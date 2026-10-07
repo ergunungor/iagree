@@ -11,4 +11,12 @@ abstract final class AppFixedColors {
   static const Color inverseAction = Color(0xFFD59AD0);
   static const Color inverseSuccess = Color(0xFF52C48D);
   static const Color inverseError = Color(0xFFFF7F76);
+
+  // tokens.json'da yok; DESIGN_SYSTEM.md §10 "IconButton" metninden (Media stili).
+
+  /// Media ikon butonunun dairesi: siyah %35.
+  static const Color mediaOverlay = Color(0x59000000);
+
+  /// Media ikon butonunun ikonu: beyaz.
+  static const Color onMedia = Color(0xFFFFFFFF);
 }

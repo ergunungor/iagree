@@ -39,6 +39,22 @@ abstract final class AppRadius {
   static double inner(double outer, double padding) =>
       math.max(0, outer - padding);
 
+  /// Tam daire (insan avatarları, yuvarlak ikon butonları). Köşe değil, bu yüzden
+  /// süperelips yerine [CircleBorder].
+  static ShapeDecoration circle({
+    Color? color,
+    BorderSide side = BorderSide.none,
+    AppElevationLevel? elevation,
+  }) {
+    return ShapeDecoration(
+      color: color,
+      shape: CircleBorder(
+        side: side == BorderSide.none ? elevation?.side ?? side : side,
+      ),
+      shadows: elevation?.shadows,
+    );
+  }
+
   /// Köşe + dolgu + elevation. [side] verilirse elevation'ın hairline'ını ezer.
   static ShapeDecoration decoration({
     required double radius,

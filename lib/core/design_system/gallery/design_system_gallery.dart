@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
 
 import '../components/buttons/app_button.dart';
+import '../components/buttons/app_icon_button.dart';
 import '../foundations/app_haptics.dart';
 import '../foundations/app_icons.dart';
 import '../foundations/app_theme.dart';
@@ -135,6 +136,7 @@ class _Sections extends StatelessWidget {
           _Section('İkonlar', _IconSection()),
           _Section('Hareket', _MotionSection()),
           _Section('Buton', _ButtonSection()),
+          _Section('İkon butonu', _IconButtonSection()),
           _Section('Haptik', _HapticsSection()),
         ],
       ),
@@ -881,6 +883,104 @@ class _ButtonSection extends StatelessWidget {
                 AppButton.momentGhost(label: 'Gruba paylaş', onPressed: noop),
                 const SizedBox(height: AppSpacing.xs),
                 AppButton.momentText(label: 'Kapat', onPressed: noop),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+// ---------------------------------------------------------------- İkon butonu
+
+class _IconButtonSection extends StatelessWidget {
+  const _IconButtonSection();
+
+  @override
+  Widget build(BuildContext context) {
+    final c = context.colors;
+    void noop() {}
+    Widget label(String text) => Padding(
+      padding: const EdgeInsets.only(bottom: AppSpacing.xs),
+      child: Text(
+        text,
+        style: context.text.overline.copyWith(color: c.textSecondary),
+      ),
+    );
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        label('plain (nav bar) · normal, pasif'),
+        Row(
+          children: [
+            AppIconButton.plain(
+              icon: AppIcons.back,
+              semanticLabel: 'Geri',
+              onPressed: noop,
+            ),
+            AppIconButton.plain(
+              icon: AppIcons.share,
+              semanticLabel: 'Paylaş',
+              onPressed: noop,
+            ),
+            const AppIconButton.plain(
+              icon: AppIcons.plus,
+              semanticLabel: 'Ekle',
+              onPressed: null,
+            ),
+          ],
+        ),
+        const SizedBox(height: AppSpacing.md),
+        label('soft · normal, pasif'),
+        Row(
+          children: [
+            AppIconButton.soft(
+              icon: AppIcons.undo,
+              semanticLabel: 'Geri al',
+              onPressed: noop,
+            ),
+            AppIconButton.soft(
+              icon: AppIcons.copy,
+              semanticLabel: 'Kopyala',
+              onPressed: noop,
+            ),
+            const AppIconButton.soft(
+              icon: AppIcons.close,
+              semanticLabel: 'Kapat',
+              onPressed: null,
+            ),
+          ],
+        ),
+        const SizedBox(height: AppSpacing.md),
+        label('media (fotoğraf üstü)'),
+        DecoratedBox(
+          decoration: BoxDecoration(
+            borderRadius: AppRadius.all(AppRadius.lg),
+            gradient: LinearGradient(
+              colors: [c.avatarSage, c.avatarMist, c.avatarRose],
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(AppSpacing.xs),
+            child: Row(
+              children: [
+                AppIconButton.media(
+                  icon: AppIcons.back,
+                  semanticLabel: 'Geri',
+                  onPressed: noop,
+                ),
+                const Spacer(),
+                AppIconButton.media(
+                  icon: AppIcons.heart,
+                  semanticLabel: 'Beğen',
+                  onPressed: noop,
+                ),
+                AppIconButton.media(
+                  icon: AppIcons.share,
+                  semanticLabel: 'Paylaş',
+                  onPressed: noop,
+                ),
               ],
             ),
           ),

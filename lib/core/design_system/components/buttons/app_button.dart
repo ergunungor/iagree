@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/physics.dart';
 
 import '../../../../l10n/app_localizations.dart';
 import '../../foundations/app_icons.dart';
+import '../../foundations/app_pressable.dart';
 import '../../foundations/context_extensions.dart';
 import '../../tokens/app_colors.dart';
 import '../../tokens/app_fixed_colors.dart';
@@ -26,7 +26,7 @@ enum AppButtonSize { large, medium, small }
 /// Tek buton sınıfı (DESIGN_SYSTEM.md §9, §10). Ekran başına tek Primary.
 ///
 /// Titreşim vermez; çağıran `onPressed` içinde `AppHaptics` kullanır.
-class AppButton extends StatefulWidget {
+class AppButton extends StatelessWidget {
   const AppButton._({
     super.key,
     required this.variant,
@@ -198,64 +198,7 @@ class AppButton extends StatefulWidget {
   final bool? fullWidth;
   final bool isLoading;
 
-  @override
-  State<AppButton> createState() => _AppButtonState();
-}
-
-class _Palette {
-  const _Palette({
-    required this.content,
-    this.fill,
-    this.pressedFill,
-    this.disabledFill,
-    this.disabledContent,
-  });
-
-  final Color content;
-
-  /// Null: dolgusuz (tertiary, momentText).
-  final Color? fill;
-  final Color? pressedFill;
-  final Color? disabledFill;
-  final Color? disabledContent;
-}
-
-class _AppButtonState extends State<AppButton>
-    with SingleTickerProviderStateMixin {
-  static const double _pressedScale = 0.97;
   static const double _pressedOpacity = 0.5;
-  static const double _ringWidth = AppSpacing.xxs / 2;
-
-  // 0 = bırakılmış, 1 = basılı. Sınırsız: spring dönüşünde taşabilir.
-  late final AnimationController _press = AnimationController.unbounded(
-    vsync: this,
-  );
-  bool _pressed = false;
-  bool _focused = false;
-
-  bool get _enabled => widget.onPressed != null;
-  bool get _interactive => _enabled && !widget.isLoading;
-
-  @override
-  void dispose() {
-    _press.dispose();
-    super.dispose();
-  }
-
-  void _down(AppMotion motion) {
-    setState(() => _pressed = true);
-    if (motion.reduceMotion) return;
-    _press.animateTo(1, duration: motion.fast, curve: AppMotion.enter);
-  }
-
-  void _up(AppMotion motion) {
-    if (!_pressed) return;
-    setState(() => _pressed = false);
-    if (motion.reduceMotion) return;
-    _press.animateWith(
-      SpringSimulation(motion.springSnappy, _press.value, 0, _press.velocity),
-    );
-  }
 
   /// Basılı dolgu: token varsa o, yoksa "bir ton koyu" (HSL parlaklığı −%6).
   static Color _darken(Color c) {
@@ -264,7 +207,7 @@ class _AppButtonState extends State<AppButton>
   }
 
   _Palette _palette(AppColors c) {
-    switch (widget.variant) {
+    switch (variant) {
       case AppButtonVariant.primary:
         return _Palette(
           fill: c.brand,
@@ -321,8 +264,9 @@ class _AppButtonState extends State<AppButton>
     final c = context.colors;
     final motion = context.motion;
     final palette = _palette(c);
+    final enabled = onPressed != null;
 
-    final (minHeight, horizontal, iconSize) = switch (widget.size) {
+    final (minHeight, horizontal, iconSize) = switch (size) {
       AppButtonSize.large => (52.0, AppSpacing.xl, AppIconSize.s20),
       AppButtonSize.medium => (
         AppSpacing.touchTarget,
@@ -331,18 +275,14 @@ class _AppButtonState extends State<AppButton>
       ),
       AppButtonSize.small => (32.0, AppSpacing.sm, AppIconSize.s16),
     };
-    final fullWidth = widget.fullWidth ?? widget.size == AppButtonSize.large;
+    final isFullWidth = fullWidth ?? size == AppButtonSize.large;
 
-    final contentColor = _enabled
+    final contentColor = enabled
         ? palette.content
         : (palette.disabledContent ?? palette.content);
-    final Color? fill = !_enabled
-        ? palette.disabledFill
-        : (_pressed ? palette.pressedFill : palette.fill);
-    final dimOnPress = palette.fill == null && _enabled && _pressed;
 
     final textStyle =
-        (widget.size == AppButtonSize.small
+        (size == AppButtonSize.small
                 ? context.text.buttonSmall
                 : context.text.button)
             .copyWith(color: contentColor);
@@ -351,16 +291,12 @@ class _AppButtonState extends State<AppButton>
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        if (widget.icon != null) ...[
-          Icon(widget.icon, size: iconSize, color: contentColor),
+        if (icon != null) ...[
+          Icon(icon, size: iconSize, color: contentColor),
           const SizedBox(width: AppSpacing.xs),
         ],
         Flexible(
-          child: Text(
-            widget.label,
-            style: textStyle,
-            textAlign: TextAlign.center,
-          ),
+          child: Text(label, style: textStyle, textAlign: TextAlign.center),
         ),
       ],
     );
@@ -369,11 +305,9 @@ class _AppButtonState extends State<AppButton>
       padding: EdgeInsets.symmetric(
         horizontal: horizontal,
         // Small'da 20 satır + 2×xxs = 28 < 32; diğerlerinde xs.
-        vertical: widget.size == AppButtonSize.small
-            ? AppSpacing.xxs
-            : AppSpacing.xs,
+        vertical: size == AppButtonSize.small ? AppSpacing.xxs : AppSpacing.xs,
       ),
-      child: widget.isLoading
+      child: isLoading
           ? Stack(
               alignment: Alignment.center,
               children: [
@@ -388,110 +322,60 @@ class _AppButtonState extends State<AppButton>
           : content,
     );
 
-    final visual = AnimatedBuilder(
-      animation: _press,
-      builder: (context, child) => Transform.scale(
-        scale: 1 + (_pressedScale - 1) * _press.value,
-        child: child,
-      ),
-      child: ConstrainedBox(
-        // Sabit tutulur: animasyonlu AnimatedContainer constraint'leri enterpole edemez.
-        constraints: BoxConstraints(
-          minWidth: fullWidth ? double.infinity : 0,
-          minHeight: minHeight,
-        ),
-        child: AnimatedContainer(
-          duration: motion.fast,
-          curve: AppMotion.move,
-          decoration: AppRadius.decoration(radius: AppRadius.pill, color: fill),
-          child: AnimatedOpacity(
-            duration: motion.fast,
-            opacity: dimOnPress ? _pressedOpacity : 1,
-            child: Center(widthFactor: 1, heightFactor: 1, child: body),
-          ),
-        ),
-      ),
-    );
-
-    final ring = _focused
-        ? [
-            Positioned.fill(
-              left: -2 * _ringWidth,
-              right: -2 * _ringWidth,
-              top: -2 * _ringWidth,
-              bottom: -2 * _ringWidth,
-              child: IgnorePointer(
-                child: DecoratedBox(
-                  decoration: ShapeDecoration(
-                    shape: AppRadius.border(
-                      AppRadius.pill,
-                      side: BorderSide(color: c.focusRing, width: _ringWidth),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Positioned.fill(
-              left: -_ringWidth,
-              right: -_ringWidth,
-              top: -_ringWidth,
-              bottom: -_ringWidth,
-              child: IgnorePointer(
-                child: DecoratedBox(
-                  decoration: ShapeDecoration(
-                    shape: AppRadius.border(
-                      AppRadius.pill,
-                      side: BorderSide(color: c.canvas, width: _ringWidth),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ]
-        : const <Widget>[];
-
-    return Semantics(
-      button: true,
-      enabled: _enabled,
-      label: widget.label,
-      value: widget.isLoading
+    return AppPressable(
+      onPressed: onPressed,
+      isBusy: isLoading,
+      semanticLabel: label,
+      semanticValue: isLoading
           ? AppLocalizations.of(context).commonLoading
           : null,
-      onTap: _interactive ? widget.onPressed : null,
-      excludeSemantics: true,
-      child: FocusableActionDetector(
-        enabled: _interactive,
-        onShowFocusHighlight: (v) => setState(() => _focused = v),
-        actions: {
-          ActivateIntent: CallbackAction<ActivateIntent>(
-            onInvoke: (_) {
-              widget.onPressed?.call();
-              return null;
-            },
+      // Dolgusuz variant'lar yalnızca opaklıkla tepki verir.
+      scaleOnPress: palette.fill != null,
+      minWidth: isFullWidth ? double.infinity : AppSpacing.touchTarget,
+      builder: (context, pressed) {
+        final fill = !enabled
+            ? palette.disabledFill
+            : (pressed ? palette.pressedFill : palette.fill);
+        final dimOnPress = palette.fill == null && enabled && pressed;
+        return ConstrainedBox(
+          // AnimatedContainer constraint'leri enterpole edemediği için dışarıda.
+          constraints: BoxConstraints(
+            minWidth: isFullWidth ? double.infinity : 0,
+            minHeight: minHeight,
           ),
-        },
-        child: GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onTapDown: _interactive ? (_) => _down(motion) : null,
-          onTapUp: _interactive ? (_) => _up(motion) : null,
-          onTapCancel: _interactive ? () => _up(motion) : null,
-          onTap: _interactive ? widget.onPressed : null,
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-              minWidth: fullWidth ? double.infinity : AppSpacing.touchTarget,
-              minHeight: AppSpacing.touchTarget,
+          child: AnimatedContainer(
+            duration: motion.fast,
+            curve: AppMotion.move,
+            decoration: AppRadius.decoration(
+              radius: AppRadius.pill,
+              color: fill,
             ),
-            child: Align(
-              widthFactor: fullWidth ? null : 1,
-              heightFactor: 1,
-              child: Stack(
-                clipBehavior: Clip.none,
-                children: [...ring, visual],
-              ),
+            child: AnimatedOpacity(
+              duration: motion.fast,
+              opacity: dimOnPress ? _pressedOpacity : 1,
+              child: Center(widthFactor: 1, heightFactor: 1, child: body),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
+}
+
+class _Palette {
+  const _Palette({
+    required this.content,
+    this.fill,
+    this.pressedFill,
+    this.disabledFill,
+    this.disabledContent,
+  });
+
+  final Color content;
+
+  /// Null: dolgusuz (tertiary, momentText).
+  final Color? fill;
+  final Color? pressedFill;
+  final Color? disabledFill;
+  final Color? disabledContent;
 }

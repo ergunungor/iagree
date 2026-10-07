@@ -100,6 +100,13 @@ void main() {
     });
   }
 
+  test('tokens.json dışı iki sabit (DESIGN_SYSTEM §10 Media ikon butonu)', () {
+    expect(AppFixedColors.mediaOverlay, const Color(0x59000000));
+    expect(AppFixedColors.onMedia, const Color(0xFFFFFFFF));
+    // %35 siyah: alfa 0x59 = 89/255 ≈ 0,349.
+    expect(AppFixedColors.mediaOverlay.a, closeTo(0.35, 0.005));
+  });
+
   test('avatarTints sırası Kum, Adaçayı, Sis, Gül, Lavanta', () {
     expect(AppColors.light.avatarTints, [
       AppColors.light.avatarSand,
