@@ -35,6 +35,7 @@ Statik, sadece `canvas` rengi (iOS native launch screen). Logo veya metin yok. O
 | 2. Mekanizma | `WelcomeB` | 2,5–5,5 sn | Nereye gidelim? (öndeki kart kendi kendine sağa kayar, "Olur" etiketi çıkar, uyum rozeti %80'e dolar) |
 | 3. Sosyal | `WelcomeC` | 5,5–8,5 sn | Birlikte karar verin. (avatarlar kenarlardan gelir, kesik çizgiler çizilir, ortadaki ✓ springBouncy ile belirir) |
 
+- Sahne 1'de büyük iki tonlu iA işareti + Fraunces "iAgree"; geçişte bu kilit küçülüp sol üstteki küçük işaret + wordmark'a dönüşür (B ve C'deki).
 - Butonlar ilk kareden itibaren görünür ve tıklanabilir. Döngü yok, "Atla" yok, haptic yok.
 - Reduce Motion: doğrudan `WelcomeC` statik.
 - "Apple ile devam et": resmi Sign in with Apple butonu (`sign_in_with_apple`), light'ta siyah, dark'ta beyaz, pill. Mockup'taki buton logosuz bir yer tutucu.

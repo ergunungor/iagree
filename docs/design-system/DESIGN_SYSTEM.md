@@ -12,7 +12,13 @@ Makine okunur değerler: `docs/design-system/tokens.json`.
 - **Marka özellikleri:** Warm · Decisive · Social · Effortless.
 - **His:** Uygulama açıldığında rahatlama ("bu iş çözülecek"); heyecan yalnızca karar anında.
 - **Görsel yön:** Warm Table + Native Calm. Sıcak kırık beyaz zemin, tek vurgu rengi Plum, SF Pro arayüz, Fraunces yalnızca büyük başlıklarda, gölge yerine ton farkı.
-- **Logo yok** (henüz). Marka adı Fraunces ile düz yazılır.
+- **Logo: iA monogramı.** i'nin gövdesi ile A'nın sol bacağı alttaki köşede birleşip ✓ oluşturur; A'nın yatay çizgisi ✓'ya değmez. Dosyalar `assets/logo/`:
+  - `iagree-mark-two-tone.svg`: marka kullanımı (i ve ✓ `brand`, kalanı `textPrimary`); yalnızca `canvas`/`surface` üzerinde.
+  - `iagree-mark-ink.svg` / `iagree-mark-cream.svg` / `iagree-mark-plum-light.svg`: tek renk (açık zemin / `brand` veya `momentBg` zemin / koyu tema).
+  - Wordmark = işaret + Fraunces 500 "iAgree", ayrı bir dosya değil; kodda yan yana kurulur (işaret yüksekliği ≈ metin boyutunun 1,3 katı).
+  - `app-icon-1024.png` (açık) ve `app-icon-dark-1024.png` (iOS koyu ikon): kare, opak, kalın çizgili tek renk.
+  - `favicon.svg`: 32 px ve altı, yatay çizgisiz (web).
+  - İşaret döndürülmez, eğilmez, gölge/gradient almaz; çevresinde en az işaret yüksekliğinin %25'i boşluk.
 
 ## 2. İçerik ve dil kuralları
 

@@ -107,6 +107,16 @@ lib/core/design_system/gallery/design_system_gallery.dart: sadece debug build'de
 Önce plan, onay bekle.
 ```
 
+### A8: Logo ve uygulama ikonu
+
+```
+DESIGN_SYSTEM.md §1'deki logo kurallarına ve assets/logo/ dosyalarına göre:
+1. iOS uygulama ikonunu ayarla: app-icon-1024.png (açık) ve app-icon-dark-1024.png (koyu) Xcode asset catalog'a, tek boyut (single size) olarak.
+2. Logo SVG'lerini uygulamada göstermek için bir yöntem öner (flutter_svg paketi mi, yoksa işareti CustomPainter ile çizmek mi; işaret basit çizgilerden oluşuyor). Paket eklemeden önce sor.
+3. AppLogo widget'ı: variant (twoTone, ink, cream, plumLight) ve wordmark gösterilsin mi parametresi; temaya göre doğru varyantı kendisi seçebilsin.
+Önce plan, onay bekle.
+```
+
 ---
 
 ## Faz B: Temel component'ler
