@@ -1,0 +1,7 @@
+{
+  "@@locale": "tr",
+  "appTitle": "iAgree",
+  "@appTitle": {
+    "description": "Uygulama adı. Marka adı çevrilmez ve büyük harfe çevrilmez."
+  }
+}
