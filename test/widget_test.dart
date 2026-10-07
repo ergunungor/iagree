@@ -13,7 +13,7 @@ Color? _textColor(WidgetTester tester) {
 }
 
 void main() {
-  testWidgets('açılış ekranı marka adını Fraunces ile gösterir', (
+  testWidgets('açılış ekranı logoyu ve marka adını Fraunces ile gösterir', (
     tester,
   ) async {
     await tester.pumpWidget(const IAgreeApp(home: IAgreePlaceholder()));
@@ -35,11 +35,13 @@ void main() {
     );
   });
 
-  testWidgets('dark temada metin textPrimary, zemin canvas', (tester) async {
+  testWidgets('dark temada wordmark plumLight (brand), zemin canvas', (
+    tester,
+  ) async {
     tester.platformDispatcher.platformBrightnessTestValue = Brightness.dark;
     addTearDown(tester.platformDispatcher.clearPlatformBrightnessTestValue);
     await tester.pumpWidget(const IAgreeApp(home: IAgreePlaceholder()));
-    expect(_textColor(tester), AppColors.dark.textPrimary);
+    expect(_textColor(tester), AppColors.dark.brand);
     expect(
       Theme.of(tester.element(find.byType(Scaffold))).scaffoldBackgroundColor,
       AppColors.dark.canvas,

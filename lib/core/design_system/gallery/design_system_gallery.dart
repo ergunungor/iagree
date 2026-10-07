@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
 
+import '../components/brand/app_logo.dart';
 import '../components/buttons/app_button.dart';
 import '../components/buttons/app_icon_button.dart';
 import '../foundations/app_haptics.dart';
@@ -9,6 +10,7 @@ import '../foundations/app_icons.dart';
 import '../foundations/app_theme.dart';
 import '../foundations/clamped_text_scale.dart';
 import '../foundations/context_extensions.dart';
+import '../tokens/app_colors.dart';
 import '../tokens/app_fixed_colors.dart';
 import '../tokens/app_motion.dart';
 import '../tokens/app_radius.dart';
@@ -135,6 +137,7 @@ class _Sections extends StatelessWidget {
           _Section('Elevation', _ElevationSection()),
           _Section('İkonlar', _IconSection()),
           _Section('Hareket', _MotionSection()),
+          _Section('Logo', _LogoSection()),
           _Section('Buton', _ButtonSection()),
           _Section('İkon butonu', _IconButtonSection()),
           _Section('Haptik', _HapticsSection()),
@@ -983,6 +986,98 @@ class _IconButtonSection extends StatelessWidget {
                 ),
               ],
             ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+// ---------------------------------------------------------------- Logo
+
+class _LogoSection extends StatelessWidget {
+  const _LogoSection();
+
+  @override
+  Widget build(BuildContext context) {
+    final c = context.colors;
+    Widget panel(String name, Color? background, Widget child) => Padding(
+      padding: const EdgeInsets.only(bottom: AppSpacing.md),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            name,
+            style: context.text.overline.copyWith(color: c.textSecondary),
+          ),
+          const SizedBox(height: AppSpacing.xs),
+          DecoratedBox(
+            decoration: AppRadius.decoration(
+              radius: AppRadius.lg,
+              color: background,
+              side: BorderSide(color: c.border),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(AppSpacing.xl),
+              child: child,
+            ),
+          ),
+        ],
+      ),
+    );
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        panel(
+          'auto (temaya göre) · wordmark',
+          null,
+          const AppLogo.auto(wordmark: true),
+        ),
+        panel(
+          'twoTone · canvas/surface üstünde',
+          c.surface,
+          const Wrap(
+            spacing: AppSpacing.xl,
+            runSpacing: AppSpacing.md,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: [
+              AppLogo(variant: AppLogoVariant.twoTone),
+              AppLogo(variant: AppLogoVariant.twoTone, wordmark: true),
+            ],
+          ),
+        ),
+        panel(
+          'ink · tek renk',
+          c.surface,
+          const AppLogo(variant: AppLogoVariant.ink, wordmark: true),
+        ),
+        panel(
+          'cream · momentBg üstünde',
+          AppFixedColors.momentBg,
+          const AppLogo(variant: AppLogoVariant.cream, wordmark: true),
+        ),
+        panel(
+          'plumLight · koyu tema',
+          AppColors.dark.canvas,
+          const AppLogo(variant: AppLogoVariant.plumLight, wordmark: true),
+        ),
+        panel(
+          'boyutlar: işaret yüksekliği 20, 32, 48, 64, 88',
+          c.surface,
+          const Wrap(
+            spacing: AppSpacing.lg,
+            runSpacing: AppSpacing.md,
+            crossAxisAlignment: WrapCrossAlignment.end,
+            children: [
+              AppLogo(variant: AppLogoVariant.twoTone, size: AppIconSize.s20),
+              AppLogo(variant: AppLogoVariant.twoTone, size: AppIconSize.s32),
+              AppLogo(variant: AppLogoVariant.twoTone, size: AppSpacing.huge),
+              AppLogo(variant: AppLogoVariant.twoTone, size: AppSpacing.giant),
+              AppLogo(
+                variant: AppLogoVariant.twoTone,
+                size: AppSpacing.giant + AppSpacing.xl,
+              ),
+            ],
           ),
         ),
       ],

@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import 'core/design_system/components/brand/app_logo.dart';
 import 'core/design_system/foundations/app_theme.dart';
-import 'core/design_system/foundations/context_extensions.dart';
 import 'core/design_system/gallery/design_system_gallery.dart';
 import 'l10n/app_localizations.dart';
 
@@ -49,13 +49,6 @@ class IAgreePlaceholder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text(
-          AppLocalizations.of(context).appTitle,
-          style: context.text.display,
-        ),
-      ),
-    );
+    return const Scaffold(body: Center(child: AppLogo.auto(wordmark: true)));
   }
 }
