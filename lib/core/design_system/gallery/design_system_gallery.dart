@@ -5,6 +5,7 @@ import 'package:flutter/physics.dart';
 import '../components/brand/app_logo.dart';
 import '../components/buttons/app_button.dart';
 import '../components/buttons/app_icon_button.dart';
+import '../components/inputs/app_text_field.dart';
 import '../foundations/app_haptics.dart';
 import '../foundations/app_icons.dart';
 import '../foundations/app_theme.dart';
@@ -140,6 +141,7 @@ class _Sections extends StatelessWidget {
           _Section('Logo', _LogoSection()),
           _Section('Buton', _ButtonSection()),
           _Section('İkon butonu', _IconButtonSection()),
+          _Section('Metin alanı', _TextFieldSection()),
           _Section('Haptik', _HapticsSection()),
         ],
       ),
@@ -1079,6 +1081,56 @@ class _LogoSection extends StatelessWidget {
               ),
             ],
           ),
+        ),
+      ],
+    );
+  }
+}
+
+// ---------------------------------------------------------------- Metin alanı
+
+class _TextFieldSection extends StatefulWidget {
+  const _TextFieldSection();
+
+  @override
+  State<_TextFieldSection> createState() => _TextFieldSectionState();
+}
+
+class _TextFieldSectionState extends State<_TextFieldSection> {
+  final _filled = TextEditingController(text: 'Cuma akşamı');
+  final _email = TextEditingController(text: 'ayse@');
+
+  @override
+  void dispose() {
+    _filled.dispose();
+    _email.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    const gap = SizedBox(height: AppSpacing.lg);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const AppTextField(label: 'Oda adı', hintText: 'Örn. Cuma akşamı'),
+        gap,
+        AppTextField(
+          label: 'Dolu (odakla: temizle ikonu)',
+          controller: _filled,
+        ),
+        gap,
+        AppTextField(
+          label: 'E-posta',
+          controller: _email,
+          keyboardType: TextInputType.emailAddress,
+          errorText: 'Geçerli bir e-posta adresi yaz.',
+        ),
+        gap,
+        const AppTextField(
+          label: 'Pasif',
+          hintText: 'Düzenlenemez',
+          enabled: false,
         ),
       ],
     );

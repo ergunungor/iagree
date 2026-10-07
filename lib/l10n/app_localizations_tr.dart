@@ -14,4 +14,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get commonLoading => 'Yükleniyor';
+
+  @override
+  String get commonClear => 'Temizle';
 }

@@ -109,6 +109,12 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Yükleniyor'**
   String get commonLoading;
+
+  /// Metin alanındaki temizle ikonunun VoiceOver etiketi.
+  ///
+  /// In tr, this message translates to:
+  /// **'Temizle'**
+  String get commonClear;
 }
 
 class _AppLocalizationsDelegate
