@@ -11,4 +11,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get appTitle => 'iAgree';
+
+  @override
+  String get commonLoading => 'Loading';
 }

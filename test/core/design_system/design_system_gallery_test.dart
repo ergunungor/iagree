@@ -7,6 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:iagree/core/design_system/foundations/app_theme.dart';
 import 'package:iagree/core/design_system/gallery/design_system_gallery.dart';
 import 'package:iagree/core/design_system/tokens/app_colors.dart';
+import 'package:iagree/l10n/app_localizations.dart';
 
 Future<void> _pump(WidgetTester tester, {bool? dark, double scale = 1}) async {
   tester.view.physicalSize = const Size(1170, 2532);
@@ -14,6 +15,8 @@ Future<void> _pump(WidgetTester tester, {bool? dark, double scale = 1}) async {
   addTearDown(tester.view.reset);
   await tester.pumpWidget(
     MaterialApp(
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
       home: DesignSystemGallery(initialDark: dark, initialTextScale: scale),

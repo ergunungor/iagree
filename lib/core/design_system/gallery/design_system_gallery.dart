@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
 
+import '../components/buttons/app_button.dart';
 import '../foundations/app_haptics.dart';
 import '../foundations/app_icons.dart';
 import '../foundations/app_theme.dart';
@@ -133,6 +134,7 @@ class _Sections extends StatelessWidget {
           _Section('Elevation', _ElevationSection()),
           _Section('İkonlar', _IconSection()),
           _Section('Hareket', _MotionSection()),
+          _Section('Buton', _ButtonSection()),
           _Section('Haptik', _HapticsSection()),
         ],
       ),
@@ -729,6 +731,160 @@ class _HapticsSection extends StatelessWidget {
       children: [
         for (final a in actions.entries)
           FilledButton.tonal(onPressed: a.value, child: Text(a.key)),
+      ],
+    );
+  }
+}
+
+// ---------------------------------------------------------------- Buton
+
+class _ButtonSection extends StatelessWidget {
+  const _ButtonSection();
+
+  @override
+  Widget build(BuildContext context) {
+    void noop() {}
+    Widget group(
+      String name,
+      Widget Function(
+        String,
+        VoidCallback?, {
+        IconData? icon,
+        bool loading,
+        AppButtonSize size,
+      })
+      build,
+    ) {
+      return Padding(
+        padding: const EdgeInsets.only(bottom: AppSpacing.lg),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              name,
+              style: context.text.overline.copyWith(
+                color: context.colors.textSecondary,
+              ),
+            ),
+            const SizedBox(height: AppSpacing.xs),
+            build('Oda oluştur', noop, size: AppButtonSize.large),
+            const SizedBox(height: AppSpacing.xs),
+            Wrap(
+              spacing: AppSpacing.xs,
+              runSpacing: AppSpacing.xs,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: [
+                build('Medium', noop, size: AppButtonSize.medium),
+                build(
+                  'İkonlu',
+                  noop,
+                  icon: AppIcons.share,
+                  size: AppButtonSize.medium,
+                ),
+                build('Pasif', null, size: AppButtonSize.medium),
+                build(
+                  'Yükleniyor',
+                  noop,
+                  loading: true,
+                  size: AppButtonSize.medium,
+                ),
+                build('Small', noop, size: AppButtonSize.small),
+                build(
+                  'İkonlu',
+                  noop,
+                  icon: AppIcons.undo,
+                  size: AppButtonSize.small,
+                ),
+              ],
+            ),
+          ],
+        ),
+      );
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        group(
+          'primary',
+          (l, p, {icon, loading = false, size = AppButtonSize.large}) =>
+              AppButton.primary(
+                label: l,
+                onPressed: p,
+                icon: icon,
+                isLoading: loading,
+                size: size,
+              ),
+        ),
+        group(
+          'secondary',
+          (l, p, {icon, loading = false, size = AppButtonSize.large}) =>
+              AppButton.secondary(
+                label: l,
+                onPressed: p,
+                icon: icon,
+                isLoading: loading,
+                size: size,
+              ),
+        ),
+        group(
+          'tertiary',
+          (l, p, {icon, loading = false, size = AppButtonSize.large}) =>
+              AppButton.tertiary(
+                label: l,
+                onPressed: p,
+                icon: icon,
+                isLoading: loading,
+                size: size,
+              ),
+        ),
+        group(
+          'destructive',
+          (l, p, {icon, loading = false, size = AppButtonSize.large}) =>
+              AppButton.destructive(
+                label: l,
+                onPressed: p,
+                icon: icon,
+                isLoading: loading,
+                size: size,
+              ),
+        ),
+        group(
+          'destructiveStrong',
+          (l, p, {icon, loading = false, size = AppButtonSize.large}) =>
+              AppButton.destructiveStrong(
+                label: l,
+                onPressed: p,
+                icon: icon,
+                isLoading: loading,
+                size: size,
+              ),
+        ),
+        Text(
+          'moment (momentBg zemininde)',
+          style: context.text.overline.copyWith(
+            color: context.colors.textSecondary,
+          ),
+        ),
+        const SizedBox(height: AppSpacing.xs),
+        DecoratedBox(
+          decoration: AppRadius.decoration(
+            radius: AppRadius.lg,
+            color: AppFixedColors.momentBg,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(AppSpacing.md),
+            child: Column(
+              children: [
+                AppButton.moment(label: 'Yol tarifi al', onPressed: noop),
+                const SizedBox(height: AppSpacing.xs),
+                AppButton.momentGhost(label: 'Gruba paylaş', onPressed: noop),
+                const SizedBox(height: AppSpacing.xs),
+                AppButton.momentText(label: 'Kapat', onPressed: noop),
+              ],
+            ),
+          ),
+        ),
       ],
     );
   }

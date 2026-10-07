@@ -11,4 +11,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get appTitle => 'iAgree';
+
+  @override
+  String get commonLoading => 'Yükleniyor';
 }

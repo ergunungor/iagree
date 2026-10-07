@@ -103,6 +103,12 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'iAgree'**
   String get appTitle;
+
+  /// Yüklenirken butonun VoiceOver değeri.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yükleniyor'**
+  String get commonLoading;
 }
 
 class _AppLocalizationsDelegate

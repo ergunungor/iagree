@@ -1,4 +1,5 @@
 {
   "@@locale": "en",
-  "appTitle": "iAgree"
+  "appTitle": "iAgree",
+  "commonLoading": "Loading"
 }

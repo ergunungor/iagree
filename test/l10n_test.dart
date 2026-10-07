@@ -6,7 +6,7 @@ import 'package:iagree/main.dart';
 Future<BuildContext> _pump(WidgetTester tester, Locale locale) async {
   tester.platformDispatcher.localesTestValue = [locale];
   addTearDown(tester.platformDispatcher.clearLocalesTestValue);
-  await tester.pumpWidget(const IAgreeApp());
+  await tester.pumpWidget(const IAgreeApp(home: IAgreePlaceholder()));
   await tester.pumpAndSettle();
   return tester.element(find.byType(Scaffold));
 }

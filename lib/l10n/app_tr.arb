@@ -3,5 +3,9 @@
   "appTitle": "iAgree",
   "@appTitle": {
     "description": "Uygulama adı. Marka adı çevrilmez ve büyük harfe çevrilmez."
+  },
+  "commonLoading": "Yükleniyor",
+  "@commonLoading": {
+    "description": "Yüklenirken butonun VoiceOver değeri."
   }
 }
