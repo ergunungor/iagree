@@ -7,7 +7,14 @@ import '../components/buttons/app_button.dart';
 import '../components/buttons/app_icon_button.dart';
 import '../components/content/app_card.dart';
 import '../components/content/app_list_group.dart';
+import '../components/feedback/app_alert.dart';
+import '../components/feedback/app_empty_state.dart';
+import '../components/feedback/app_sheet.dart';
+import '../components/feedback/app_skeleton.dart';
+import '../components/feedback/app_toast.dart';
+import '../components/feedback/offline_banner.dart';
 import '../components/inputs/app_search_field.dart';
+import '../components/inputs/app_selection_field.dart';
 import '../components/inputs/app_slider.dart';
 import '../components/inputs/app_stepper.dart';
 import '../components/people/app_avatar.dart';
@@ -160,6 +167,7 @@ class _Sections extends StatelessWidget {
           _Section('Seçim', _SelectionSection()),
           _Section('Kart ve liste', _CardListSection()),
           _Section('Avatar', _AvatarSection()),
+          _Section('Geri bildirim ve katmanlar', _FeedbackSection()),
           _Section('Haptik', _HapticsSection()),
         ],
       ),
@@ -1665,6 +1673,216 @@ class _AvatarSectionState extends State<_AvatarSection> {
               size: AppAvatarSize.lg,
             ),
           ],
+        ),
+      ],
+    );
+  }
+}
+
+// ---------------------------------------------------------------- Geri bildirim ve katmanlar
+
+class _FeedbackSection extends StatefulWidget {
+  const _FeedbackSection();
+
+  @override
+  State<_FeedbackSection> createState() => _FeedbackSectionState();
+}
+
+class _FeedbackSectionState extends State<_FeedbackSection> {
+  bool _offline = false;
+  String? _when = 'hafta';
+  String _lastResult = '—';
+
+  static const _whenOptions = [
+    AppSelectionOption(value: 'bugun', label: 'Bugün'),
+    AppSelectionOption(value: 'hafta', label: 'Bu hafta sonu'),
+    AppSelectionOption(value: 'baska', label: 'Başka zaman'),
+  ];
+
+  Widget _sheetBody(BuildContext context) => Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      for (var i = 1; i <= 12; i++)
+        Padding(
+          padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+          child: Text('Satır $i', style: context.text.body),
+        ),
+    ],
+  );
+
+  Future<void> _sheet(List<AppSheetDetent> detents, {bool footer = true}) =>
+      AppSheet.show<void>(
+        context,
+        title: 'Linki paylaş',
+        detents: detents,
+        builder: _sheetBody,
+        footer: footer
+            ? AppButton.primary(
+                label: 'Linki paylaş',
+                onPressed: () => Navigator.of(context).pop(),
+              )
+            : null,
+      );
+
+  @override
+  Widget build(BuildContext context) {
+    final c = context.colors;
+    Widget label(String text) => Padding(
+      padding: const EdgeInsets.only(bottom: AppSpacing.xs),
+      child: Text(
+        text,
+        style: context.text.overline.copyWith(color: c.textSecondary),
+      ),
+    );
+    const gap = SizedBox(height: AppSpacing.lg);
+    Widget wrap(List<Widget> children) => Wrap(
+      spacing: AppSpacing.xs,
+      runSpacing: AppSpacing.xs,
+      children: children,
+    );
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        label('bottom sheet · detent'),
+        wrap([
+          AppButton.secondary(
+            label: 'Fit',
+            size: AppButtonSize.medium,
+            onPressed: () => _sheet([AppSheetDetent.fit]),
+          ),
+          AppButton.secondary(
+            label: 'Medium',
+            size: AppButtonSize.medium,
+            onPressed: () => _sheet([AppSheetDetent.medium]),
+          ),
+          AppButton.secondary(
+            label: 'Large (✕)',
+            size: AppButtonSize.medium,
+            onPressed: () => _sheet([AppSheetDetent.large]),
+          ),
+          AppButton.secondary(
+            label: 'Medium + Large',
+            size: AppButtonSize.medium,
+            onPressed: () =>
+                _sheet([AppSheetDetent.medium, AppSheetDetent.large]),
+          ),
+        ]),
+        gap,
+        label('alert (yalnızca geri alınamaz işlemler)'),
+        wrap([
+          AppButton.destructive(
+            label: 'Odayı sil',
+            size: AppButtonSize.medium,
+            onPressed: () async {
+              final ok = await AppAlert.show(
+                context,
+                title: 'Oda silinsin mi?',
+                message: 'Bu işlem geri alınamaz. Oda herkes için silinir.',
+                actionLabel: 'Odayı sil',
+              );
+              setState(() => _lastResult = ok ? 'silindi' : 'vazgeçildi');
+            },
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
+            child: Text('sonuç: $_lastResult', style: context.text.caption),
+          ),
+        ]),
+        gap,
+        label('toast (üstte, tek, 3/5 sn, yukarı kaydır)'),
+        wrap([
+          AppButton.secondary(
+            label: 'Nötr',
+            size: AppButtonSize.medium,
+            onPressed: () =>
+                AppToast.show(context, message: 'Link panoya kopyalandı'),
+          ),
+          AppButton.secondary(
+            label: 'Başarı',
+            size: AppButtonSize.medium,
+            onPressed: () => AppToast.show(
+              context,
+              message: 'Tercihlerin gönderildi',
+              kind: AppToastKind.success,
+            ),
+          ),
+          AppButton.secondary(
+            label: 'Hata',
+            size: AppButtonSize.medium,
+            onPressed: () => AppToast.show(
+              context,
+              message: 'Gönderilemedi. Bağlantını kontrol edip tekrar dene.',
+              kind: AppToastKind.error,
+            ),
+          ),
+          AppButton.secondary(
+            label: 'Geri al',
+            size: AppButtonSize.medium,
+            onPressed: () => AppToast.show(
+              context,
+              message: 'Oda arşivlendi',
+              actionLabel: 'Geri al',
+              onAction: () {},
+            ),
+          ),
+        ]),
+        gap,
+        label('çevrimdışı banner'),
+        Row(
+          children: [
+            AppToggle(
+              value: _offline,
+              semanticLabel: 'Çevrimdışı',
+              onChanged: (v) => setState(() => _offline = v),
+            ),
+          ],
+        ),
+        OfflineBanner(visible: _offline),
+        gap,
+        label('seçim alanı (dokununca sheet)'),
+        AppSelectionField<String>(
+          label: 'Ne zaman',
+          hintText: 'Seç',
+          options: _whenOptions,
+          value: _when,
+          onChanged: (v) => setState(() => _when = v),
+        ),
+        gap,
+        label('skeleton (nabız, shimmer yok)'),
+        const AppSkeleton.lines(),
+        gap,
+        label('boş durum · hata durumu'),
+        SizedBox(
+          height: 360,
+          child: DecoratedBox(
+            decoration: AppRadius.decoration(
+              radius: AppRadius.lg,
+              color: c.surfaceMuted,
+            ),
+            child: AppEmptyState.dashedAvatars(
+              title: 'Henüz oda yok',
+              message: 'İlk odanı kur, arkadaşlarını çağır.',
+              actionLabel: 'Oda oluştur',
+              onAction: () {},
+            ),
+          ),
+        ),
+        const SizedBox(height: AppSpacing.md),
+        SizedBox(
+          height: 300,
+          child: DecoratedBox(
+            decoration: AppRadius.decoration(
+              radius: AppRadius.lg,
+              color: c.surfaceMuted,
+            ),
+            child: AppEmptyState.error(
+              title: 'Yüklenemedi',
+              message: 'Bağlantını kontrol edip tekrar dene.',
+              actionLabel: 'Tekrar dene',
+              onAction: () {},
+            ),
+          ),
         ),
       ],
     );

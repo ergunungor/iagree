@@ -62,5 +62,13 @@
         "type": "String"
       }
     }
+  },
+  "commonClose": "Kapat",
+  "@commonClose": {
+    "description": "Sheet kapatma ✕ ikonunun ve scrim'in VoiceOver etiketi."
+  },
+  "offlineBannerMessage": "Bağlantı yok. Değişikliklerin bağlanınca gönderilecek.",
+  "@offlineBannerMessage": {
+    "description": "Çevrimdışı banner metni (nav bar altında kalıcı)."
   }
 }

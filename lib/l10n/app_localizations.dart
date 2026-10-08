@@ -157,6 +157,18 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'{name}, hazır'**
   String participantReady(String name);
+
+  /// Sheet kapatma ✕ ikonunun ve scrim'in VoiceOver etiketi.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kapat'**
+  String get commonClose;
+
+  /// Çevrimdışı banner metni (nav bar altında kalıcı).
+  ///
+  /// In tr, this message translates to:
+  /// **'Bağlantı yok. Değişikliklerin bağlanınca gönderilecek.'**
+  String get offlineBannerMessage;
 }
 
 class _AppLocalizationsDelegate

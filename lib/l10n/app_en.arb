@@ -9,5 +9,7 @@
   "participantInvited": "{name}, waiting",
   "participantJoined": "{name}, joined",
   "participantChoosing": "{name}, choosing, {percent} percent",
-  "participantReady": "{name}, ready"
+  "participantReady": "{name}, ready",
+  "commonClose": "Close",
+  "offlineBannerMessage": "No connection. Your changes will be sent when you reconnect."
 }

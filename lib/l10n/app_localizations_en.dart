@@ -46,4 +46,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String participantReady(String name) {
     return '$name, ready';
   }
+
+  @override
+  String get commonClose => 'Close';
+
+  @override
+  String get offlineBannerMessage =>
+      'No connection. Your changes will be sent when you reconnect.';
 }

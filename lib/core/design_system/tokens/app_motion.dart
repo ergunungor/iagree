@@ -15,6 +15,7 @@ class AppMotion {
     required this.springStandard,
     required this.springBouncy,
     required this.springSnappyCurve,
+    required this.springStandardCurve,
   });
 
   /// Reduce Motion kapalı.
@@ -28,6 +29,7 @@ class AppMotion {
     springStandard: _spring(stiffness: 195, ratio: 0.85),
     springBouncy: _spring(stiffness: 158, ratio: 0.7),
     springSnappyCurve: SpringCurve(_spring(stiffness: 439, ratio: 0.9)),
+    springStandardCurve: SpringCurve(_spring(stiffness: 195, ratio: 0.85)),
   );
 
   /// Reduce Motion açık: süreler 0, spring'ler aynı stiffness ile overshoot'suz (kritik sönüm).
@@ -41,6 +43,7 @@ class AppMotion {
     springStandard: _spring(stiffness: 195, ratio: 1),
     springBouncy: _spring(stiffness: 158, ratio: 1),
     springSnappyCurve: SpringCurve(_spring(stiffness: 439, ratio: 1)),
+    springStandardCurve: SpringCurve(_spring(stiffness: 195, ratio: 1)),
   );
 
   /// `MediaQuery.disableAnimationsOf` açıksa [reduced], değilse [regular].
@@ -75,6 +78,18 @@ class AppMotion {
   /// animasyonlarda spring hissi için (chip genişliği). Süresi `springSnappyCurve.duration`;
   /// Reduce Motion'da süre 0 verilmelidir (bkz. [springSnappyDuration]).
   final SpringCurve springSnappyCurve;
+
+  /// [springStandard]'ın eğri hâli: sheet ve toast girişi gibi yalnızca süre ve eğri alan
+  /// animasyonlar için.
+  final SpringCurve springStandardCurve;
+
+  /// [springStandardCurve] ile birlikte kullanılacak süre; Reduce Motion'da 0.
+  Duration get springStandardDuration =>
+      reduceMotion ? Duration.zero : springStandardCurve.duration;
+
+  /// Çıkışlar girişten %25 kısadır (DESIGN_SYSTEM.md §12).
+  Duration exitOf(Duration enter) =>
+      Duration(microseconds: (enter.inMicroseconds * 0.75).round());
 
   /// [springSnappyCurve] ile birlikte kullanılacak süre; Reduce Motion'da 0.
   Duration get springSnappyDuration =>

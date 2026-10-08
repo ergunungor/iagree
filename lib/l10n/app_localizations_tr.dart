@@ -46,4 +46,11 @@ class AppLocalizationsTr extends AppLocalizations {
   String participantReady(String name) {
     return '$name, hazır';
   }
+
+  @override
+  String get commonClose => 'Kapat';
+
+  @override
+  String get offlineBannerMessage =>
+      'Bağlantı yok. Değişikliklerin bağlanınca gönderilecek.';
 }
