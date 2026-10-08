@@ -5,6 +5,8 @@ import 'package:flutter/physics.dart';
 import '../components/brand/app_logo.dart';
 import '../components/buttons/app_button.dart';
 import '../components/buttons/app_icon_button.dart';
+import '../components/content/app_card.dart';
+import '../components/content/app_list_group.dart';
 import '../components/inputs/app_search_field.dart';
 import '../components/inputs/app_slider.dart';
 import '../components/inputs/app_stepper.dart';
@@ -153,6 +155,7 @@ class _Sections extends StatelessWidget {
           _Section('Arama alanı', _SearchFieldSection()),
           _Section('Stepper ve slider', _StepperSliderSection()),
           _Section('Seçim', _SelectionSection()),
+          _Section('Kart ve liste', _CardListSection()),
           _Section('Haptik', _HapticsSection()),
         ],
       ),
@@ -1353,6 +1356,165 @@ class _SelectionSectionState extends State<_SelectionSection> {
             const AppCheckCircle(selected: false),
             const SizedBox(width: AppSpacing.md),
             const AppCheckCircle(selected: true),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+// ---------------------------------------------------------------- Kart ve liste
+
+class _CardListSection extends StatefulWidget {
+  const _CardListSection();
+
+  @override
+  State<_CardListSection> createState() => _CardListSectionState();
+}
+
+class _CardListSectionState extends State<_CardListSection> {
+  bool _selectedCard = true;
+  int _sort = 0;
+  bool _notifications = true;
+
+  @override
+  Widget build(BuildContext context) {
+    final c = context.colors;
+    Widget label(String text) => Padding(
+      padding: const EdgeInsets.only(bottom: AppSpacing.xs),
+      child: Text(
+        text,
+        style: context.text.overline.copyWith(color: c.textSecondary),
+      ),
+    );
+    const gap = SizedBox(height: AppSpacing.lg);
+    const sorts = ['Uyuma göre', 'Mesafeye göre', 'Puana göre'];
+
+    Widget photo(Color a, Color b) => DecoratedBox(
+      decoration: BoxDecoration(gradient: LinearGradient(colors: [a, b])),
+    );
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        label('kart · standart'),
+        AppCard(child: Text('Cuma akşamı', style: context.text.title)),
+        gap,
+        label('kart · interaktif (basılı tut)'),
+        AppCard(
+          onPressed: () {},
+          semanticLabel: 'Cuma akşamı. 3 kişiden 2\'si hazır.',
+          child: Text('Cuma akşamı', style: context.text.title),
+        ),
+        gap,
+        label('kart · seçili (2px brand, boyut aynı)'),
+        AppCard(
+          selected: _selectedCard,
+          onPressed: () => setState(() => _selectedCard = !_selectedCard),
+          semanticLabel: 'Seçili kart',
+          child: Text('Dokun: seçimi çevir', style: context.text.title),
+        ),
+        gap,
+        label('kart · medya (4:3)'),
+        AppCard(
+          media: photo(c.avatarSage, c.avatarRose),
+          onPressed: () {},
+          semanticLabel: 'Trattoria Lume. İtalyan, orta fiyat, 1,2 kilometre.',
+          padding: const EdgeInsets.all(AppSpacing.md),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Trattoria Lume', style: context.text.h3),
+              const SizedBox(height: AppSpacing.xxs),
+              Text(
+                '★ 4,6 · İtalyan · ₺₺ · 1,2 km',
+                style: context.text.caption.tabular.copyWith(
+                  color: c.textSecondary,
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: AppSpacing.xxl),
+        label('liste grubu · gezinti, toggle, yıkıcı'),
+        AppListGroup(
+          children: [
+            AppListRow(
+              leading: Icon(
+                AppIcons.userPlus,
+                size: AppIconSize.s20,
+                color: c.textPrimary,
+              ),
+              leadingExtent: AppIconSize.s20,
+              title: 'Arkadaşlarını çağır',
+              showsChevron: true,
+              onPressed: () {},
+            ),
+            AppListRow(
+              title: 'Bildirimler',
+              trailing: AppToggle(
+                value: _notifications,
+                semanticLabel: 'Bildirimler',
+                onChanged: (v) => setState(() => _notifications = v),
+              ),
+            ),
+            AppListRow(
+              title: 'Hesabı sil',
+              destructive: true,
+              onPressed: () {},
+            ),
+          ],
+        ),
+        gap,
+        label('liste grubu · tekli seçim (sağda ✓)'),
+        AppListGroup(
+          children: [
+            for (var i = 0; i < sorts.length; i++)
+              AppListRow(
+                title: sorts[i],
+                selected: _sort == i,
+                onPressed: () => setState(() => _sort = i),
+              ),
+          ],
+        ),
+        gap,
+        label('liste grubu · thumbnail ve meta'),
+        AppListGroup(
+          children: [
+            AppListRow(
+              leading: SizedBox.square(
+                dimension: 56,
+                child: ClipPath(
+                  clipper: ShapeBorderClipper(
+                    shape: AppRadius.border(AppRadius.sm),
+                  ),
+                  child: photo(c.avatarMist, c.avatarLavender),
+                ),
+              ),
+              leadingExtent: 56,
+              emphasized: true,
+              title: 'Trattoria Lume',
+              subtitle: '★ 4,6 · ₺₺ · 1,2 km',
+              trailing: Text('%80', style: context.text.caption.tabular),
+              onPressed: () {},
+            ),
+            AppListRow(
+              leading: SizedBox.square(
+                dimension: 56,
+                child: ClipPath(
+                  clipper: ShapeBorderClipper(
+                    shape: AppRadius.border(AppRadius.sm),
+                  ),
+                  child: photo(c.avatarSand, c.avatarSage),
+                ),
+              ),
+              leadingExtent: 56,
+              emphasized: true,
+              title: 'Bahçe Kafe',
+              subtitle: '★ 4,2 · ₺ · 0,8 km',
+              trailing: Text('%60', style: context.text.caption.tabular),
+              onPressed: () {},
+            ),
           ],
         ),
       ],
