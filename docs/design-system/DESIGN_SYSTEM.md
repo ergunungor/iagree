@@ -443,3 +443,31 @@ Kural: birden fazla feature'da kullanılan design_system'da; tek feature'a ait o
 3. Hareket yalnızca `AppMotion`, titreşim yalnızca `AppHaptics`, ikon yalnızca `AppIcons` üzerinden.
 4. Debug'da component galerisi: her component light/dark ve textScale 1.0 / 2.0'da.
 5. Yeni paket eklemeden önce sorulur. Onaylı: `phosphor_flutter`.
+
+---
+
+## 17. Uygulama sapmaları ve ek kararlar (Faz C sonu)
+
+Uygulama sırasında verilen, yukarıdaki metinden **bilinçli olarak ayrılan** ya da metnin boş bıraktığı kararlar. Çelişki halinde bu bölüm, ilgili ana bölümden önce gelir. Kullanıcı kararı olanlar "K" ile işaretli.
+
+| # | Konu | Metin | Uygulama | Not |
+|---|---|---|---|---|
+| 1 | SwipeDeck eksen kilidi | İlk 12pt'den sonra kilit | **Kilit yok.** Baskın eksen her harekette yeniden bulunur; diğer eksen yumuşak 24pt ile sınırlı; iki eksen arası sürekli harmanlanır. 12pt yalnızca "yön/etiket belirir, hız tek başına karar sayılır" alt sınırı | K |
+| 2 | Sürükleme geri bildirimi | İlgili alt buton vurgulanır, diğerleri soluklaşır | **Ekran zemini** kararın tonuna boyanır (eşikte %25); alt butonlar sabit. Kart foto tonu %20 aynen | K |
+| 3 | ↓ Olmaz eşiği | %35 mesafe | Kartın **görünen** ofsetinin %35'i (parmak ≈ %64 yükseklik), hız sayılmaz | |
+| 4 | Hız kuralı | > 800 pt/s | Hız, ofsetle aynı yönde olmalı; kart ≥ 12pt oynamış olmalı | |
+| 5 | Uçuş süresi | ~250 ms, min 1000 pt/s | `mesafe / max(hız, 1000)`, aralık `fast` – `exitOf(emphasis)` (225 ms) | |
+| 6 | Karar etiketi/tonu | Etiket renkleri tabloda | Konum: Olur/Çok isterim/Olmaz sol üst, Pas sağ üst. Ton: Olur `brandMuted`, Pas `textTertiary`, Çok isterim `brand`, Olmaz `error` | |
+| 7 | Geri al | Son kart | Tek seviye; sayaç = şu anki kartın sırası | |
+| 8 | İlk kullanım ipucu | Dört yön gösterilir, 24pt × 2 döngü | Kıpırdama sırasında dört yön pill'i belirir; karar etiketi/ton yok. "Bir kez" bilgisini çağıran tutar | K |
+| 9 | Reduce Motion (deste) | Kart solar | Yerinde 200 ms solar (`AppMotion.regular.standard`); Geri al'da solarak gelir | |
+| 10 | DeckCard | Görsel ~%78, iki satır | PROMPTS C2'deki %58 ve açık/gerekçe satırı **uygulanmadı**; yalnızca istisna "Kapanıyor · N dk" 3. satırda | |
+| 11 | Mesafe biçimi | `1,2 km` | 1 km altı metre (`650 m`, en yakın 10), tam km ondalıksız (`1 km`) | mockup |
+| 12 | ResultCard | Compact: 56 thumbnail | Satır 72 (dikey padding 8); compact'ta puan yazılmaz; hero seçili değilken sağ üstte boş halka rozeti | K |
+| 13 | VoteOption | Önde olan 2px brand | Hero kart kenarı; compact satırda 4pt içeride 2px halka. Yalnızca "Çok isterim" diyenler isimle (API başka tür vermez) | K |
+| 14 | AgreementArc | Sayı + "N/M kişi" | VoiceOver cümlesinde sayıya ek yok ("Toplam 5 kişi, olumlu 4, çok isteyen 2."); S'de "N/M kişi" yazmaz; sayılar sonradan değişirse animasyonsuz; yüzde aşağı yuvarlanır | K |
+| 15 | Karar anı çoğunluk | "Arc gerçek oranına" | Çoğunlukta **Arc yok**, "3/4 oyla seçildi" etiketi (mockup + SCREENS D8); en fazla 5 avatar; avatar örtüşmesi %25 | K |
+| 16 | Nav bar | Blur sigma ≈ 20 | Sigma 10 (`CupertinoSliverNavigationBar` sabit); çubuk arka planı `canvas` %85; uzun large title tek satır, sonuna "…" | |
+| 17 | Skeleton nabzı | Süre yok | Her yön `emphasis` (300 ms); `expressive` yalnızca Arc ve karar anı için | |
+| 18 | Bekleyen açık konular | | Slider değerinin konumu (üst/sağ), thumb gölgesi (E1/mockup), pasif toggle'ın CupertinoSwitch soluklaştırması | |
+| 19 | Klasör yapısı | SwipeDeck, ResultCard, VoteOption, DecisionMoment `features/` altında | Hepsi `lib/core/design_system/components/` altında (galeri tek yerden gezer, testler tek yerde); ekran kodu `features/` altında olacak | E0'da yeniden değerlendirilebilir |

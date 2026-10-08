@@ -118,7 +118,7 @@ class _ScreenTintState extends State<_ScreenTint>
   static const double _fadeThreshold = 0.02;
 
   late final AnimationController _fade = AnimationController(vsync: this);
-  Color _tint = const Color(0x00000000);
+  Color _tint = Colors.transparent;
   double _alpha = 0;
   double _fadeFrom = 0;
 

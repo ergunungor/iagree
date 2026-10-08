@@ -207,7 +207,6 @@ class _ToastViewState extends State<_ToastView>
   @override
   Widget build(BuildContext context) {
     final text = context.text;
-    final media = MediaQuery.of(context);
     final (IconData icon, Color iconColor) = switch (widget.kind) {
       AppToastKind.neutral => (AppIcons.info, AppFixedColors.inverseText),
       AppToastKind.success => (AppIcons.check, AppFixedColors.inverseSuccess),
@@ -280,7 +279,7 @@ class _ToastViewState extends State<_ToastView>
     // Overlay'de Material atası yok: onsuz metinler Flutter'ın uyarı stiliyle (sarı altı çizgi)
     // çizilir. Saydam Material yalnızca varsayılan metin stilini sağlar.
     return Positioned(
-      top: media.padding.top + AppSpacing.xs,
+      top: MediaQuery.paddingOf(context).top + AppSpacing.xs,
       left: AppSpacing.screenPadding,
       right: AppSpacing.screenPadding,
       child: Material(

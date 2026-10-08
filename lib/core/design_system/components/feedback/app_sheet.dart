@@ -122,13 +122,14 @@ class _SheetBodyState extends State<_SheetBody> {
   bool get _multi => widget.detents.length == 2;
 
   double _fraction(BuildContext context, AppSheetDetent d) {
-    final media = MediaQuery.of(context);
+    final size = MediaQuery.sizeOf(context);
     switch (d) {
       case AppSheetDetent.medium:
         return AppSheet._mediumFraction;
       case AppSheetDetent.large:
         return 1 -
-            (media.padding.top + AppSheet._largeTopGap) / media.size.height;
+            (MediaQuery.paddingOf(context).top + AppSheet._largeTopGap) /
+                size.height;
       case AppSheetDetent.fit:
         return AppSheet._fitMaxFraction;
     }
@@ -136,7 +137,7 @@ class _SheetBodyState extends State<_SheetBody> {
 
   @override
   Widget build(BuildContext context) {
-    final media = MediaQuery.of(context);
+    final size = MediaQuery.sizeOf(context);
 
     if (_multi) {
       final medium = _fraction(context, AppSheetDetent.medium);
@@ -177,14 +178,12 @@ class _SheetBodyState extends State<_SheetBody> {
     );
     final height = detent == AppSheetDetent.fit
         ? null
-        : _fraction(context, detent) * media.size.height;
+        : _fraction(context, detent) * size.height;
     // Hizalama ve konum BottomSheet'in kendi yerleşiminden gelir. Ekranı kaplayan bir kap
     // (Align/ColoredBox) BottomSheet'in Material'ini tam ekran yapıp scrim dokunuşlarını yutar.
     return ConstrainedBox(
       constraints: height == null
-          ? BoxConstraints(
-              maxHeight: AppSheet._fitMaxFraction * media.size.height,
-            )
+          ? BoxConstraints(maxHeight: AppSheet._fitMaxFraction * size.height)
           : BoxConstraints.tightFor(height: height),
       child: panel,
     );

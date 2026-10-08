@@ -83,11 +83,8 @@ class _AlertBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final c = context.colors;
-    final media = MediaQuery.of(context);
-    final width = math.min(
-      media.size.width - 2 * AppSpacing.xl,
-      AppAlert._maxWidth,
-    );
+    final size = MediaQuery.sizeOf(context);
+    final width = math.min(size.width - 2 * AppSpacing.xl, AppAlert._maxWidth);
 
     // showGeneralDialog'un Material'i yok: onsuz metinler uyarı stiliyle (sarı altı çizgi) çizilir.
     return Material(
@@ -108,7 +105,7 @@ class _AlertBody extends StatelessWidget {
               ),
               child: ConstrainedBox(
                 // Büyük yazıda alert ekrandan taşmasın, içeride kayar.
-                constraints: BoxConstraints(maxHeight: media.size.height * 0.8),
+                constraints: BoxConstraints(maxHeight: size.height * 0.8),
                 child: SingleChildScrollView(
                   padding: const EdgeInsets.all(AppSpacing.xl),
                   child: Column(
