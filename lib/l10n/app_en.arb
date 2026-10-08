@@ -34,6 +34,9 @@
   "deckDecisionPass": "Pass",
   "deckDecisionLove": "Love it",
   "deckDecisionVeto": "No way",
+  "deckBackSemantics": "Back to room",
+  "deckUndoSemantics": "Undo",
+  "deckProgressSemantics": "Card {position} of {total}",
   "commonBack": "Back",
   "commonClose": "Close",
   "offlineBannerMessage": "No connection. Your changes will be sent when you reconnect."

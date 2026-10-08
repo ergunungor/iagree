@@ -157,6 +157,17 @@ class AppLocalizationsTr extends AppLocalizations {
   String get deckDecisionVeto => 'Olmaz';
 
   @override
+  String get deckBackSemantics => 'Odaya dön';
+
+  @override
+  String get deckUndoSemantics => 'Geri al';
+
+  @override
+  String deckProgressSemantics(int position, int total) {
+    return 'Kart $position, toplam $total';
+  }
+
+  @override
   String get commonBack => 'Geri';
 
   @override

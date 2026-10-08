@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/semantics.dart';
 
 import '../../../../l10n/app_localizations.dart';
 import '../../foundations/app_icons.dart';
@@ -7,22 +8,28 @@ import '../../foundations/context_extensions.dart';
 import '../../tokens/app_radius.dart';
 import 'swipe_deck_physics.dart';
 
-/// Kartın fotoğraf alanına bir [DeckDecisionOverlay] bağlamak için: `SwipeDeck` ön kartı bu
-/// kapsamla sarar, `DeckCard` kapsamı bulursa fotoğraf alanının üstüne overlay'i çizer.
-class DeckPhotoOverlayScope extends InheritedWidget {
-  const DeckPhotoOverlayScope({
+/// `SwipeDeck`'in karta ilettiği bilgi: sürükleme durumu (etiket ve ton için) ve erişilebilirlik
+/// eylemleri. `DeckCard` kapsamı bulursa fotoğraf alanının üstüne overlay'i çizer ve bilgi
+/// paneline özel eylemleri ekler. Kapsam yoksa kart statik çalışır.
+class DeckCardScope extends InheritedWidget {
+  const DeckCardScope({
     super.key,
     required this.frame,
+    this.actions = const {},
     required super.child,
   });
 
   final ValueListenable<SwipeFrame> frame;
 
-  static DeckPhotoOverlayScope? maybeOf(BuildContext context) =>
-      context.dependOnInheritedWidgetOfExactType<DeckPhotoOverlayScope>();
+  /// VoiceOver özel eylemleri (Olur, Pas, Çok isterim, Olmaz). Yalnızca ön kartta dolu.
+  final Map<CustomSemanticsAction, VoidCallback> actions;
+
+  static DeckCardScope? maybeOf(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<DeckCardScope>();
 
   @override
-  bool updateShouldNotify(DeckPhotoOverlayScope old) => old.frame != frame;
+  bool updateShouldNotify(DeckCardScope old) =>
+      old.frame != frame || !mapEquals(old.actions, actions);
 }
 
 /// Sürükleme sırasında kartın üstündeki karar etiketi ve renk tonu (DESIGN_SYSTEM.md §10

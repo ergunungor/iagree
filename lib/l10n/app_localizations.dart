@@ -307,6 +307,24 @@ abstract class AppLocalizations {
   /// **'Olmaz'**
   String get deckDecisionVeto;
 
+  /// Deste üst barındaki geri düğmesi.
+  ///
+  /// In tr, this message translates to:
+  /// **'Odaya dön'**
+  String get deckBackSemantics;
+
+  /// Son kartı geri alma düğmesi.
+  ///
+  /// In tr, this message translates to:
+  /// **'Geri al'**
+  String get deckUndoSemantics;
+
+  /// Deste ilerlemesi (VoiceOver).
+  ///
+  /// In tr, this message translates to:
+  /// **'Kart {position}, toplam {total}'**
+  String deckProgressSemantics(int position, int total);
+
   /// Navigasyon çubuğundaki geri chevron'unun VoiceOver etiketi.
   ///
   /// In tr, this message translates to:

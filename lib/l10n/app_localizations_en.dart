@@ -157,6 +157,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get deckDecisionVeto => 'No way';
 
   @override
+  String get deckBackSemantics => 'Back to room';
+
+  @override
+  String get deckUndoSemantics => 'Undo';
+
+  @override
+  String deckProgressSemantics(int position, int total) {
+    return 'Card $position of $total';
+  }
+
+  @override
   String get commonBack => 'Back';
 
   @override

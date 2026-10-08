@@ -216,6 +216,22 @@
   "@deckDecisionVeto": {
     "description": "Kart üstü etiket: ↓ Olmaz."
   },
+  "deckBackSemantics": "Odaya dön",
+  "@deckBackSemantics": {
+    "description": "Deste üst barındaki geri düğmesi."
+  },
+  "deckUndoSemantics": "Geri al",
+  "@deckUndoSemantics": {
+    "description": "Son kartı geri alma düğmesi."
+  },
+  "deckProgressSemantics": "Kart {position}, toplam {total}",
+  "@deckProgressSemantics": {
+    "description": "Deste ilerlemesi (VoiceOver).",
+    "placeholders": {
+      "position": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
   "commonBack": "Geri",
   "@commonBack": {
     "description": "Navigasyon çubuğundaki geri chevron'unun VoiceOver etiketi."

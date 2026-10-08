@@ -10,11 +10,14 @@ import '../../tokens/app_radius.dart';
 /// "Adım 2/4" yazılmaz; ilerleme yalnızca çubukla ve VoiceOver değeriyle (`%50`) anlatılır.
 /// Değişim `AppMotion` ile akar, Reduce Motion'da anında olur.
 class AppFlowProgress extends StatelessWidget {
-  const AppFlowProgress({super.key, required this.value})
+  const AppFlowProgress({super.key, required this.value, this.rounded = false})
     : assert(value >= 0 && value <= 1);
 
   /// 0–1 arası ilerleme.
   final double value;
+
+  /// İz de pill olur (deste üst barı gibi satır içi kullanım); varsayılan düz çubuktur.
+  final bool rounded;
 
   static const double height = 4;
 
@@ -26,32 +29,41 @@ class AppFlowProgress extends StatelessWidget {
       Localizations.localeOf(context).toLanguageTag(),
     ).format(value);
 
+    final bar = ColoredBox(
+      color: c.surfaceMuted,
+      child: TweenAnimationBuilder<double>(
+        tween: Tween<double>(end: value),
+        duration: motion.standard,
+        curve: AppMotion.move,
+        builder: (context, v, _) => Align(
+          alignment: AlignmentDirectional.centerStart,
+          child: FractionallySizedBox(
+            widthFactor: v,
+            heightFactor: 1,
+            child: DecoratedBox(
+              decoration: AppRadius.decoration(
+                radius: AppRadius.pill,
+                color: c.brand,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
     return Semantics(
       value: percent,
       child: ExcludeSemantics(
         child: SizedBox(
           height: height,
-          child: ColoredBox(
-            color: c.surfaceMuted,
-            child: TweenAnimationBuilder<double>(
-              tween: Tween<double>(end: value),
-              duration: motion.standard,
-              curve: AppMotion.move,
-              builder: (context, v, _) => Align(
-                alignment: AlignmentDirectional.centerStart,
-                child: FractionallySizedBox(
-                  widthFactor: v,
-                  heightFactor: 1,
-                  child: DecoratedBox(
-                    decoration: AppRadius.decoration(
-                      radius: AppRadius.pill,
-                      color: c.brand,
-                    ),
+          child: rounded
+              ? ClipPath(
+                  clipper: ShapeBorderClipper(
+                    shape: AppRadius.border(AppRadius.pill),
                   ),
-                ),
-              ),
-            ),
-          ),
+                  child: bar,
+                )
+              : bar,
         ),
       ),
     );

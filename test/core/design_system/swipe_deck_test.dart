@@ -531,15 +531,14 @@ void main() {
   });
 
   group('Reduce Motion', () {
-    testWidgets('karar anında, çökme yok; öne gelen kart tam boyutta', (
+    testWidgets('karar uçuşsuz: solar, sonra öne gelen kart tam boyutta', (
       tester,
     ) async {
       _phone(tester);
       final log = _Log();
       await pumpApp(tester, _deck(log), disableAnimations: true);
       await _slowDrag(tester, const Offset(130, 0));
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 5));
+      await tester.pumpAndSettle();
       expect(log.swiped.single.$2, DeckDecision.ok);
       expect(_card('a'), findsNothing);
       expect(_width(tester, 'b'), closeTo(350, 0.01));

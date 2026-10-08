@@ -175,7 +175,7 @@ class _DeckCardState extends State<DeckCard> {
 
   /// `SwipeDeck` ön kartı sürüklenirken fotoğraf alanının üstüne karar etiketi ve tonu çizer.
   Widget _withDecisionOverlay(BuildContext context, Widget area) {
-    final scope = DeckPhotoOverlayScope.maybeOf(context);
+    final scope = DeckCardScope.maybeOf(context);
     if (scope == null) return area;
     return Stack(
       fit: StackFit.expand,
@@ -433,18 +433,29 @@ class _DeckCardState extends State<DeckCard> {
       ),
     );
 
+    final actions = DeckCardScope.maybeOf(context)?.actions ?? const {};
     if (w.onDetailsTap == null) {
       return Semantics(
         label: label,
+        customSemanticsActions: actions,
         child: ExcludeSemantics(child: content),
       );
     }
-    return AppPressable(
+    final pressable = AppPressable(
       onPressed: w.onDetailsTap,
       semanticLabel: label,
       semanticHint: l10n.deckDetails,
       scaleOnPress: false,
       builder: (context, pressed) => ExcludeSemantics(child: content),
+    );
+    if (actions.isEmpty) return pressable;
+    // Özel eylemler aynı düğümde birleşsin: VoiceOver tek öğe okur, eylemler rotor'da.
+    return MergeSemantics(
+      child: Semantics(
+        container: true,
+        customSemanticsActions: actions,
+        child: pressable,
+      ),
     );
   }
 
