@@ -433,6 +433,228 @@ abstract class AppLocalizations {
   /// **'Katılımcılar: {names}'**
   String decisionParticipants(String names);
 
+  /// E-posta ekranı başlığı.
+  ///
+  /// In tr, this message translates to:
+  /// **'E-posta adresin'**
+  String get authEmailTitle;
+
+  /// E-posta ekranı açıklaması.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sana 6 haneli bir giriş kodu göndereceğiz. Şifre yok.'**
+  String get authEmailSubtitle;
+
+  /// E-posta alanı etiketi.
+  ///
+  /// In tr, this message translates to:
+  /// **'E-posta'**
+  String get authEmailLabel;
+
+  /// E-posta ekranı birincil butonu.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kodu gönder'**
+  String get authEmailSend;
+
+  /// Geçersiz e-posta hatası.
+  ///
+  /// In tr, this message translates to:
+  /// **'Geçerli bir e-posta adresi gir.'**
+  String get authEmailInvalid;
+
+  /// Kod ekranı başlığı.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kodu gir'**
+  String get authCodeTitle;
+
+  /// Kod ekranı açıklaması; adres kalın yazılır.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kodu {email} adresine gönderdik.'**
+  String authCodeSubtitle(String email);
+
+  /// Kod ekranında e-posta ekranına dönüş.
+  ///
+  /// In tr, this message translates to:
+  /// **'Adresi değiştir'**
+  String get authChangeAddress;
+
+  /// Kod ekranı yardım metni.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kod gelmedi mi? Spam klasörüne de bak.'**
+  String get authCodeHint;
+
+  /// Geri sayım sürerken pasif yeniden gönder metni.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeniden gönder · {time}'**
+  String authResendIn(String time);
+
+  /// Geri sayım bitince aktif yeniden gönder.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeniden gönder'**
+  String get authResend;
+
+  /// Mail uygulamasını açma butonu.
+  ///
+  /// In tr, this message translates to:
+  /// **'Mail\'i aç'**
+  String get authOpenMail;
+
+  /// Yanlış kod hatası.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kod doğru değil. Tekrar dene.'**
+  String get authCodeWrong;
+
+  /// Boş kod alanı (VoiceOver).
+  ///
+  /// In tr, this message translates to:
+  /// **'Kod alanı, {length} hane'**
+  String authCodeEmptySemantics(int length);
+
+  /// Kısmen dolu kod alanı (VoiceOver).
+  ///
+  /// In tr, this message translates to:
+  /// **'Kod: {digits}, {remaining} hane kaldı'**
+  String authCodeSemantics(String digits, int remaining);
+
+  /// Profil kurulumu başlığı.
+  ///
+  /// In tr, this message translates to:
+  /// **'Son bir adım'**
+  String get authProfileTitle;
+
+  /// Profil kurulumu açıklaması.
+  ///
+  /// In tr, this message translates to:
+  /// **'Arkadaşların seni odalarda bu isim ve fotoğrafla görecek.'**
+  String get authProfileSubtitle;
+
+  /// Profil fotoğrafı ekleme.
+  ///
+  /// In tr, this message translates to:
+  /// **'Fotoğraf ekle'**
+  String get authAddPhoto;
+
+  /// Fotoğrafın isteğe bağlı olduğunu söyler.
+  ///
+  /// In tr, this message translates to:
+  /// **'İsteğe bağlı'**
+  String get authOptional;
+
+  /// İsim alanı etiketi.
+  ///
+  /// In tr, this message translates to:
+  /// **'Adın'**
+  String get authNameLabel;
+
+  /// Apple'dan gelen isim notu.
+  ///
+  /// In tr, this message translates to:
+  /// **'Apple hesabından geldi. İstersen değiştir.'**
+  String get authNameFromApple;
+
+  /// Boş isim hatası.
+  ///
+  /// In tr, this message translates to:
+  /// **'Adını yaz.'**
+  String get authNameRequired;
+
+  /// Profil kurulumu birincil butonu.
+  ///
+  /// In tr, this message translates to:
+  /// **'Başla'**
+  String get authStart;
+
+  /// Fotoğraf seçici henüz yokken gösterilen bilgi.
+  ///
+  /// In tr, this message translates to:
+  /// **'Fotoğraf seçimi yakında'**
+  String get authPhotoSoon;
+
+  /// Mail açma henüz yokken gösterilen bilgi.
+  ///
+  /// In tr, this message translates to:
+  /// **'Mail uygulaması yakında açılacak'**
+  String get authMailSoon;
+
+  /// Koşullar/gizlilik bağlantıları hazır olana kadar gösterilen bilgi.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu sayfa yakında eklenecek'**
+  String get welcomeLinkSoon;
+
+  /// Karşılama sahne 1 sloganı.
+  ///
+  /// In tr, this message translates to:
+  /// **'“Nereye gidelim?” sorusunu birlikte, tartışmadan bitirin.'**
+  String get welcomeTagline;
+
+  /// Apple ile giriş butonu.
+  ///
+  /// In tr, this message translates to:
+  /// **'Apple ile devam et'**
+  String get welcomeApple;
+
+  /// E-posta ile giriş butonu.
+  ///
+  /// In tr, this message translates to:
+  /// **'E-posta ile devam et'**
+  String get welcomeEmail;
+
+  /// Koşullar metni; iki bağlantı kalın/renkli yazılır.
+  ///
+  /// In tr, this message translates to:
+  /// **'Devam ederek {terms}’nı ve {privacy}’nı kabul etmiş olursun.'**
+  String welcomeTerms(String terms, String privacy);
+
+  /// Koşullar bağlantı metni.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kullanım Koşulları'**
+  String get welcomeTermsLabel;
+
+  /// Gizlilik bağlantı metni.
+  ///
+  /// In tr, this message translates to:
+  /// **'Gizlilik Politikası'**
+  String get welcomePrivacyLabel;
+
+  /// Karşılama sahne 2 başlığı.
+  ///
+  /// In tr, this message translates to:
+  /// **'Nereye gidelim?'**
+  String get welcomeSceneTwoTitle;
+
+  /// Karşılama sahne 2 açıklaması.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kartları kaydır: Olur, Pas, Çok isterim. Gruptaki uyum anında görünür.'**
+  String get welcomeSceneTwoBody;
+
+  /// Karşılama sahne 3 başlığı.
+  ///
+  /// In tr, this message translates to:
+  /// **'Birlikte karar verin.'**
+  String get welcomeSceneThreeTitle;
+
+  /// Karşılama sahne 3 açıklaması.
+  ///
+  /// In tr, this message translates to:
+  /// **'Oda kur, arkadaşlarını çağır. Herkes seçsin, iAgree ortak noktayı bulsun.'**
+  String get welcomeSceneThreeBody;
+
+  /// Geçici ana ekranda çıkış.
+  ///
+  /// In tr, this message translates to:
+  /// **'Çıkış yap'**
+  String get homeSignOut;
+
   /// Navigasyon çubuğundaki geri chevron'unun VoiceOver etiketi.
   ///
   /// In tr, this message translates to:

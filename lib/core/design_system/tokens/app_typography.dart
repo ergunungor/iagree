@@ -24,6 +24,8 @@ class AppTypography {
     required this.overline,
     required this.arcNumberSmall,
     required this.arcNumberLarge,
+    required this.hero,
+    required this.lead,
   });
 
   /// display ve h1 için Dynamic Type üst sınırı.
@@ -109,6 +111,13 @@ class AppTypography {
       weight: FontWeight.w700,
       letterSpacing: 0.37,
     ),
+    hero: _display(size: 80, lineHeight: 76, letterSpacing: -2),
+    lead: _ui(
+      size: 20,
+      lineHeight: 27,
+      weight: FontWeight.w400,
+      letterSpacing: -0.2,
+    ),
   );
 
   /// Bold Text açıkken kullanılan, bir kez üretilen varyant.
@@ -133,6 +142,12 @@ class AppTypography {
   /// AgreementArc L'nin yay içi yüzdesi (34 bold). M `title` kullanır.
   final TextStyle arcNumberLarge;
 
+  /// Karşılama ekranının büyük marka adı (Fraunces 500, 80/76). Yalnızca A2 sahne 1.
+  final TextStyle hero;
+
+  /// Karşılama sloganı (SF 20/27, 400). Yalnızca A2 sahne 1.
+  final TextStyle lead;
+
   /// Bold Text erişilebilirlik ayarı: bütün ağırlıklar +100 (en fazla 900).
   AppTypography bold() {
     return AppTypography(
@@ -150,6 +165,8 @@ class AppTypography {
       overline: _bolder(overline),
       arcNumberSmall: _bolder(arcNumberSmall),
       arcNumberLarge: _bolder(arcNumberLarge),
+      hero: _bolder(hero),
+      lead: _bolder(lead),
     );
   }
 

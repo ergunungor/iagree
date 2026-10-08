@@ -351,6 +351,171 @@
       "names": {"type": "String"}
     }
   },
+  "authEmailTitle": "E-posta adresin",
+  "@authEmailTitle": {
+    "description": "E-posta ekranı başlığı."
+  },
+  "authEmailSubtitle": "Sana 6 haneli bir giriş kodu göndereceğiz. Şifre yok.",
+  "@authEmailSubtitle": {
+    "description": "E-posta ekranı açıklaması."
+  },
+  "authEmailLabel": "E-posta",
+  "@authEmailLabel": {
+    "description": "E-posta alanı etiketi."
+  },
+  "authEmailSend": "Kodu gönder",
+  "@authEmailSend": {
+    "description": "E-posta ekranı birincil butonu."
+  },
+  "authEmailInvalid": "Geçerli bir e-posta adresi gir.",
+  "@authEmailInvalid": {
+    "description": "Geçersiz e-posta hatası."
+  },
+  "authCodeTitle": "Kodu gir",
+  "@authCodeTitle": {
+    "description": "Kod ekranı başlığı."
+  },
+  "authCodeSubtitle": "Kodu {email} adresine gönderdik.",
+  "@authCodeSubtitle": {
+    "description": "Kod ekranı açıklaması; adres kalın yazılır.",
+    "placeholders": {
+      "email": {"type": "String"}
+    }
+  },
+  "authChangeAddress": "Adresi değiştir",
+  "@authChangeAddress": {
+    "description": "Kod ekranında e-posta ekranına dönüş."
+  },
+  "authCodeHint": "Kod gelmedi mi? Spam klasörüne de bak.",
+  "@authCodeHint": {
+    "description": "Kod ekranı yardım metni."
+  },
+  "authResendIn": "Yeniden gönder · {time}",
+  "@authResendIn": {
+    "description": "Geri sayım sürerken pasif yeniden gönder metni.",
+    "placeholders": {
+      "time": {"type": "String"}
+    }
+  },
+  "authResend": "Yeniden gönder",
+  "@authResend": {
+    "description": "Geri sayım bitince aktif yeniden gönder."
+  },
+  "authOpenMail": "Mail'i aç",
+  "@authOpenMail": {
+    "description": "Mail uygulamasını açma butonu."
+  },
+  "authCodeWrong": "Kod doğru değil. Tekrar dene.",
+  "@authCodeWrong": {
+    "description": "Yanlış kod hatası."
+  },
+  "authCodeEmptySemantics": "Kod alanı, {length} hane",
+  "@authCodeEmptySemantics": {
+    "description": "Boş kod alanı (VoiceOver).",
+    "placeholders": {
+      "length": {"type": "int"}
+    }
+  },
+  "authCodeSemantics": "Kod: {digits}, {remaining} hane kaldı",
+  "@authCodeSemantics": {
+    "description": "Kısmen dolu kod alanı (VoiceOver).",
+    "placeholders": {
+      "digits": {"type": "String"},
+      "remaining": {"type": "int"}
+    }
+  },
+  "authProfileTitle": "Son bir adım",
+  "@authProfileTitle": {
+    "description": "Profil kurulumu başlığı."
+  },
+  "authProfileSubtitle": "Arkadaşların seni odalarda bu isim ve fotoğrafla görecek.",
+  "@authProfileSubtitle": {
+    "description": "Profil kurulumu açıklaması."
+  },
+  "authAddPhoto": "Fotoğraf ekle",
+  "@authAddPhoto": {
+    "description": "Profil fotoğrafı ekleme."
+  },
+  "authOptional": "İsteğe bağlı",
+  "@authOptional": {
+    "description": "Fotoğrafın isteğe bağlı olduğunu söyler."
+  },
+  "authNameLabel": "Adın",
+  "@authNameLabel": {
+    "description": "İsim alanı etiketi."
+  },
+  "authNameFromApple": "Apple hesabından geldi. İstersen değiştir.",
+  "@authNameFromApple": {
+    "description": "Apple'dan gelen isim notu."
+  },
+  "authNameRequired": "Adını yaz.",
+  "@authNameRequired": {
+    "description": "Boş isim hatası."
+  },
+  "authStart": "Başla",
+  "@authStart": {
+    "description": "Profil kurulumu birincil butonu."
+  },
+  "authPhotoSoon": "Fotoğraf seçimi yakında",
+  "@authPhotoSoon": {
+    "description": "Fotoğraf seçici henüz yokken gösterilen bilgi."
+  },
+  "authMailSoon": "Mail uygulaması yakında açılacak",
+  "@authMailSoon": {
+    "description": "Mail açma henüz yokken gösterilen bilgi."
+  },
+  "welcomeLinkSoon": "Bu sayfa yakında eklenecek",
+  "@welcomeLinkSoon": {
+    "description": "Koşullar/gizlilik bağlantıları hazır olana kadar gösterilen bilgi."
+  },
+  "welcomeTagline": "“Nereye gidelim?” sorusunu birlikte, tartışmadan bitirin.",
+  "@welcomeTagline": {
+    "description": "Karşılama sahne 1 sloganı."
+  },
+  "welcomeApple": "Apple ile devam et",
+  "@welcomeApple": {
+    "description": "Apple ile giriş butonu."
+  },
+  "welcomeEmail": "E-posta ile devam et",
+  "@welcomeEmail": {
+    "description": "E-posta ile giriş butonu."
+  },
+  "welcomeTerms": "Devam ederek {terms}’nı ve {privacy}’nı kabul etmiş olursun.",
+  "@welcomeTerms": {
+    "description": "Koşullar metni; iki bağlantı kalın/renkli yazılır.",
+    "placeholders": {
+      "terms": {"type": "String"},
+      "privacy": {"type": "String"}
+    }
+  },
+  "welcomeTermsLabel": "Kullanım Koşulları",
+  "@welcomeTermsLabel": {
+    "description": "Koşullar bağlantı metni."
+  },
+  "welcomePrivacyLabel": "Gizlilik Politikası",
+  "@welcomePrivacyLabel": {
+    "description": "Gizlilik bağlantı metni."
+  },
+  "welcomeSceneTwoTitle": "Nereye gidelim?",
+  "@welcomeSceneTwoTitle": {
+    "description": "Karşılama sahne 2 başlığı."
+  },
+  "welcomeSceneTwoBody": "Kartları kaydır: Olur, Pas, Çok isterim. Gruptaki uyum anında görünür.",
+  "@welcomeSceneTwoBody": {
+    "description": "Karşılama sahne 2 açıklaması."
+  },
+  "welcomeSceneThreeTitle": "Birlikte karar verin.",
+  "@welcomeSceneThreeTitle": {
+    "description": "Karşılama sahne 3 başlığı."
+  },
+  "welcomeSceneThreeBody": "Oda kur, arkadaşlarını çağır. Herkes seçsin, iAgree ortak noktayı bulsun.",
+  "@welcomeSceneThreeBody": {
+    "description": "Karşılama sahne 3 açıklaması."
+  },
+  "homeSignOut": "Çıkış yap",
+  "@homeSignOut": {
+    "description": "Geçici ana ekranda çıkış."
+  },
   "commonBack": "Geri",
   "@commonBack": {
     "description": "Navigasyon çubuğundaki geri chevron'unun VoiceOver etiketi."

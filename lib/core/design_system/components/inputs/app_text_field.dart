@@ -24,6 +24,7 @@ class AppTextField extends StatefulWidget {
     this.focusNode,
     this.hintText,
     this.errorText,
+    this.helperText,
     this.enabled = true,
     this.autofocus = false,
     this.keyboardType,
@@ -44,6 +45,9 @@ class AppTextField extends StatefulWidget {
 
   /// Doluysa alan hata durumunda: kenarlık `error`, altında ⚠ + metin.
   final String? errorText;
+
+  /// Hata yokken alanın altında `caption` `textSecondary` açıklama (örn. "Apple hesabından geldi").
+  final String? helperText;
   final bool enabled;
   final bool autofocus;
   final TextInputType? keyboardType;
@@ -244,7 +248,15 @@ class _AppTextFieldState extends State<AppTextField>
                     ),
                   ),
                 )
-              : const SizedBox(width: double.infinity),
+              : (widget.helperText != null
+                    ? Padding(
+                        padding: const EdgeInsets.only(top: AppSpacing.xs),
+                        child: Text(
+                          widget.helperText!,
+                          style: text.caption.copyWith(color: c.textSecondary),
+                        ),
+                      )
+                    : const SizedBox(width: double.infinity)),
         ),
       ],
     );

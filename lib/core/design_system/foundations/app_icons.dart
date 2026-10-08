@@ -32,6 +32,20 @@ abstract final class AppIcons {
   static const String _regular = 'PhosphorRegular';
   static const String _fill = 'PhosphorFill';
 
+  /// Phosphor `camera` (regular).
+  static const IconData camera = IconData(
+    0xe10e,
+    fontFamily: _regular,
+    fontPackage: _package,
+  );
+
+  /// Phosphor `envelopeSimple` (regular).
+  static const IconData mail = IconData(
+    0xe218,
+    fontFamily: _regular,
+    fontPackage: _package,
+  );
+
   /// Phosphor `export` (regular).
   static const IconData share = IconData(
     0xeaf0,

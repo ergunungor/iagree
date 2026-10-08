@@ -246,6 +246,132 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
+  String get authEmailTitle => 'E-posta adresin';
+
+  @override
+  String get authEmailSubtitle =>
+      'Sana 6 haneli bir giriş kodu göndereceğiz. Şifre yok.';
+
+  @override
+  String get authEmailLabel => 'E-posta';
+
+  @override
+  String get authEmailSend => 'Kodu gönder';
+
+  @override
+  String get authEmailInvalid => 'Geçerli bir e-posta adresi gir.';
+
+  @override
+  String get authCodeTitle => 'Kodu gir';
+
+  @override
+  String authCodeSubtitle(String email) {
+    return 'Kodu $email adresine gönderdik.';
+  }
+
+  @override
+  String get authChangeAddress => 'Adresi değiştir';
+
+  @override
+  String get authCodeHint => 'Kod gelmedi mi? Spam klasörüne de bak.';
+
+  @override
+  String authResendIn(String time) {
+    return 'Yeniden gönder · $time';
+  }
+
+  @override
+  String get authResend => 'Yeniden gönder';
+
+  @override
+  String get authOpenMail => 'Mail\'i aç';
+
+  @override
+  String get authCodeWrong => 'Kod doğru değil. Tekrar dene.';
+
+  @override
+  String authCodeEmptySemantics(int length) {
+    return 'Kod alanı, $length hane';
+  }
+
+  @override
+  String authCodeSemantics(String digits, int remaining) {
+    return 'Kod: $digits, $remaining hane kaldı';
+  }
+
+  @override
+  String get authProfileTitle => 'Son bir adım';
+
+  @override
+  String get authProfileSubtitle =>
+      'Arkadaşların seni odalarda bu isim ve fotoğrafla görecek.';
+
+  @override
+  String get authAddPhoto => 'Fotoğraf ekle';
+
+  @override
+  String get authOptional => 'İsteğe bağlı';
+
+  @override
+  String get authNameLabel => 'Adın';
+
+  @override
+  String get authNameFromApple => 'Apple hesabından geldi. İstersen değiştir.';
+
+  @override
+  String get authNameRequired => 'Adını yaz.';
+
+  @override
+  String get authStart => 'Başla';
+
+  @override
+  String get authPhotoSoon => 'Fotoğraf seçimi yakında';
+
+  @override
+  String get authMailSoon => 'Mail uygulaması yakında açılacak';
+
+  @override
+  String get welcomeLinkSoon => 'Bu sayfa yakında eklenecek';
+
+  @override
+  String get welcomeTagline =>
+      '“Nereye gidelim?” sorusunu birlikte, tartışmadan bitirin.';
+
+  @override
+  String get welcomeApple => 'Apple ile devam et';
+
+  @override
+  String get welcomeEmail => 'E-posta ile devam et';
+
+  @override
+  String welcomeTerms(String terms, String privacy) {
+    return 'Devam ederek $terms’nı ve $privacy’nı kabul etmiş olursun.';
+  }
+
+  @override
+  String get welcomeTermsLabel => 'Kullanım Koşulları';
+
+  @override
+  String get welcomePrivacyLabel => 'Gizlilik Politikası';
+
+  @override
+  String get welcomeSceneTwoTitle => 'Nereye gidelim?';
+
+  @override
+  String get welcomeSceneTwoBody =>
+      'Kartları kaydır: Olur, Pas, Çok isterim. Gruptaki uyum anında görünür.';
+
+  @override
+  String get welcomeSceneThreeTitle => 'Birlikte karar verin.';
+
+  @override
+  String get welcomeSceneThreeBody =>
+      'Oda kur, arkadaşlarını çağır. Herkes seçsin, iAgree ortak noktayı bulsun.';
+
+  @override
+  String get homeSignOut => 'Çıkış yap';
+
+  @override
   String get commonBack => 'Geri';
 
   @override

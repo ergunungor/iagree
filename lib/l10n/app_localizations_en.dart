@@ -246,6 +246,133 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get authEmailTitle => 'Your email';
+
+  @override
+  String get authEmailSubtitle =>
+      'We\'ll send you a 6-digit sign-in code. No password.';
+
+  @override
+  String get authEmailLabel => 'Email';
+
+  @override
+  String get authEmailSend => 'Send code';
+
+  @override
+  String get authEmailInvalid => 'Enter a valid email address.';
+
+  @override
+  String get authCodeTitle => 'Enter the code';
+
+  @override
+  String authCodeSubtitle(String email) {
+    return 'We sent the code to $email.';
+  }
+
+  @override
+  String get authChangeAddress => 'Change address';
+
+  @override
+  String get authCodeHint => 'No code? Check your spam folder too.';
+
+  @override
+  String authResendIn(String time) {
+    return 'Resend · $time';
+  }
+
+  @override
+  String get authResend => 'Resend';
+
+  @override
+  String get authOpenMail => 'Open Mail';
+
+  @override
+  String get authCodeWrong => 'That code isn\'t right. Try again.';
+
+  @override
+  String authCodeEmptySemantics(int length) {
+    return 'Code field, $length digits';
+  }
+
+  @override
+  String authCodeSemantics(String digits, int remaining) {
+    return 'Code: $digits, $remaining digits left';
+  }
+
+  @override
+  String get authProfileTitle => 'One last step';
+
+  @override
+  String get authProfileSubtitle =>
+      'Your friends will see you in rooms with this name and photo.';
+
+  @override
+  String get authAddPhoto => 'Add photo';
+
+  @override
+  String get authOptional => 'Optional';
+
+  @override
+  String get authNameLabel => 'Your name';
+
+  @override
+  String get authNameFromApple =>
+      'Came from your Apple account. Change it if you like.';
+
+  @override
+  String get authNameRequired => 'Enter your name.';
+
+  @override
+  String get authStart => 'Get started';
+
+  @override
+  String get authPhotoSoon => 'Photo picking is coming soon';
+
+  @override
+  String get authMailSoon => 'Opening Mail is coming soon';
+
+  @override
+  String get welcomeLinkSoon => 'This page is coming soon';
+
+  @override
+  String get welcomeTagline =>
+      'Settle “where should we go?” together, without the argument.';
+
+  @override
+  String get welcomeApple => 'Continue with Apple';
+
+  @override
+  String get welcomeEmail => 'Continue with email';
+
+  @override
+  String welcomeTerms(String terms, String privacy) {
+    return 'By continuing you agree to the $terms and $privacy.';
+  }
+
+  @override
+  String get welcomeTermsLabel => 'Terms of Use';
+
+  @override
+  String get welcomePrivacyLabel => 'Privacy Policy';
+
+  @override
+  String get welcomeSceneTwoTitle => 'Where to?';
+
+  @override
+  String get welcomeSceneTwoBody =>
+      'Swipe cards: Yes, Pass, Love it. The group\'s match shows up instantly.';
+
+  @override
+  String get welcomeSceneThreeTitle => 'Decide together.';
+
+  @override
+  String get welcomeSceneThreeBody =>
+      'Start a room, invite your friends. Everyone picks, iAgree finds the common ground.';
+
+  @override
+  String get homeSignOut => 'Sign out';
+
+  @override
   String get commonBack => 'Back';
 
   @override

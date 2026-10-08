@@ -471,3 +471,5 @@ Uygulama sırasında verilen, yukarıdaki metinden **bilinçli olarak ayrılan**
 | 17 | Skeleton nabzı | Süre yok | Her yön `emphasis` (300 ms); `expressive` yalnızca Arc ve karar anı için | |
 | 18 | Bekleyen açık konular | | Slider değerinin konumu (üst/sağ), thumb gölgesi (E1/mockup), pasif toggle'ın CupertinoSwitch soluklaştırması | |
 | 19 | Klasör yapısı | SwipeDeck, ResultCard, VoteOption, DecisionMoment `features/` altında | Hepsi `lib/core/design_system/components/` altında (galeri tek yerden gezer, testler tek yerde); ekran kodu `features/` altında olacak | E0'da yeniden değerlendirilebilir |
+| 20 | Karşılama tipografisi | Yalnızca `display`/`h1` Fraunces | Karşılama sahne 1 için `hero` (Fraunces 80/76, -2) ve slogan için `lead` (SF 20/27) eklendi; yalnızca A2'de kullanılır, `tokens.json`'a işlenmedi | |
+| 21 | Kod alanı | Metinde yok | `AppCodeField`: gizli TextField + 6 kutu; hata durumunda tüm kutular `error` kenar; yanlış kodda temizlenir | |
