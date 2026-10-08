@@ -283,6 +283,30 @@ abstract class AppLocalizations {
   /// **'Ayrıntılar'**
   String get deckDetails;
 
+  /// Kart üstü etiket: → Olur.
+  ///
+  /// In tr, this message translates to:
+  /// **'Olur'**
+  String get deckDecisionOk;
+
+  /// Kart üstü etiket: ← Pas.
+  ///
+  /// In tr, this message translates to:
+  /// **'Pas'**
+  String get deckDecisionPass;
+
+  /// Kart üstü etiket: ↑ Çok isterim.
+  ///
+  /// In tr, this message translates to:
+  /// **'Çok isterim'**
+  String get deckDecisionLove;
+
+  /// Kart üstü etiket: ↓ Olmaz.
+  ///
+  /// In tr, this message translates to:
+  /// **'Olmaz'**
+  String get deckDecisionVeto;
+
   /// Navigasyon çubuğundaki geri chevron'unun VoiceOver etiketi.
   ///
   /// In tr, this message translates to:

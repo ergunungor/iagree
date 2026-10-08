@@ -145,6 +145,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get deckDetails => 'Details';
 
   @override
+  String get deckDecisionOk => 'Okay';
+
+  @override
+  String get deckDecisionPass => 'Pass';
+
+  @override
+  String get deckDecisionLove => 'Love it';
+
+  @override
+  String get deckDecisionVeto => 'No way';
+
+  @override
   String get commonBack => 'Back';
 
   @override

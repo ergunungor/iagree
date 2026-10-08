@@ -145,6 +145,18 @@ class AppLocalizationsTr extends AppLocalizations {
   String get deckDetails => 'Ayrıntılar';
 
   @override
+  String get deckDecisionOk => 'Olur';
+
+  @override
+  String get deckDecisionPass => 'Pas';
+
+  @override
+  String get deckDecisionLove => 'Çok isterim';
+
+  @override
+  String get deckDecisionVeto => 'Olmaz';
+
+  @override
   String get commonBack => 'Geri';
 
   @override

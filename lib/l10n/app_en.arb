@@ -30,6 +30,10 @@
   "deckPhotoSemantics": "Photo {index}/{total}",
   "deckPosterSemantics": "{name} poster",
   "deckDetails": "Details",
+  "deckDecisionOk": "Okay",
+  "deckDecisionPass": "Pass",
+  "deckDecisionLove": "Love it",
+  "deckDecisionVeto": "No way",
   "commonBack": "Back",
   "commonClose": "Close",
   "offlineBannerMessage": "No connection. Your changes will be sent when you reconnect."

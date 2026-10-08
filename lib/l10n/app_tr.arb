@@ -200,6 +200,22 @@
   "@deckDetails": {
     "description": "Kart bilgi panelinin eylem ipucu."
   },
+  "deckDecisionOk": "Olur",
+  "@deckDecisionOk": {
+    "description": "Kart üstü etiket: → Olur."
+  },
+  "deckDecisionPass": "Pas",
+  "@deckDecisionPass": {
+    "description": "Kart üstü etiket: ← Pas."
+  },
+  "deckDecisionLove": "Çok isterim",
+  "@deckDecisionLove": {
+    "description": "Kart üstü etiket: ↑ Çok isterim."
+  },
+  "deckDecisionVeto": "Olmaz",
+  "@deckDecisionVeto": {
+    "description": "Kart üstü etiket: ↓ Olmaz."
+  },
   "commonBack": "Geri",
   "@commonBack": {
     "description": "Navigasyon çubuğundaki geri chevron'unun VoiceOver etiketi."

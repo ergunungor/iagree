@@ -9,6 +9,7 @@ import '../../tokens/app_fixed_colors.dart';
 import '../../tokens/app_radius.dart';
 import '../../tokens/app_spacing.dart';
 import '../../tokens/app_typography.dart';
+import 'deck_decision_overlay.dart';
 
 /// Deste kartı (DESIGN_SYSTEM.md §10 "SwipeDeck"): yalnızca **statik** kart. Sürükleme, arka
 /// kart, üst bar ve butonlar `SwipeDeck`'in işi.
@@ -62,6 +63,9 @@ class DeckCard extends StatefulWidget {
   /// Bir kartta en fazla kaç fotoğraf olur.
   static const int maxPhotos = 4;
 
+  /// Genişlik / yükseklik (3:4).
+  static const double aspectRatio = 3 / 4;
+
   final bool _film;
 
   /// Mekan/film adı.
@@ -97,7 +101,6 @@ class DeckCard extends StatefulWidget {
 }
 
 class _DeckCardState extends State<DeckCard> {
-  static const double _aspectRatio = 3 / 4;
   static const double _panelFraction = 0.22;
   static const double _segmentTop = 10;
   static const double _segmentSide = 14;
@@ -130,7 +133,7 @@ class _DeckCardState extends State<DeckCard> {
       container: true,
       explicitChildNodes: true,
       child: AspectRatio(
-        aspectRatio: _aspectRatio,
+        aspectRatio: DeckCard.aspectRatio,
         child: DecoratedBox(
           decoration: AppRadius.decoration(
             radius: AppRadius.xl,
@@ -145,9 +148,12 @@ class _DeckCardState extends State<DeckCard> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Expanded(
-                      child: widget._film
-                          ? _filmArea(context, l10n)
-                          : _photoArea(context, l10n),
+                      child: _withDecisionOverlay(
+                        context,
+                        widget._film
+                            ? _filmArea(context, l10n)
+                            : _photoArea(context, l10n),
+                      ),
                     ),
                     ConstrainedBox(
                       constraints: BoxConstraints(
@@ -166,6 +172,19 @@ class _DeckCardState extends State<DeckCard> {
   }
 
   // ───────────── görsel alanı ─────────────
+
+  /// `SwipeDeck` ön kartı sürüklenirken fotoğraf alanının üstüne karar etiketi ve tonu çizer.
+  Widget _withDecisionOverlay(BuildContext context, Widget area) {
+    final scope = DeckPhotoOverlayScope.maybeOf(context);
+    if (scope == null) return area;
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        area,
+        DeckDecisionOverlay(frame: scope.frame),
+      ],
+    );
+  }
 
   Widget _photoArea(BuildContext context, AppLocalizations l10n) {
     final c = context.colors;

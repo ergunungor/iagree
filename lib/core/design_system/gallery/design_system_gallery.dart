@@ -8,6 +8,8 @@ import '../components/buttons/app_button.dart';
 import '../components/buttons/app_icon_button.dart';
 import '../components/content/app_card.dart';
 import '../components/deck/deck_card.dart';
+import '../components/deck/swipe_deck.dart';
+import '../components/deck/swipe_deck_physics.dart';
 import '../components/content/app_list_group.dart';
 import '../components/feedback/app_alert.dart';
 import '../components/feedback/app_empty_state.dart';
@@ -2115,6 +2117,15 @@ class _DeckCardSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        AppButton.secondary(
+          label: 'Desteyi aç (sürükle)',
+          size: AppButtonSize.medium,
+          fullWidth: false,
+          onPressed: () => Navigator.of(context).push(
+            CupertinoPageRoute<void>(builder: (_) => const _SwipeDeckDemo()),
+          ),
+        ),
+        gap,
         const _Caption('mekan · 4 fotoğraf (sağ/sol yarıya dokun)'),
         const SizedBox(height: AppSpacing.xs),
         DeckCard.place(
@@ -2155,6 +2166,87 @@ class _DeckCardSection extends StatelessWidget {
           platform: 'Netflix',
         ),
       ],
+    );
+  }
+}
+
+class _SwipeDeckDemo extends StatefulWidget {
+  const _SwipeDeckDemo();
+
+  @override
+  State<_SwipeDeckDemo> createState() => _SwipeDeckDemoState();
+}
+
+class _SwipeDeckDemoState extends State<_SwipeDeckDemo> {
+  static const _places = [
+    ('Trattoria Lume', 'İtalyan', Color(0xFF3A2A24), Color(0xFF7C8A4C)),
+    ('Mavi Kapı Kahve', 'Kahve', Color(0xFFE3D6C3), Color(0xFF6E7D57)),
+    ('Çınar Meyhane', 'Meyhane', Color(0xFF2A3A4A), Color(0xFFB9573A)),
+    ('Sahil Börekçisi', 'Fırın', Color(0xFFB89C7A), Color(0xFFE9E1D6)),
+    ('Lale Sofrası', 'Ev yemeği', Color(0xFF5B6A47), Color(0xFFF0C27A)),
+    ('Nar Bistro', 'Bistro', Color(0xFF6B2E63), Color(0xFFB07AA8)),
+  ];
+
+  String _last = 'Henüz karar yok';
+  bool _done = false;
+
+  static String _name(DeckDecision d) => switch (d) {
+    DeckDecision.ok => 'Olur',
+    DeckDecision.pass => 'Pas',
+    DeckDecision.love => 'Çok isterim',
+    DeckDecision.veto => 'Olmaz',
+  };
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppInlineNavBar(
+        title: 'Deste',
+        onBack: () => Navigator.of(context).pop(),
+      ),
+      body: SafeArea(
+        child: Column(
+          children: [
+            Expanded(
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.screenPadding,
+                  ),
+                  child: _done
+                      ? Text('Deste bitti', style: context.text.h3)
+                      : SwipeDeck<(String, String, Color, Color)>(
+                          items: _places,
+                          onSwiped: (item, d) =>
+                              setState(() => _last = '${item.$1}: ${_name(d)}'),
+                          onCompleted: () => setState(() => _done = true),
+                          itemBuilder: (context, p) => DeckCard.place(
+                            name: p.$1,
+                            photos: [
+                              ColoredBox(color: p.$3),
+                              ColoredBox(color: p.$4),
+                            ],
+                            rating: 4.5,
+                            category: p.$2,
+                            priceLevel: 2,
+                            distanceKm: 1.2,
+                          ),
+                        ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(AppSpacing.screenPadding),
+              child: Text(
+                _last,
+                style: context.text.caption.copyWith(
+                  color: context.colors.textSecondary,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
