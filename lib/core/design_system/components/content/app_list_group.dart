@@ -74,6 +74,10 @@ class AppListRow extends StatelessWidget {
     this.selected,
     this.emphasized = false,
     this.destructive = false,
+    this.verticalPadding = AppSpacing.sm,
+    this.highlighted = false,
+    this.semanticLabel,
+    this.semanticSelected,
     this.onPressed,
   }) : assert(
          (leading == null) == (leadingExtent == null),
@@ -108,10 +112,50 @@ class AppListRow extends StatelessWidget {
   /// Yıkıcı eylem satırı: ana metin `error`.
   final bool destructive;
 
+  /// Satırın dikey iç boşluğu (varsayılan 12). Daha yüksek görselli satırlar (56'lık
+  /// thumbnail) için küçültülebilir.
+  final double verticalPadding;
+
+  /// Satırı 2px `brand` halkayla vurgular (örn. oylamada önde olan seçenek). Halka satırın
+  /// üstüne, 4pt iç boşlukla çizilir; yerleşimi etkilemez.
+  final bool highlighted;
+
+  /// VoiceOver etiketi; boşsa [title]. Satırın içeriği zengin olduğunda (meta, Arc) tek cümle.
+  final String? semanticLabel;
+
+  /// VoiceOver seçili durumu (görsel ✓'ten bağımsız); boşsa [selected].
+  final bool? semanticSelected;
+
   final VoidCallback? onPressed;
 
   static const double _minHeight = 52;
+  static const double _highlightBorder = 2;
+  static const double _highlightInset = AppSpacing.xxs;
   static const double _hairline = 1;
+
+  Widget _withHighlight(Color brand, Widget row) {
+    if (!highlighted) return row;
+    return Stack(
+      children: [
+        row,
+        Positioned.fill(
+          child: IgnorePointer(
+            child: Padding(
+              padding: const EdgeInsets.all(_highlightInset),
+              child: DecoratedBox(
+                decoration: ShapeDecoration(
+                  shape: AppRadius.border(
+                    AppRadius.md,
+                    side: BorderSide(color: brand, width: _highlightBorder),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -130,93 +174,104 @@ class AppListRow extends StatelessWidget {
         duration: motion.fast,
         curve: AppMotion.move,
         color: pressed ? c.surfacePressed : Colors.transparent,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            ConstrainedBox(
-              constraints: const BoxConstraints(minHeight: _minHeight),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppSpacing.md,
-                  vertical: AppSpacing.sm,
-                ),
-                child: Row(
-                  children: [
-                    if (leading != null) ...[
-                      SizedBox(width: leadingExtent, child: leading),
-                      const SizedBox(width: AppSpacing.sm),
-                    ],
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            title,
-                            style: (emphasized ? text.title : text.body)
-                                .copyWith(color: titleColor),
-                          ),
-                          if (subtitle != null)
+        child: _withHighlight(
+          c.brand,
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              ConstrainedBox(
+                constraints: const BoxConstraints(minHeight: _minHeight),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: AppSpacing.md,
+                    vertical: verticalPadding,
+                  ),
+                  child: Row(
+                    children: [
+                      if (leading != null) ...[
+                        SizedBox(width: leadingExtent, child: leading),
+                        const SizedBox(width: AppSpacing.sm),
+                      ],
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
                             Text(
-                              subtitle!,
-                              style: text.caption.tabular.copyWith(
-                                color: c.textSecondary,
-                              ),
+                              title,
+                              style: (emphasized ? text.title : text.body)
+                                  .copyWith(color: titleColor),
                             ),
-                        ],
+                            if (subtitle != null)
+                              Text(
+                                subtitle!,
+                                style: text.caption.tabular.copyWith(
+                                  color: c.textSecondary,
+                                ),
+                              ),
+                          ],
+                        ),
                       ),
-                    ),
-                    if (trailing != null) ...[
-                      const SizedBox(width: AppSpacing.sm),
-                      trailing!,
+                      if (trailing != null) ...[
+                        const SizedBox(width: AppSpacing.sm),
+                        trailing!,
+                      ],
+                      if (selected != null) ...[
+                        const SizedBox(width: AppSpacing.sm),
+                        // Seçili değilken de yer ayrılır: seçim değişince metin kaymaz.
+                        SizedBox.square(
+                          dimension: AppIconSize.s20,
+                          child: selected!
+                              ? Icon(
+                                  AppIcons.check,
+                                  size: AppIconSize.s20,
+                                  color: c.brand,
+                                )
+                              : null,
+                        ),
+                      ],
+                      if (showsChevron) ...[
+                        const SizedBox(width: AppSpacing.xs),
+                        Icon(
+                          AppIcons.chevronRight,
+                          size: AppIconSize.s20,
+                          color: c.textTertiary,
+                        ),
+                      ],
                     ],
-                    if (selected != null) ...[
-                      const SizedBox(width: AppSpacing.sm),
-                      // Seçili değilken de yer ayrılır: seçim değişince metin kaymaz.
-                      SizedBox.square(
-                        dimension: AppIconSize.s20,
-                        child: selected!
-                            ? Icon(
-                                AppIcons.check,
-                                size: AppIconSize.s20,
-                                color: c.brand,
-                              )
-                            : null,
-                      ),
-                    ],
-                    if (showsChevron) ...[
-                      const SizedBox(width: AppSpacing.xs),
-                      Icon(
-                        AppIcons.chevronRight,
-                        size: AppIconSize.s20,
-                        color: c.textTertiary,
-                      ),
-                    ],
-                  ],
+                  ),
                 ),
               ),
-            ),
-            if (!isLast)
-              Padding(
-                padding: EdgeInsets.only(left: inset),
-                child: SizedBox(
-                  height: _hairline,
-                  child: ColoredBox(color: c.border),
+              if (!isLast)
+                Padding(
+                  padding: EdgeInsets.only(left: inset),
+                  child: SizedBox(
+                    height: _hairline,
+                    child: ColoredBox(color: c.border),
+                  ),
                 ),
-              ),
-          ],
+            ],
+          ),
         ),
       );
     }
 
-    if (!interactive) return row(false);
+    if (!interactive) {
+      // Zengin içerikli (meta, Arc, avatarlar) etkileşimsiz satır tek cümle olarak okunur.
+      if (semanticLabel == null) return row(false);
+      return Semantics(
+        container: true,
+        label: semanticLabel,
+        child: ExcludeSemantics(child: row(false)),
+      );
+    }
 
     return AppPressable(
       onPressed: onPressed,
-      semanticLabel: title,
-      semanticValue: subtitle,
-      semanticSelected: selected,
+      semanticLabel: semanticLabel ?? title,
+      semanticValue: semanticLabel == null ? subtitle : null,
+      semanticSelected: semanticSelected ?? selected,
       scaleOnPress: false,
       focusShape: AppRadius.border(AppRadius.lg),
       minWidth: double.infinity,

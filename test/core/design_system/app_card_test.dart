@@ -284,4 +284,38 @@ void main() {
     );
     expect(tester.takeException(), isNull);
   });
+
+  testWidgets('mediaAspectRatio: varsayılan 4:3, verilince o oran', (
+    tester,
+  ) async {
+    await pumpApp(
+      tester,
+      const SizedBox(
+        width: 300,
+        child: AppCard(
+          media: ColoredBox(key: ValueKey('m'), color: Colors.red),
+          child: Text('x'),
+        ),
+      ),
+    );
+    expect(
+      tester.getSize(find.byKey(const ValueKey('m'))).height,
+      closeTo(225, 0.01),
+    );
+    await pumpApp(
+      tester,
+      const SizedBox(
+        width: 300,
+        child: AppCard(
+          mediaAspectRatio: 16 / 10,
+          media: ColoredBox(key: ValueKey('m'), color: Colors.red),
+          child: Text('x'),
+        ),
+      ),
+    );
+    expect(
+      tester.getSize(find.byKey(const ValueKey('m'))).height,
+      closeTo(187.5, 0.01),
+    );
+  });
 }

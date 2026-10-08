@@ -261,7 +261,7 @@ void main() {
         tester,
         _card(rating: null, category: 'Kafe', price: null, distance: 0.8),
       );
-      expect(_meta(tester), 'Kafe · 0,8 km');
+      expect(_meta(tester), 'Kafe · 800 m'); // 1 km altı metre
       await pumpApp(
         tester,
         _card(rating: 4.2, category: null, price: 1, distance: null),

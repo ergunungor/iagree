@@ -69,6 +69,24 @@ class AgreementArc extends StatefulWidget {
   final AgreementArcSize size;
   final bool onMoment;
 
+  /// Arc'ın VoiceOver cümlesi; üst bileşenler (sonuç kartları) kendi tek cümlelerine katar.
+  static String semanticsOf(
+    AppLocalizations l10n, {
+    required int loveCount,
+    required int okCount,
+    required int total,
+  }) {
+    final percent = AgreementMath.percent(
+      loveCount: loveCount,
+      okCount: okCount,
+      total: total,
+    );
+    final positive = loveCount + okCount;
+    return loveCount > 0
+        ? l10n.agreementArcSemanticsLove(percent, total, positive, loveCount)
+        : l10n.agreementArcSemantics(percent, total, positive);
+  }
+
   /// İlk görünüşte dolma animasyonu.
   final bool animate;
 
@@ -135,14 +153,12 @@ class _AgreementArcState extends State<AgreementArc>
       total: w.total,
     );
     final positive = w.loveCount + w.okCount;
-    final label = w.loveCount > 0
-        ? l10n.agreementArcSemanticsLove(
-            percent,
-            w.total,
-            positive,
-            w.loveCount,
-          )
-        : l10n.agreementArcSemantics(percent, w.total, positive);
+    final label = AgreementArc.semanticsOf(
+      l10n,
+      loveCount: w.loveCount,
+      okCount: w.okCount,
+      total: w.total,
+    );
 
     final numberStyle =
         switch (w.size) {

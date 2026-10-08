@@ -168,6 +168,54 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
+  String placeDistanceMeters(int meters) {
+    return '$meters m';
+  }
+
+  @override
+  String placeDistanceMetersSemantics(int meters) {
+    return '$meters metre';
+  }
+
+  @override
+  String resultLovers1(String a) {
+    return '$a çok istiyor';
+  }
+
+  @override
+  String resultLovers2(String a, String b) {
+    return '$a ve $b çok istiyor';
+  }
+
+  @override
+  String resultLovers3(String a, String b, String c) {
+    return '$a, $b ve $c çok istiyor';
+  }
+
+  @override
+  String resultLoversMore(String a, String b, int count) {
+    return '$a, $b ve $count kişi daha çok istiyor';
+  }
+
+  @override
+  String voteOptionVotes(String name, int count, String names) {
+    return '$name, $count oy: $names';
+  }
+
+  @override
+  String voteOptionVotesLeading(String name, int count, String names) {
+    return '$name, önde, $count oy: $names';
+  }
+
+  @override
+  String voteOptionNoVotes(String name) {
+    return '$name, oy yok';
+  }
+
+  @override
+  String get voteOptionMine => 'Senin oyun.';
+
+  @override
   String get commonBack => 'Geri';
 
   @override

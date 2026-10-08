@@ -30,6 +30,9 @@ import '../components/selection/app_chip.dart';
 import '../components/selection/app_segmented_control.dart';
 import '../components/selection/app_toggle.dart';
 import '../components/inputs/app_text_field.dart';
+import '../components/content/place_meta.dart';
+import '../components/result/result_card.dart';
+import '../components/result/vote_option.dart';
 import '../components/navigation/app_nav_bar.dart';
 import '../foundations/app_haptics.dart';
 import '../foundations/app_icons.dart';
@@ -64,18 +67,22 @@ class _DesignSystemGalleryState extends State<DesignSystemGallery> {
   late bool? _dark = widget.initialDark;
   late double _textScale = widget.initialTextScale;
 
-  /// Geliştirme kısayolu: `--dart-define=DEMO=deck` ile deste demosu doğrudan açılır.
+  /// Geliştirme kısayolu: `--dart-define=DEMO=deck|results` ile demo sayfası doğrudan açılır.
   static const String _demo = String.fromEnvironment('DEMO');
 
   @override
   void initState() {
     super.initState();
-    if (_demo == 'deck') {
+    final page = switch (_demo) {
+      'deck' => const _SwipeDeckDemo(),
+      'results' => const _ResultsDemo(),
+      _ => null,
+    };
+    if (page != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (!mounted) return;
-        Navigator.of(context).push(
-          CupertinoPageRoute<void>(builder: (_) => const _SwipeDeckDemo()),
-        );
+        Navigator.of(context)
+            .push(CupertinoPageRoute<void>(builder: (_) => page));
       });
     }
   }
@@ -190,6 +197,7 @@ class _Sections extends StatelessWidget {
           _Section('Avatar', _AvatarSection()),
           _Section('Geri bildirim ve katmanlar', _FeedbackSection()),
           _Section('Uyum yayı', _ArcSection()),
+          _Section('Sonuçlar', _ResultsSection()),
           _Section('Deste kartı', _DeckCardSection()),
           _Section('Navigasyon', _NavigationSection()),
           _Section('Haptik', _HapticsSection()),
@@ -2232,6 +2240,143 @@ class _SwipeDeckDemo extends StatelessWidget {
           priceLevel: 2,
           distanceKm: 1.2,
         ),
+      ),
+    );
+  }
+}
+
+class _ResultsSection extends StatelessWidget {
+  const _ResultsSection();
+
+  @override
+  Widget build(BuildContext context) {
+    return AppButton.secondary(
+      label: 'Sonuçlar demosunu aç',
+      size: AppButtonSize.medium,
+      fullWidth: false,
+      onPressed: () => Navigator.of(context)
+          .push(CupertinoPageRoute<void>(builder: (_) => const _ResultsDemo())),
+    );
+  }
+}
+
+/// D7 (Sonuçlar) demosu: oy öncesi seçim, "Oyumu ver" sonrası oy sayıları.
+class _ResultsDemo extends StatefulWidget {
+  const _ResultsDemo();
+
+  @override
+  State<_ResultsDemo> createState() => _ResultsDemoState();
+}
+
+class _ResultsDemoState extends State<_ResultsDemo> {
+  int _selected = 0;
+  bool _voted = false;
+
+  static const _ayse = AppAvatarPerson(userId: 'u-ayse', name: 'Ayşe');
+  static const _can = AppAvatarPerson(userId: 'u-can', name: 'Can');
+  static const _deniz = AppAvatarPerson(userId: 'u-deniz', name: 'Deniz');
+
+  static const _names = ['Mavi Kapı Kahve', 'Bahçe Bistro', 'Köşe Fırın'];
+  static const _colors = [
+    Color(0xFFE3D6C3),
+    Color(0xFFCFD8DD),
+    Color(0xFF3A2A24),
+  ];
+  static const _metas = [
+    PlaceMeta(rating: 4.7, category: 'Kahve', priceLevel: 1, distanceKm: 0.65),
+    PlaceMeta(
+      rating: 4.4,
+      category: 'Kahvaltı',
+      priceLevel: 2,
+      distanceKm: 1.4,
+    ),
+    PlaceMeta(rating: 4.5, category: 'Fırın', priceLevel: 1, distanceKm: 2.1),
+  ];
+
+  Widget _photo(int i) => ColoredBox(color: _colors[i]);
+
+  @override
+  Widget build(BuildContext context) {
+    final text = context.text;
+    return Scaffold(
+      appBar: AppInlineNavBar(
+        title: 'Sonuçlar',
+        onBack: () => Navigator.of(context).pop(),
+      ),
+      body: ListView(
+        padding: const EdgeInsets.all(AppSpacing.screenPadding),
+        children: [
+          Text('Hangisi olsun?', style: text.h1),
+          const SizedBox(height: AppSpacing.lg),
+          if (!_voted) ...[
+            ResultCard.hero(
+              name: _names[0],
+              photo: _photo(0),
+              loveCount: 2,
+              okCount: 1,
+              total: 4,
+              meta: _metas[0],
+              lovers: const [_ayse, _can],
+              selected: _selected == 0,
+              onSelected: () => setState(() => _selected = 0),
+            ),
+            const SizedBox(height: AppSpacing.sm),
+            AppListGroup(
+              children: [
+                for (final i in [1, 2])
+                  ResultCard.compact(
+                    context: context,
+                    name: _names[i],
+                    photo: _photo(i),
+                    loveCount: i == 1 ? 1 : 0,
+                    okCount: i == 1 ? 2 : 2,
+                    total: 4,
+                    meta: _metas[i],
+                    selected: _selected == i,
+                    onSelected: () => setState(() => _selected = i),
+                  ),
+              ],
+            ),
+            const SizedBox(height: AppSpacing.xl),
+            AppButton.primary(
+              label: 'Oyumu ver',
+              onPressed: () => setState(() => _voted = true),
+            ),
+          ] else ...[
+            VoteOption.hero(
+              name: _names[0],
+              photo: _photo(0),
+              meta: _metas[0],
+              voters: const [_ayse, _can],
+              isLeading: true,
+              isMine: _selected == 0,
+            ),
+            const SizedBox(height: AppSpacing.sm),
+            AppListGroup(
+              children: [
+                VoteOption.compact(
+                  context: context,
+                  name: _names[1],
+                  photo: _photo(1),
+                  voters: const [_deniz],
+                  isMine: _selected == 1,
+                ),
+                VoteOption.compact(
+                  context: context,
+                  name: _names[2],
+                  photo: _photo(2),
+                  voters: const [],
+                  isMine: _selected == 2,
+                ),
+              ],
+            ),
+            const SizedBox(height: AppSpacing.xl),
+            AppButton.secondary(
+              label: 'Oyu geri aç',
+              onPressed: () => setState(() => _voted = false),
+            ),
+          ],
+        ],
       ),
     );
   }

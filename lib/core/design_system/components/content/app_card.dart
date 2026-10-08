@@ -16,6 +16,7 @@ class AppCard extends StatelessWidget {
     super.key,
     required this.child,
     this.media,
+    this.mediaAspectRatio = _defaultMediaAspectRatio,
     this.onPressed,
     this.semanticLabel,
     this.selected = false,
@@ -28,8 +29,11 @@ class AppCard extends StatelessWidget {
   /// Kartın içeriği (görselin altındaki metin alanı da burası).
   final Widget child;
 
-  /// Üstte 4:3 oranında, kenardan kenara görsel.
+  /// Üstte kenardan kenara görsel (varsayılan 4:3; sonuç kartlarında 16:10).
   final Widget? media;
+
+  /// [media]'nın genişlik / yükseklik oranı.
+  final double mediaAspectRatio;
 
   /// Verilirse kart interaktif; null ise sadece bir kap.
   final VoidCallback? onPressed;
@@ -42,7 +46,7 @@ class AppCard extends StatelessWidget {
 
   static const double _selectedBorder = 2;
   static const double _hairline = 1;
-  static const double _mediaAspectRatio = 4 / 3;
+  static const double _defaultMediaAspectRatio = 4 / 3;
   static const double _pressedOverlayAlpha = 0.04;
 
   @override
@@ -72,7 +76,7 @@ class AppCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   if (media != null)
-                    AspectRatio(aspectRatio: _mediaAspectRatio, child: media),
+                    AspectRatio(aspectRatio: mediaAspectRatio, child: media),
                   Padding(padding: padding, child: child),
                 ],
               ),

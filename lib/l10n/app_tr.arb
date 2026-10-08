@@ -232,6 +232,82 @@
       "total": {"type": "int"}
     }
   },
+  "placeDistanceMeters": "{meters} m",
+  "@placeDistanceMeters": {
+    "description": "Görünür mesafe, 1 km'nin altında.",
+    "placeholders": {
+      "meters": {"type": "int"}
+    }
+  },
+  "placeDistanceMetersSemantics": "{meters} metre",
+  "@placeDistanceMetersSemantics": {
+    "description": "Mesafenin VoiceOver metni, 1 km'nin altında.",
+    "placeholders": {
+      "meters": {"type": "int"}
+    }
+  },
+  "resultLovers1": "{a} çok istiyor",
+  "@resultLovers1": {
+    "description": "Çok isteyen tek kişi.",
+    "placeholders": {
+      "a": {"type": "String"}
+    }
+  },
+  "resultLovers2": "{a} ve {b} çok istiyor",
+  "@resultLovers2": {
+    "description": "Çok isteyen iki kişi.",
+    "placeholders": {
+      "a": {"type": "String"},
+      "b": {"type": "String"}
+    }
+  },
+  "resultLovers3": "{a}, {b} ve {c} çok istiyor",
+  "@resultLovers3": {
+    "description": "Çok isteyen üç kişi.",
+    "placeholders": {
+      "a": {"type": "String"},
+      "b": {"type": "String"},
+      "c": {"type": "String"}
+    }
+  },
+  "resultLoversMore": "{a}, {b} ve {count} kişi daha çok istiyor",
+  "@resultLoversMore": {
+    "description": "Çok isteyen dört ya da daha fazla kişi.",
+    "placeholders": {
+      "a": {"type": "String"},
+      "b": {"type": "String"},
+      "count": {"type": "int"}
+    }
+  },
+  "voteOptionVotes": "{name}, {count} oy: {names}",
+  "@voteOptionVotes": {
+    "description": "Oy almış seçenek (VoiceOver).",
+    "placeholders": {
+      "name": {"type": "String"},
+      "count": {"type": "int"},
+      "names": {"type": "String"}
+    }
+  },
+  "voteOptionVotesLeading": "{name}, önde, {count} oy: {names}",
+  "@voteOptionVotesLeading": {
+    "description": "Önde olan seçenek (VoiceOver).",
+    "placeholders": {
+      "name": {"type": "String"},
+      "count": {"type": "int"},
+      "names": {"type": "String"}
+    }
+  },
+  "voteOptionNoVotes": "{name}, oy yok",
+  "@voteOptionNoVotes": {
+    "description": "Oy almamış seçenek (VoiceOver).",
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "voteOptionMine": "Senin oyun.",
+  "@voteOptionMine": {
+    "description": "Kullanıcının kendi oyunu verdiği seçenek (VoiceOver)."
+  },
   "commonBack": "Geri",
   "@commonBack": {
     "description": "Navigasyon çubuğundaki geri chevron'unun VoiceOver etiketi."

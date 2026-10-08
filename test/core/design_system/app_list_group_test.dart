@@ -432,4 +432,66 @@ void main() {
     expect(tester.takeException(), isNull);
     expect(tester.getSize(_rows).height, greaterThan(52));
   });
+
+  group('sonuç satırı seçenekleri', () {
+    Widget group(AppListRow row) =>
+        SizedBox(width: 350, child: AppListGroup(children: [row]));
+
+    testWidgets('verticalPadding satır yüksekliğini belirler', (tester) async {
+      await pumpApp(
+        tester,
+        group(
+          const AppListRow(
+            title: 'A',
+            leading: SizedBox.square(dimension: 56),
+            leadingExtent: 56,
+            verticalPadding: 8,
+          ),
+        ),
+      );
+      expect(tester.getSize(find.byType(AppListRow)).height, 72);
+    });
+
+    testWidgets('highlighted: 2px brand halka, yerleşimi değiştirmez', (
+      tester,
+    ) async {
+      await pumpApp(tester, group(const AppListRow(title: 'A')));
+      final h = tester.getSize(find.byType(AppListRow));
+      await pumpApp(
+        tester,
+        group(const AppListRow(title: 'A', highlighted: true)),
+      );
+      expect(tester.getSize(find.byType(AppListRow)), h);
+      final ring = tester
+          .widgetList<DecoratedBox>(find.byType(DecoratedBox))
+          .map((d) => d.decoration)
+          .whereType<ShapeDecoration>()
+          .where((d) {
+            final s = d.shape;
+            return s is RoundedSuperellipseBorder &&
+                s.side.width == 2 &&
+                s.side.color == AppColors.light.brand;
+          });
+      expect(ring, hasLength(1));
+    });
+
+    testWidgets('semanticLabel etkileşimsiz satırı tek öğe yapar', (
+      tester,
+    ) async {
+      final handle = tester.ensureSemantics();
+      await pumpApp(
+        tester,
+        group(
+          const AppListRow(
+            title: 'A',
+            subtitle: 'B',
+            semanticLabel: 'A, B, özel',
+          ),
+        ),
+      );
+      expect(find.bySemanticsLabel('A, B, özel'), findsOneWidget);
+      expect(find.bySemanticsLabel('A'), findsNothing);
+      handle.dispose();
+    });
+  });
 }

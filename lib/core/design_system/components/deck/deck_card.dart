@@ -9,6 +9,7 @@ import '../../tokens/app_fixed_colors.dart';
 import '../../tokens/app_radius.dart';
 import '../../tokens/app_spacing.dart';
 import '../../tokens/app_typography.dart';
+import '../content/place_meta.dart';
 import 'deck_decision_overlay.dart';
 
 /// Deste kartı (DESIGN_SYSTEM.md §10 "SwipeDeck"): yalnızca **statik** kart. Sürükleme, arka
@@ -327,6 +328,7 @@ class _DeckCardState extends State<DeckCard> {
       decimalDigits: 1,
     );
     final w = widget;
+    final place = PlaceMeta(distanceKm: w.distanceKm);
 
     final metaStyle = text.caption.tabular.copyWith(color: c.textSecondary);
     final spans = <InlineSpan>[];
@@ -358,7 +360,7 @@ class _DeckCardState extends State<DeckCard> {
       add(TextSpan(text: '₺' * w.priceLevel!));
     }
     if (!w._film && w.distanceKm != null) {
-      add(TextSpan(text: l10n.deckDistance(oneDecimal.format(w.distanceKm))));
+      add(TextSpan(text: place.distanceText(context)));
     }
     if (w._film && w.durationMinutes != null) {
       add(TextSpan(text: _duration(l10n, w.durationMinutes!, spoken: false)));
@@ -383,8 +385,7 @@ class _DeckCardState extends State<DeckCard> {
           2 => l10n.deckPriceMid,
           _ => l10n.deckPriceHigh,
         },
-      if (!w._film && w.distanceKm != null)
-        l10n.deckDistanceSemantics(oneDecimal.format(w.distanceKm)),
+      if (!w._film) ?place.spokenDistance(context),
       if (w._film && w.durationMinutes != null)
         _duration(l10n, w.durationMinutes!, spoken: true),
       if (w.closingInMinutes != null)

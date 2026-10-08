@@ -325,6 +325,66 @@ abstract class AppLocalizations {
   /// **'Kart {position}, toplam {total}'**
   String deckProgressSemantics(int position, int total);
 
+  /// Görünür mesafe, 1 km'nin altında.
+  ///
+  /// In tr, this message translates to:
+  /// **'{meters} m'**
+  String placeDistanceMeters(int meters);
+
+  /// Mesafenin VoiceOver metni, 1 km'nin altında.
+  ///
+  /// In tr, this message translates to:
+  /// **'{meters} metre'**
+  String placeDistanceMetersSemantics(int meters);
+
+  /// Çok isteyen tek kişi.
+  ///
+  /// In tr, this message translates to:
+  /// **'{a} çok istiyor'**
+  String resultLovers1(String a);
+
+  /// Çok isteyen iki kişi.
+  ///
+  /// In tr, this message translates to:
+  /// **'{a} ve {b} çok istiyor'**
+  String resultLovers2(String a, String b);
+
+  /// Çok isteyen üç kişi.
+  ///
+  /// In tr, this message translates to:
+  /// **'{a}, {b} ve {c} çok istiyor'**
+  String resultLovers3(String a, String b, String c);
+
+  /// Çok isteyen dört ya da daha fazla kişi.
+  ///
+  /// In tr, this message translates to:
+  /// **'{a}, {b} ve {count} kişi daha çok istiyor'**
+  String resultLoversMore(String a, String b, int count);
+
+  /// Oy almış seçenek (VoiceOver).
+  ///
+  /// In tr, this message translates to:
+  /// **'{name}, {count} oy: {names}'**
+  String voteOptionVotes(String name, int count, String names);
+
+  /// Önde olan seçenek (VoiceOver).
+  ///
+  /// In tr, this message translates to:
+  /// **'{name}, önde, {count} oy: {names}'**
+  String voteOptionVotesLeading(String name, int count, String names);
+
+  /// Oy almamış seçenek (VoiceOver).
+  ///
+  /// In tr, this message translates to:
+  /// **'{name}, oy yok'**
+  String voteOptionNoVotes(String name);
+
+  /// Kullanıcının kendi oyunu verdiği seçenek (VoiceOver).
+  ///
+  /// In tr, this message translates to:
+  /// **'Senin oyun.'**
+  String get voteOptionMine;
+
   /// Navigasyon çubuğundaki geri chevron'unun VoiceOver etiketi.
   ///
   /// In tr, this message translates to:

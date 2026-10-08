@@ -168,6 +168,54 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String placeDistanceMeters(int meters) {
+    return '$meters m';
+  }
+
+  @override
+  String placeDistanceMetersSemantics(int meters) {
+    return '$meters meters';
+  }
+
+  @override
+  String resultLovers1(String a) {
+    return '$a loves it';
+  }
+
+  @override
+  String resultLovers2(String a, String b) {
+    return '$a and $b love it';
+  }
+
+  @override
+  String resultLovers3(String a, String b, String c) {
+    return '$a, $b and $c love it';
+  }
+
+  @override
+  String resultLoversMore(String a, String b, int count) {
+    return '$a, $b and $count more love it';
+  }
+
+  @override
+  String voteOptionVotes(String name, int count, String names) {
+    return '$name, $count votes: $names';
+  }
+
+  @override
+  String voteOptionVotesLeading(String name, int count, String names) {
+    return '$name, leading, $count votes: $names';
+  }
+
+  @override
+  String voteOptionNoVotes(String name) {
+    return '$name, no votes';
+  }
+
+  @override
+  String get voteOptionMine => 'Your vote.';
+
+  @override
   String get commonBack => 'Back';
 
   @override
