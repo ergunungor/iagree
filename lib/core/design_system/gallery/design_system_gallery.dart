@@ -31,6 +31,8 @@ import '../components/selection/app_segmented_control.dart';
 import '../components/selection/app_toggle.dart';
 import '../components/inputs/app_text_field.dart';
 import '../components/content/place_meta.dart';
+import '../components/decision/decision_card.dart';
+import '../components/decision/decision_moment.dart';
 import '../components/result/result_card.dart';
 import '../components/result/vote_option.dart';
 import '../components/navigation/app_nav_bar.dart';
@@ -67,7 +69,7 @@ class _DesignSystemGalleryState extends State<DesignSystemGallery> {
   late bool? _dark = widget.initialDark;
   late double _textScale = widget.initialTextScale;
 
-  /// Geliştirme kısayolu: `--dart-define=DEMO=deck|results` ile demo sayfası doğrudan açılır.
+  /// Geliştirme kısayolu: `--dart-define=DEMO=deck|results|moment|moment-majority` ile demo sayfası doğrudan açılır.
   static const String _demo = String.fromEnvironment('DEMO');
 
   @override
@@ -76,6 +78,8 @@ class _DesignSystemGalleryState extends State<DesignSystemGallery> {
     final page = switch (_demo) {
       'deck' => const _SwipeDeckDemo(),
       'results' => const _ResultsDemo(),
+      'moment' => const _MomentDemo(unanimous: true),
+      'moment-majority' => const _MomentDemo(unanimous: false),
       _ => null,
     };
     if (page != null) {
@@ -197,6 +201,7 @@ class _Sections extends StatelessWidget {
           _Section('Avatar', _AvatarSection()),
           _Section('Geri bildirim ve katmanlar', _FeedbackSection()),
           _Section('Uyum yayı', _ArcSection()),
+          _Section('Karar anı', _DecisionSection()),
           _Section('Sonuçlar', _ResultsSection()),
           _Section('Deste kartı', _DeckCardSection()),
           _Section('Navigasyon', _NavigationSection()),
@@ -2377,6 +2382,94 @@ class _ResultsDemoState extends State<_ResultsDemo> {
             ),
           ],
         ],
+      ),
+    );
+  }
+}
+
+class _DecisionSection extends StatelessWidget {
+  const _DecisionSection();
+
+  @override
+  Widget build(BuildContext context) {
+    Widget open(String label, bool unanimous) => AppButton.secondary(
+      label: label,
+      size: AppButtonSize.medium,
+      fullWidth: false,
+      onPressed: () => Navigator.of(context).push(
+        CupertinoPageRoute<void>(
+          fullscreenDialog: true,
+          builder: (_) => _MomentDemo(unanimous: unanimous),
+        ),
+      ),
+    );
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Wrap(
+          spacing: AppSpacing.xs,
+          runSpacing: AppSpacing.xs,
+          children: [
+            open('Oybirliği (animasyonlu)', true),
+            open('Çoğunluk', false),
+          ],
+        ),
+        const SizedBox(height: AppSpacing.md),
+        const _Caption('karar kartı (odanın üstünde)'),
+        const SizedBox(height: AppSpacing.xs),
+        DecisionCard(
+          placeName: 'Trattoria Lume',
+          time: 'Cuma 20:00',
+          photo: const ColoredBox(color: Color(0xFF3A2A24)),
+          onPressed: () {},
+        ),
+      ],
+    );
+  }
+}
+
+class _MomentDemo extends StatelessWidget {
+  const _MomentDemo({required this.unanimous});
+
+  final bool unanimous;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: DecisionMoment(
+        isUnanimous: unanimous,
+        participants: const [
+          AppAvatarPerson(userId: 'u-ayse', name: 'Ayşe Yılmaz'),
+          AppAvatarPerson(userId: 'u-can', name: 'Can Kaya'),
+          AppAvatarPerson(userId: 'u-deniz', name: 'Deniz Er'),
+          AppAvatarPerson(userId: 'u-mert', name: 'Mert Zor'),
+        ],
+        placeName: unanimous ? 'Trattoria Lume' : 'Mavi Kapı Kahve',
+        photo: ColoredBox(
+          color: unanimous ? const Color(0xFF3A2A24) : const Color(0xFFE3D6C3),
+        ),
+        meta: unanimous
+            ? const PlaceMeta(
+                rating: 4.6,
+                category: 'İtalyan',
+                priceLevel: 2,
+                distanceKm: 1.2,
+              )
+            : const PlaceMeta(
+                rating: 4.7,
+                category: 'Kahve',
+                priceLevel: 1,
+                distanceKm: 0.65,
+              ),
+        loveCount: 3,
+        okCount: 1,
+        total: 4,
+        votes: 3,
+        totalVotes: 4,
+        onDirections: () =>
+            AppToast.show(context, message: 'Apple Maps açılırdı'),
+        onShare: () => AppToast.show(context, message: 'Paylaşım açılırdı'),
+        onClose: () => Navigator.of(context).pop(),
       ),
     );
   }

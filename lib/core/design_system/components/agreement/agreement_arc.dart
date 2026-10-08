@@ -54,6 +54,7 @@ class AgreementArc extends StatefulWidget {
     this.size = AgreementArcSize.medium,
     this.onMoment = false,
     this.animate = true,
+    this.reveal,
   }) : assert(loveCount >= 0 && okCount >= 0 && total >= 0),
        assert(loveCount + okCount <= total);
 
@@ -90,6 +91,10 @@ class AgreementArc extends StatefulWidget {
   /// İlk görünüşte dolma animasyonu.
   final bool animate;
 
+  /// Verilirse dolma süresini ve eğrisini kendi içindeki animasyon yerine bu belirler (0→1);
+  /// karar anı gibi koreografinin parçası olan kullanımlar içindir. [animate] yok sayılır.
+  final Animation<double>? reveal;
+
   @override
   State<AgreementArc> createState() => _AgreementArcState();
 }
@@ -108,6 +113,10 @@ class _AgreementArcState extends State<AgreementArc>
     super.didChangeDependencies();
     if (_initialized) return;
     _initialized = true;
+    if (widget.reveal != null) {
+      _reveal = widget.reveal!;
+      return;
+    }
     final motion = context.motion;
     if (!widget.animate || motion.reduceMotion) {
       _controller.value = 1;

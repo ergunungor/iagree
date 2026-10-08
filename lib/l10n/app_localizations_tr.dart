@@ -216,6 +216,36 @@ class AppLocalizationsTr extends AppLocalizations {
   String get voteOptionMine => 'Senin oyun.';
 
   @override
+  String get decisionUnanimous => 'Hepiniz anlaştınız.';
+
+  @override
+  String get decisionMajority => 'Karar verildi.';
+
+  @override
+  String get decisionDirections => 'Yol tarifi al';
+
+  @override
+  String get decisionShare => 'Gruba paylaş';
+
+  @override
+  String decisionVotes(int votes, int total) {
+    return '$votes/$total oyla seçildi';
+  }
+
+  @override
+  String get decisionCardOverline => 'Karar';
+
+  @override
+  String decisionCardSemantics(String name, String time) {
+    return 'Karar: $name, $time';
+  }
+
+  @override
+  String decisionParticipants(String names) {
+    return 'Katılımcılar: $names';
+  }
+
+  @override
   String get commonBack => 'Geri';
 
   @override

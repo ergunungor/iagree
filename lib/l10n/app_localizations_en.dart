@@ -216,6 +216,36 @@ class AppLocalizationsEn extends AppLocalizations {
   String get voteOptionMine => 'Your vote.';
 
   @override
+  String get decisionUnanimous => 'You all agree.';
+
+  @override
+  String get decisionMajority => 'It\'s decided.';
+
+  @override
+  String get decisionDirections => 'Get directions';
+
+  @override
+  String get decisionShare => 'Share with the group';
+
+  @override
+  String decisionVotes(int votes, int total) {
+    return 'Chosen with $votes/$total votes';
+  }
+
+  @override
+  String get decisionCardOverline => 'Decision';
+
+  @override
+  String decisionCardSemantics(String name, String time) {
+    return 'Decision: $name, $time';
+  }
+
+  @override
+  String decisionParticipants(String names) {
+    return 'Participants: $names';
+  }
+
+  @override
   String get commonBack => 'Back';
 
   @override

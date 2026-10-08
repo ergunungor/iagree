@@ -308,6 +308,49 @@
   "@voteOptionMine": {
     "description": "Kullanıcının kendi oyunu verdiği seçenek (VoiceOver)."
   },
+  "decisionUnanimous": "Hepiniz anlaştınız.",
+  "@decisionUnanimous": {
+    "description": "Karar anı başlığı (oybirliği)."
+  },
+  "decisionMajority": "Karar verildi.",
+  "@decisionMajority": {
+    "description": "Karar anı başlığı (çoğunluk)."
+  },
+  "decisionDirections": "Yol tarifi al",
+  "@decisionDirections": {
+    "description": "Karar anı birincil eylemi."
+  },
+  "decisionShare": "Gruba paylaş",
+  "@decisionShare": {
+    "description": "Karar anı ikincil eylemi."
+  },
+  "decisionVotes": "{votes}/{total} oyla seçildi",
+  "@decisionVotes": {
+    "description": "Çoğunluk etiketi.",
+    "placeholders": {
+      "votes": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
+  "decisionCardOverline": "Karar",
+  "@decisionCardOverline": {
+    "description": "Odadaki karar kartının üst etiketi."
+  },
+  "decisionCardSemantics": "Karar: {name}, {time}",
+  "@decisionCardSemantics": {
+    "description": "Karar kartı (VoiceOver).",
+    "placeholders": {
+      "name": {"type": "String"},
+      "time": {"type": "String"}
+    }
+  },
+  "decisionParticipants": "Katılımcılar: {names}",
+  "@decisionParticipants": {
+    "description": "Karar anındaki avatar kümesi (VoiceOver).",
+    "placeholders": {
+      "names": {"type": "String"}
+    }
+  },
   "commonBack": "Geri",
   "@commonBack": {
     "description": "Navigasyon çubuğundaki geri chevron'unun VoiceOver etiketi."

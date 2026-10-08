@@ -385,6 +385,54 @@ abstract class AppLocalizations {
   /// **'Senin oyun.'**
   String get voteOptionMine;
 
+  /// Karar anı başlığı (oybirliği).
+  ///
+  /// In tr, this message translates to:
+  /// **'Hepiniz anlaştınız.'**
+  String get decisionUnanimous;
+
+  /// Karar anı başlığı (çoğunluk).
+  ///
+  /// In tr, this message translates to:
+  /// **'Karar verildi.'**
+  String get decisionMajority;
+
+  /// Karar anı birincil eylemi.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yol tarifi al'**
+  String get decisionDirections;
+
+  /// Karar anı ikincil eylemi.
+  ///
+  /// In tr, this message translates to:
+  /// **'Gruba paylaş'**
+  String get decisionShare;
+
+  /// Çoğunluk etiketi.
+  ///
+  /// In tr, this message translates to:
+  /// **'{votes}/{total} oyla seçildi'**
+  String decisionVotes(int votes, int total);
+
+  /// Odadaki karar kartının üst etiketi.
+  ///
+  /// In tr, this message translates to:
+  /// **'Karar'**
+  String get decisionCardOverline;
+
+  /// Karar kartı (VoiceOver).
+  ///
+  /// In tr, this message translates to:
+  /// **'Karar: {name}, {time}'**
+  String decisionCardSemantics(String name, String time);
+
+  /// Karar anındaki avatar kümesi (VoiceOver).
+  ///
+  /// In tr, this message translates to:
+  /// **'Katılımcılar: {names}'**
+  String decisionParticipants(String names);
+
   /// Navigasyon çubuğundaki geri chevron'unun VoiceOver etiketi.
   ///
   /// In tr, this message translates to:
