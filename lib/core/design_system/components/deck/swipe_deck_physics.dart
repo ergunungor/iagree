@@ -82,8 +82,8 @@ abstract final class SwipePhysics {
   /// Renk tonunun eşikteki en yüksek opaklığı.
   static const double tintMaxAlpha = 0.20;
 
-  /// Sürükleme sırasında ekran zemininin eşikteki en yüksek ton opaklığı (karttan daha yumuşak).
-  static const double screenTintMaxAlpha = 0.12;
+  /// Sürükleme sırasında ekran zemininin eşikteki en yüksek ton opaklığı (kart tonundan biraz yukarıda: zemin geniş bir alan, renk ayırt edilmeli).
+  static const double screenTintMaxAlpha = 0.25;
 
   /// Ekranın alt kenarında bu kadar pt'lik şeritte başlayan dokunuş deste hareketi sayılmaz.
   static const double bottomGuard = 20;

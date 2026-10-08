@@ -288,35 +288,45 @@ void main() {
       'Olmaz': (const Offset(0, 300), _light.error),
     };
     for (final e in tones.entries) {
-      testWidgets('${e.key}: ekran eşikte kararın tonuna %12 boyanır', (
-        tester,
-      ) async {
+      testWidgets(
+        '${e.key}: ekran eşikte kararın tonuna tam ton opaklığına boyanır',
+        (tester) async {
+          _phone(tester);
+          await pumpApp(tester, _screen(_Log(), items: const ['a', 'b']));
+          final g = await tester.startGesture(
+            _pivot(tester, 'a') - const Offset(0, 200),
+          );
+          await g.moveBy(e.value.$1);
+          await tester.pump();
+          expect(
+            tintAlpha(tester, e.value.$2),
+            closeTo(SwipePhysics.screenTintMaxAlpha, 0.01),
+          );
+          await g.up();
+          await tester.pumpAndSettle();
+          expect(tintAlpha(tester, e.value.$2), isNull);
+        },
+      );
+    }
+
+    testWidgets(
+      'ton eşiğe kadar artar: yarıda yarısı (kart 310 pt, eşik 93 pt)',
+      (tester) async {
         _phone(tester);
-        await pumpApp(tester, _screen(_Log(), items: const ['a', 'b']));
+        await pumpApp(tester, _screen(_Log()));
         final g = await tester.startGesture(
           _pivot(tester, 'a') - const Offset(0, 200),
         );
-        await g.moveBy(e.value.$1);
+        await g.moveBy(const Offset(46.5, 0));
         await tester.pump();
-        expect(tintAlpha(tester, e.value.$2), closeTo(0.12, 0.01));
+        expect(
+          tintAlpha(tester, _light.brandMuted),
+          closeTo(SwipePhysics.screenTintMaxAlpha / 2, 0.01),
+        );
         await g.up();
         await tester.pumpAndSettle();
-        expect(tintAlpha(tester, e.value.$2), isNull);
-      });
-    }
-
-    testWidgets('ton eşiğe kadar artar: yarıda ~%6', (tester) async {
-      _phone(tester);
-      await pumpApp(tester, _screen(_Log()));
-      final g = await tester.startGesture(
-        _pivot(tester, 'a') - const Offset(0, 200),
-      );
-      await g.moveBy(const Offset(52.5, 0));
-      await tester.pump();
-      expect(tintAlpha(tester, _light.brandMuted), closeTo(0.06, 0.01));
-      await g.up();
-      await tester.pumpAndSettle();
-    });
+      },
+    );
 
     testWidgets('bırakmadan yön değişince ton da değişir', (tester) async {
       _phone(tester);
@@ -330,7 +340,10 @@ void main() {
       await g.moveBy(const Offset(0, -300));
       await tester.pump();
       expect(tintAlpha(tester, _light.brandMuted), isNull);
-      expect(tintAlpha(tester, _light.brand), closeTo(0.12, 0.01));
+      expect(
+        tintAlpha(tester, _light.brand),
+        closeTo(SwipePhysics.screenTintMaxAlpha, 0.01),
+      );
       await g.up();
       await tester.pumpAndSettle();
     });
@@ -347,7 +360,10 @@ void main() {
       await tester.pump(const Duration(milliseconds: 200)); // uçuş bitti
       await tester.pump(const Duration(milliseconds: 100)); // solma sürüyor
       final fading = tintAlpha(tester, _light.brandMuted);
-      expect(fading == null || fading < 0.12, isTrue);
+      expect(
+        fading == null || fading < SwipePhysics.screenTintMaxAlpha,
+        isTrue,
+      );
       await tester.pumpAndSettle();
       expect(tintAlpha(tester, _light.brandMuted), isNull);
     });
@@ -375,7 +391,10 @@ void main() {
       );
       await g.moveBy(const Offset(120, 0));
       await tester.pump();
-      expect(tintAlpha(tester, AppColors.dark.brandMuted), closeTo(0.12, 0.01));
+      expect(
+        tintAlpha(tester, AppColors.dark.brandMuted),
+        closeTo(SwipePhysics.screenTintMaxAlpha, 0.01),
+      );
       await g.up();
       await tester.pumpAndSettle();
     });
