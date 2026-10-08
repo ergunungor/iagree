@@ -22,6 +22,8 @@ class AppPressable extends StatefulWidget {
     required this.semanticLabel,
     required this.builder,
     this.semanticValue,
+    this.semanticSelected,
+    this.semanticChecked,
     this.isBusy = false,
     this.scaleOnPress = true,
     this.focusShape,
@@ -33,6 +35,12 @@ class AppPressable extends StatefulWidget {
   final VoidCallback? onPressed;
   final String semanticLabel;
   final String? semanticValue;
+
+  /// Seçili durumu (chip, segment); null ise semantics'e eklenmez.
+  final bool? semanticSelected;
+
+  /// İşaretli durumu (checkbox, check circle); null ise semantics'e eklenmez.
+  final bool? semanticChecked;
 
   /// Meşgulken (loading) basış yok sayılır ama VoiceOver'a enabled görünür.
   final bool isBusy;
@@ -180,6 +188,8 @@ class _AppPressableState extends State<AppPressable>
       enabled: _enabled,
       label: widget.semanticLabel,
       value: widget.semanticValue,
+      selected: widget.semanticSelected,
+      checked: widget.semanticChecked,
       onTap: _interactive ? widget.onPressed : null,
       excludeSemantics: true,
       child: FocusableActionDetector(

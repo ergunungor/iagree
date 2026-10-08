@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../l10n/app_localizations.dart';
+import '../../foundations/app_animated_size.dart';
 import '../../foundations/app_icons.dart';
 import '../../foundations/context_extensions.dart';
 import '../../foundations/text_input_controllers.dart';
@@ -142,7 +143,7 @@ class _AppSearchFieldState extends State<AppSearchField>
     return Row(
       children: [
         field,
-        AnimatedSize(
+        AppAnimatedSize(
           duration: motion.standard,
           curve: AppMotion.enter,
           alignment: Alignment.centerRight,

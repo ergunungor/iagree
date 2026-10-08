@@ -100,4 +100,31 @@ void main() {
     expect(on.reduceMotion, isTrue);
     expect(off.reduceMotion, isFalse);
   });
+
+  group('SpringCurve', () {
+    test('0\'da 0, 1\'de 1; yerleşme süresi makul', () {
+      final c = AppMotion.regular.springSnappyCurve;
+      expect(c.transform(0), 0);
+      expect(c.transform(1), 1);
+      expect(c.duration.inMilliseconds, inInclusiveRange(150, 700));
+    });
+
+    test('hedefe yaklaşır, sönüm 0,9 olduğu için taşma küçüktür', () {
+      final c = AppMotion.regular.springSnappyCurve;
+      var peak = 0.0;
+      for (var i = 0; i <= 100; i++) {
+        peak = peak < c.transform(i / 100) ? c.transform(i / 100) : peak;
+      }
+      expect(peak, lessThan(1.05));
+      expect(c.transform(0.5), greaterThan(0.8));
+    });
+
+    test('Reduce Motion: süre 0', () {
+      expect(
+        AppMotion.regular.springSnappyDuration,
+        AppMotion.regular.springSnappyCurve.duration,
+      );
+      expect(AppMotion.reduced.springSnappyDuration, Duration.zero);
+    });
+  });
 }

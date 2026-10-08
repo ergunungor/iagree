@@ -258,4 +258,26 @@ void main() {
       expect(tester.getSize(_box).height, greaterThan(44));
     });
   });
+
+  group('Reduce Motion', () {
+    testWidgets('Vazgeç animasyonsuz ve çökmeden belirir', (tester) async {
+      await tester.pumpWidget(
+        MediaQuery(
+          data: const MediaQueryData(disableAnimations: true),
+          child: MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            locale: const Locale('tr'),
+            theme: AppTheme.light,
+            home: const Scaffold(body: AppSearchField(hintText: 'Mekan ara')),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      await tester.tap(find.byType(TextField));
+      await tester.pumpAndSettle();
+      expect(tester.takeException(), isNull);
+      expect(find.text('Vazgeç'), findsOneWidget);
+    });
+  });
 }

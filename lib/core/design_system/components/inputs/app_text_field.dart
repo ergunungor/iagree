@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../../l10n/app_localizations.dart';
+import '../../foundations/app_animated_size.dart';
 import '../../foundations/app_icons.dart';
 import '../../foundations/app_pressable.dart';
 import '../../foundations/context_extensions.dart';
@@ -208,7 +209,7 @@ class _AppTextFieldState extends State<AppTextField>
           onTap: widget.enabled ? focusNode.requestFocus : null,
           child: field,
         ),
-        AnimatedSize(
+        AppAnimatedSize(
           duration: motion.standard,
           curve: AppMotion.enter,
           alignment: Alignment.topLeft,

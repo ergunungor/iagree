@@ -8,6 +8,11 @@ import '../components/buttons/app_icon_button.dart';
 import '../components/inputs/app_search_field.dart';
 import '../components/inputs/app_slider.dart';
 import '../components/inputs/app_stepper.dart';
+import '../components/selection/app_check_circle.dart';
+import '../components/selection/app_checkbox.dart';
+import '../components/selection/app_chip.dart';
+import '../components/selection/app_segmented_control.dart';
+import '../components/selection/app_toggle.dart';
 import '../components/inputs/app_text_field.dart';
 import '../foundations/app_haptics.dart';
 import '../foundations/app_icons.dart';
@@ -147,6 +152,7 @@ class _Sections extends StatelessWidget {
           _Section('Metin alanı', _TextFieldSection()),
           _Section('Arama alanı', _SearchFieldSection()),
           _Section('Stepper ve slider', _StepperSliderSection()),
+          _Section('Seçim', _SelectionSection()),
           _Section('Haptik', _HapticsSection()),
         ],
       ),
@@ -1222,6 +1228,132 @@ class _StepperSliderSectionState extends State<_StepperSliderSection> {
           semanticLabel: 'Mesafe',
           valueFormatter: (v) => '${v.round()} km',
           onChanged: null,
+        ),
+      ],
+    );
+  }
+}
+
+// ---------------------------------------------------------------- Seçim
+
+class _SelectionSection extends StatefulWidget {
+  const _SelectionSection();
+
+  @override
+  State<_SelectionSection> createState() => _SelectionSectionState();
+}
+
+class _SelectionSectionState extends State<_SelectionSection> {
+  final Set<String> _chips = {'Bugün'};
+  String _when = 'Akşam';
+  bool _toggle = true;
+  bool _check = true;
+  bool _circle = true;
+
+  @override
+  Widget build(BuildContext context) {
+    final c = context.colors;
+    Widget label(String text) => Padding(
+      padding: const EdgeInsets.only(bottom: AppSpacing.xs),
+      child: Text(
+        text,
+        style: context.text.overline.copyWith(color: c.textSecondary),
+      ),
+    );
+    const gap = SizedBox(height: AppSpacing.lg);
+    const whens = [
+      'Şimdi',
+      'Bugün',
+      'Bu hafta sonu',
+      'Cuma akşamı',
+      'Başka zaman',
+    ];
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        label('chip · çoklu seçim (✓ spring ile açılır)'),
+        Wrap(
+          spacing: AppSpacing.xs,
+          runSpacing: AppSpacing.xs,
+          children: [
+            for (final w in whens)
+              AppChip(
+                label: w,
+                selected: _chips.contains(w),
+                onChanged: (v) =>
+                    setState(() => v ? _chips.add(w) : _chips.remove(w)),
+              ),
+            const AppChip(label: 'Pasif', selected: false, onChanged: null),
+          ],
+        ),
+        gap,
+        label('segmented · 3 segment'),
+        AppSegmentedControl<String>(
+          segments: const [
+            AppSegment(value: 'Sabah', label: 'Sabah'),
+            AppSegment(value: 'Öğle', label: 'Öğle'),
+            AppSegment(value: 'Akşam', label: 'Akşam'),
+          ],
+          value: _when,
+          onChanged: (v) => setState(() => _when = v),
+        ),
+        const SizedBox(height: AppSpacing.md),
+        label('segmented · 2 segment, pasif'),
+        AppSegmentedControl<String>(
+          segments: const [
+            AppSegment(value: 'a', label: 'Açık'),
+            AppSegment(value: 'b', label: 'Koyu'),
+          ],
+          value: 'a',
+          onChanged: null,
+        ),
+        gap,
+        label('toggle'),
+        Row(
+          children: [
+            AppToggle(
+              value: _toggle,
+              semanticLabel: 'Bildirimler',
+              onChanged: (v) => setState(() => _toggle = v),
+            ),
+            const SizedBox(width: AppSpacing.md),
+            const AppToggle(
+              value: true,
+              semanticLabel: 'Pasif',
+              onChanged: null,
+            ),
+          ],
+        ),
+        gap,
+        label('checkbox · check circle'),
+        Row(
+          children: [
+            AppCheckbox(
+              value: _check,
+              semanticLabel: 'Koşulları kabul ediyorum',
+              onChanged: (v) => setState(() => _check = v),
+            ),
+            const AppCheckbox(
+              value: false,
+              semanticLabel: 'Pasif',
+              onChanged: null,
+            ),
+            const AppCheckbox(
+              value: true,
+              semanticLabel: 'Pasif işaretli',
+              onChanged: null,
+            ),
+            const SizedBox(width: AppSpacing.lg),
+            AppCheckCircle(
+              selected: _circle,
+              semanticLabel: 'Seçenek',
+              onChanged: (v) => setState(() => _circle = v),
+            ),
+            const SizedBox(width: AppSpacing.xs),
+            const AppCheckCircle(selected: false),
+            const SizedBox(width: AppSpacing.md),
+            const AppCheckCircle(selected: true),
+          ],
         ),
       ],
     );

@@ -1,3 +1,4 @@
+import 'package:flutter/physics.dart';
 import 'package:flutter/widgets.dart';
 
 /// Hareket token'ları (DESIGN_SYSTEM.md §12). Reduce Motion'a duyarlıdır:
@@ -13,6 +14,7 @@ class AppMotion {
     required this.springSnappy,
     required this.springStandard,
     required this.springBouncy,
+    required this.springSnappyCurve,
   });
 
   /// Reduce Motion kapalı.
@@ -25,6 +27,7 @@ class AppMotion {
     springSnappy: _spring(stiffness: 439, ratio: 0.9),
     springStandard: _spring(stiffness: 195, ratio: 0.85),
     springBouncy: _spring(stiffness: 158, ratio: 0.7),
+    springSnappyCurve: SpringCurve(_spring(stiffness: 439, ratio: 0.9)),
   );
 
   /// Reduce Motion açık: süreler 0, spring'ler aynı stiffness ile overshoot'suz (kritik sönüm).
@@ -37,6 +40,7 @@ class AppMotion {
     springSnappy: _spring(stiffness: 439, ratio: 1),
     springStandard: _spring(stiffness: 195, ratio: 1),
     springBouncy: _spring(stiffness: 158, ratio: 1),
+    springSnappyCurve: SpringCurve(_spring(stiffness: 439, ratio: 1)),
   );
 
   /// `MediaQuery.disableAnimationsOf` açıksa [reduced], değilse [regular].
@@ -67,6 +71,15 @@ class AppMotion {
   /// Yalnızca tamamlanma anları: ring ✓, karar anı.
   final SpringDescription springBouncy;
 
+  /// [springSnappy]'nin eğri hâli: `AnimatedSize` gibi yalnızca süre ve eğri alan
+  /// animasyonlarda spring hissi için (chip genişliği). Süresi `springSnappyCurve.duration`;
+  /// Reduce Motion'da süre 0 verilmelidir (bkz. [springSnappyDuration]).
+  final SpringCurve springSnappyCurve;
+
+  /// [springSnappyCurve] ile birlikte kullanılacak süre; Reduce Motion'da 0.
+  Duration get springSnappyDuration =>
+      reduceMotion ? Duration.zero : springSnappyCurve.duration;
+
   /// Ekrana giren her şey.
   static const Cubic enter = Cubic(0.16, 1, 0.3, 1);
 
@@ -86,4 +99,33 @@ class AppMotion {
       ratio: ratio,
     );
   }
+}
+
+/// Bir spring'in 0'dan 1'e yerleşme hareketini [Curve] olarak verir.
+///
+/// `transform(t)`, spring'in `t * duration` anındaki konumudur; süre, spring'in yerleştiği
+/// ana (varsayılan tolerans) kadardır. Sönüm oranı < 1 ise küçük bir taşma olabilir.
+class SpringCurve extends Curve {
+  SpringCurve(SpringDescription spring)
+    : _simulation = SpringSimulation(spring, 0, 1, 0),
+      duration = _settleTime(spring);
+
+  final SpringSimulation _simulation;
+
+  /// Spring'in yerleşme süresi.
+  final Duration duration;
+
+  static Duration _settleTime(SpringDescription spring) {
+    final simulation = SpringSimulation(spring, 0, 1, 0);
+    var ms = 0;
+    while (!simulation.isDone(ms / 1000) && ms < 2000) {
+      ms++;
+    }
+    return Duration(milliseconds: ms);
+  }
+
+  @override
+  double transformInternal(double t) => _simulation.x(
+    t * duration.inMicroseconds / Duration.microsecondsPerSecond,
+  );
 }

@@ -392,4 +392,25 @@ void main() {
       expect(tester.getSize(_box).height, greaterThan(60));
     });
   });
+
+  group('Reduce Motion', () {
+    testWidgets('hata satırı animasyonsuz ve çökmeden görünür', (tester) async {
+      await tester.pumpWidget(
+        MediaQuery(
+          data: const MediaQueryData(disableAnimations: true),
+          child: MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            theme: AppTheme.light,
+            home: const Scaffold(
+              body: AppTextField(label: 'x', errorText: 'Hata'),
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      expect(tester.takeException(), isNull);
+      expect(find.text('Hata'), findsOneWidget);
+    });
+  });
 }
