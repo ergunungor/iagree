@@ -23,6 +23,7 @@ class AppIconButton extends StatelessWidget {
     required this.icon,
     required this.semanticLabel,
     required this.onPressed,
+    this.repeatOnHold = false,
   }) : style = AppIconButtonStyle.plain,
        assert(semanticLabel != '');
 
@@ -31,6 +32,7 @@ class AppIconButton extends StatelessWidget {
     required this.icon,
     required this.semanticLabel,
     required this.onPressed,
+    this.repeatOnHold = false,
   }) : style = AppIconButtonStyle.soft,
        assert(semanticLabel != '');
 
@@ -41,6 +43,7 @@ class AppIconButton extends StatelessWidget {
     required this.semanticLabel,
     required VoidCallback this.onPressed,
   }) : style = AppIconButtonStyle.media,
+       repeatOnHold = false,
        assert(semanticLabel != '');
 
   final AppIconButtonStyle style;
@@ -49,6 +52,9 @@ class AppIconButton extends StatelessWidget {
 
   /// Null ise disabled.
   final VoidCallback? onPressed;
+
+  /// Basılı tutulunca [onPressed]'i hızlanarak tekrarlar (stepper).
+  final bool repeatOnHold;
 
   static const double _circle = 36;
   static const double _pressedOpacity = 0.5;
@@ -70,6 +76,7 @@ class AppIconButton extends StatelessWidget {
     return AppPressable(
       onPressed: onPressed,
       semanticLabel: semanticLabel,
+      repeatOnHold: repeatOnHold,
       // Plain dolgusuz: yalnızca opaklıkla tepki verir.
       scaleOnPress: style != AppIconButtonStyle.plain,
       focusShape: style == AppIconButtonStyle.plain

@@ -200,4 +200,36 @@ void main() {
     await tester.pump();
     expect(taps, 1);
   });
+
+  testWidgets(
+    'basılıyken pasifleşirse (parmak hâlâ üstünde) hata vermez, basılı durum sıfırlanır',
+    (tester) async {
+      final enabled = ValueNotifier<bool>(true);
+      await _pump(
+        tester,
+        ValueListenableBuilder<bool>(
+          valueListenable: enabled,
+          builder: (context, on, _) => AppPressable(
+            onPressed: on ? () {} : null,
+            semanticLabel: 'x',
+            builder: (c, p) => _box(p),
+          ),
+        ),
+      );
+      final g = await tester.startGesture(tester.getCenter(_pressable));
+      await tester.pump();
+      ColoredBox box() => tester.widget<ColoredBox>(
+        find.descendant(of: _pressable, matching: find.byType(ColoredBox)),
+      );
+      expect(box().color, Colors.red);
+      enabled.value = false; // parmak hâlâ basılı
+      await tester.pump();
+      await tester.pump();
+      expect(tester.takeException(), isNull);
+      expect(box().color, Colors.blue);
+      await g.up();
+      await tester.pumpAndSettle();
+      expect(tester.takeException(), isNull);
+    },
+  );
 }

@@ -3,5 +3,7 @@
   "appTitle": "iAgree",
   "commonLoading": "Loading",
   "commonClear": "Clear",
-  "commonCancel": "Cancel"
+  "commonCancel": "Cancel",
+  "commonIncrease": "Increase",
+  "commonDecrease": "Decrease"
 }

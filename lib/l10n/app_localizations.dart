@@ -121,6 +121,18 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Vazgeç'**
   String get commonCancel;
+
+  /// Stepper + butonunun VoiceOver etiketi.
+  ///
+  /// In tr, this message translates to:
+  /// **'Artır'**
+  String get commonIncrease;
+
+  /// Stepper − butonunun VoiceOver etiketi.
+  ///
+  /// In tr, this message translates to:
+  /// **'Azalt'**
+  String get commonDecrease;
 }
 
 class _AppLocalizationsDelegate

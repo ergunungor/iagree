@@ -6,6 +6,8 @@ import '../components/brand/app_logo.dart';
 import '../components/buttons/app_button.dart';
 import '../components/buttons/app_icon_button.dart';
 import '../components/inputs/app_search_field.dart';
+import '../components/inputs/app_slider.dart';
+import '../components/inputs/app_stepper.dart';
 import '../components/inputs/app_text_field.dart';
 import '../foundations/app_haptics.dart';
 import '../foundations/app_icons.dart';
@@ -144,6 +146,7 @@ class _Sections extends StatelessWidget {
           _Section('İkon butonu', _IconButtonSection()),
           _Section('Metin alanı', _TextFieldSection()),
           _Section('Arama alanı', _SearchFieldSection()),
+          _Section('Stepper ve slider', _StepperSliderSection()),
           _Section('Haptik', _HapticsSection()),
         ],
       ),
@@ -1152,6 +1155,74 @@ class _SearchFieldSection extends StatelessWidget {
         AppSearchField(hintText: 'Mekan ara'),
         SizedBox(height: AppSpacing.md),
         AppSearchField(hintText: 'Pasif', enabled: false),
+      ],
+    );
+  }
+}
+
+// ---------------------------------------------------------------- Stepper ve slider
+
+class _StepperSliderSection extends StatefulWidget {
+  const _StepperSliderSection();
+
+  @override
+  State<_StepperSliderSection> createState() => _StepperSliderSectionState();
+}
+
+class _StepperSliderSectionState extends State<_StepperSliderSection> {
+  int _people = 4;
+  double _km = 3;
+  static const _kmValues = [1.0, 3.0, 5.0, 10.0];
+
+  @override
+  Widget build(BuildContext context) {
+    final c = context.colors;
+    Widget label(String text) => Padding(
+      padding: const EdgeInsets.only(bottom: AppSpacing.xs),
+      child: Text(
+        text,
+        style: context.text.overline.copyWith(color: c.textSecondary),
+      ),
+    );
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        label('stepper · 1–12 (basılı tut: hızlanır)'),
+        AppStepper(
+          value: _people,
+          min: 1,
+          max: 12,
+          semanticLabel: 'Kişi sayısı',
+          valueFormatter: (v) => '$v kişi',
+          onChanged: (v) => setState(() => _people = v),
+        ),
+        const SizedBox(height: AppSpacing.md),
+        label('stepper · pasif'),
+        const AppStepper(
+          value: 2,
+          min: 1,
+          max: 12,
+          semanticLabel: 'Kişi sayısı',
+          onChanged: null,
+        ),
+        const SizedBox(height: AppSpacing.xl),
+        label('slider · 1, 3, 5, 10 km'),
+        AppSlider(
+          values: _kmValues,
+          value: _km,
+          semanticLabel: 'Mesafe',
+          valueFormatter: (v) => '${v.round()} km',
+          onChanged: (v) => setState(() => _km = v),
+        ),
+        const SizedBox(height: AppSpacing.md),
+        label('slider · pasif'),
+        AppSlider(
+          values: _kmValues,
+          value: 5,
+          semanticLabel: 'Mesafe',
+          valueFormatter: (v) => '${v.round()} km',
+          onChanged: null,
+        ),
       ],
     );
   }

@@ -20,4 +20,10 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get commonCancel => 'Vazgeç';
+
+  @override
+  String get commonIncrease => 'Artır';
+
+  @override
+  String get commonDecrease => 'Azalt';
 }

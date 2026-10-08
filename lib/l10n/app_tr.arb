@@ -15,5 +15,13 @@
   "commonCancel": "Vazgeç",
   "@commonCancel": {
     "description": "Vazgeç butonu (arama alanı gibi geri alınabilir işlemler)."
+  },
+  "commonIncrease": "Artır",
+  "commonDecrease": "Azalt",
+  "@commonIncrease": {
+    "description": "Stepper + butonunun VoiceOver etiketi."
+  },
+  "@commonDecrease": {
+    "description": "Stepper − butonunun VoiceOver etiketi."
   }
 }
