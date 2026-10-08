@@ -158,6 +158,29 @@ abstract class AppLocalizations {
   /// **'{name}, hazır'**
   String participantReady(String name);
 
+  /// AgreementArc altındaki kişi sayısı: olumlu / toplam.
+  ///
+  /// In tr, this message translates to:
+  /// **'{positive}/{total} kişi'**
+  String agreementArcPeople(int positive, int total);
+
+  /// AgreementArc VoiceOver cümlesi (çok isteyen yoksa). Sayıya ek getirilmez: Türkçe ünlü uyumu sayıya göre değişir.
+  ///
+  /// In tr, this message translates to:
+  /// **'Uyum yüzde {percent}. Toplam {total} kişi, olumlu {positive}.'**
+  String agreementArcSemantics(int percent, int total, int positive);
+
+  /// AgreementArc VoiceOver cümlesi (çok isteyen varsa).
+  ///
+  /// In tr, this message translates to:
+  /// **'Uyum yüzde {percent}. Toplam {total} kişi, olumlu {positive}, çok isteyen {love}.'**
+  String agreementArcSemanticsLove(
+    int percent,
+    int total,
+    int positive,
+    int love,
+  );
+
   /// Navigasyon çubuğundaki geri chevron'unun VoiceOver etiketi.
   ///
   /// In tr, this message translates to:

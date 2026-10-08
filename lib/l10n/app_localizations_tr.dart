@@ -48,6 +48,26 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
+  String agreementArcPeople(int positive, int total) {
+    return '$positive/$total kişi';
+  }
+
+  @override
+  String agreementArcSemantics(int percent, int total, int positive) {
+    return 'Uyum yüzde $percent. Toplam $total kişi, olumlu $positive.';
+  }
+
+  @override
+  String agreementArcSemanticsLove(
+    int percent,
+    int total,
+    int positive,
+    int love,
+  ) {
+    return 'Uyum yüzde $percent. Toplam $total kişi, olumlu $positive, çok isteyen $love.';
+  }
+
+  @override
   String get commonBack => 'Geri';
 
   @override

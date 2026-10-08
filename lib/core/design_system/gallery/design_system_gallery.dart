@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
 
+import '../components/agreement/agreement_arc.dart';
 import '../components/brand/app_logo.dart';
 import '../components/buttons/app_button.dart';
 import '../components/buttons/app_icon_button.dart';
@@ -169,6 +170,7 @@ class _Sections extends StatelessWidget {
           _Section('Kart ve liste', _CardListSection()),
           _Section('Avatar', _AvatarSection()),
           _Section('Geri bildirim ve katmanlar', _FeedbackSection()),
+          _Section('Uyum yayı', _ArcSection()),
           _Section('Navigasyon', _NavigationSection()),
           _Section('Haptik', _HapticsSection()),
         ],
@@ -1993,6 +1995,101 @@ class _ModalFlowDemoState extends State<_ModalFlowDemo> {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _ArcSection extends StatefulWidget {
+  const _ArcSection();
+
+  @override
+  State<_ArcSection> createState() => _ArcSectionState();
+}
+
+class _ArcSectionState extends State<_ArcSection> {
+  int _replay = 0;
+
+  // (Çok isterim, Olur, toplam)
+  static const _cases = [(2, 2, 5), (0, 2, 3), (0, 0, 5), (3, 2, 5)];
+
+  @override
+  Widget build(BuildContext context) {
+    return KeyedSubtree(
+      key: ValueKey(_replay),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          AppButton.secondary(
+            label: 'Animasyonu yeniden oynat',
+            size: AppButtonSize.medium,
+            onPressed: () => setState(() => _replay++),
+          ),
+          const SizedBox(height: AppSpacing.md),
+          const _Caption('S · 32 / 4'),
+          const SizedBox(height: AppSpacing.xs),
+          Wrap(
+            spacing: AppSpacing.lg,
+            runSpacing: AppSpacing.sm,
+            children: [
+              for (final c in _cases)
+                AgreementArc(
+                  loveCount: c.$1,
+                  okCount: c.$2,
+                  total: c.$3,
+                  size: AgreementArcSize.small,
+                ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.md),
+          const _Caption(
+            'M · 64 / 6 · 2/2/5, 0/2/3 (%66), 0/0/5, 3/2/5 (%100)',
+          ),
+          const SizedBox(height: AppSpacing.xs),
+          Wrap(
+            spacing: AppSpacing.lg,
+            runSpacing: AppSpacing.sm,
+            children: [
+              for (final c in _cases)
+                AgreementArc(
+                  loveCount: c.$1,
+                  okCount: c.$2,
+                  total: c.$3,
+                  size: AgreementArcSize.medium,
+                ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.md),
+          const _Caption('L · 160 / 14'),
+          const SizedBox(height: AppSpacing.xs),
+          const AgreementArc(
+            loveCount: 2,
+            okCount: 2,
+            total: 5,
+            size: AgreementArcSize.large,
+          ),
+          const SizedBox(height: AppSpacing.md),
+          const _Caption('onMoment · momentBg üzerinde, tek ton'),
+          const SizedBox(height: AppSpacing.xs),
+          DecoratedBox(
+            decoration: AppRadius.decoration(
+              radius: AppRadius.lg,
+              color: AppFixedColors.momentBg,
+            ),
+            child: const Padding(
+              padding: EdgeInsets.all(AppSpacing.xl),
+              child: Center(
+                child: AgreementArc(
+                  loveCount: 2,
+                  okCount: 2,
+                  total: 5,
+                  size: AgreementArcSize.large,
+                  onMoment: true,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

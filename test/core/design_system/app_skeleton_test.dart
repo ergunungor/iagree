@@ -111,12 +111,12 @@ void main() {
       expect(find.byType(ShaderMask), findsNothing);
     });
 
-    testWidgets('her yön expressive (600 ms): ~600 ms\'de dip', (tester) async {
+    testWidgets('her yön emphasis (300 ms): ~300 ms\'de dip', (tester) async {
       await pumpApp(tester, const AppSkeleton(width: 100), settle: false);
       await tester.pump();
-      await tester.pump(const Duration(milliseconds: 600));
+      await tester.pump(const Duration(milliseconds: 300));
       expect(_opacity(tester), closeTo(0.6, 0.03));
-      await tester.pump(const Duration(milliseconds: 600));
+      await tester.pump(const Duration(milliseconds: 300));
       expect(_opacity(tester), closeTo(1, 0.03));
     });
 

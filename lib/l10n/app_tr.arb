@@ -63,6 +63,33 @@
       }
     }
   },
+  "agreementArcPeople": "{positive}/{total} kişi",
+  "@agreementArcPeople": {
+    "description": "AgreementArc altındaki kişi sayısı: olumlu / toplam.",
+    "placeholders": {
+      "positive": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
+  "agreementArcSemantics": "Uyum yüzde {percent}. Toplam {total} kişi, olumlu {positive}.",
+  "@agreementArcSemantics": {
+    "description": "AgreementArc VoiceOver cümlesi (çok isteyen yoksa). Sayıya ek getirilmez: Türkçe ünlü uyumu sayıya göre değişir.",
+    "placeholders": {
+      "percent": {"type": "int"},
+      "total": {"type": "int"},
+      "positive": {"type": "int"}
+    }
+  },
+  "agreementArcSemanticsLove": "Uyum yüzde {percent}. Toplam {total} kişi, olumlu {positive}, çok isteyen {love}.",
+  "@agreementArcSemanticsLove": {
+    "description": "AgreementArc VoiceOver cümlesi (çok isteyen varsa).",
+    "placeholders": {
+      "percent": {"type": "int"},
+      "total": {"type": "int"},
+      "positive": {"type": "int"},
+      "love": {"type": "int"}
+    }
+  },
   "commonBack": "Geri",
   "@commonBack": {
     "description": "Navigasyon çubuğundaki geri chevron'unun VoiceOver etiketi."

@@ -22,6 +22,8 @@ class AppTypography {
     required this.buttonSmall,
     required this.caption,
     required this.overline,
+    required this.arcNumberSmall,
+    required this.arcNumberLarge,
   });
 
   /// display ve h1 için Dynamic Type üst sınırı.
@@ -95,6 +97,18 @@ class AppTypography {
       weight: FontWeight.w600,
       letterSpacing: 0.5,
     ),
+    arcNumberSmall: _ui(
+      size: 13,
+      lineHeight: 18,
+      weight: FontWeight.w600,
+      letterSpacing: -0.08,
+    ),
+    arcNumberLarge: _ui(
+      size: 34,
+      lineHeight: 40,
+      weight: FontWeight.w700,
+      letterSpacing: 0.37,
+    ),
   );
 
   /// Bold Text açıkken kullanılan, bir kez üretilen varyant.
@@ -113,6 +127,12 @@ class AppTypography {
   final TextStyle caption;
   final TextStyle overline;
 
+  /// AgreementArc S'nin yan yüzdesi (`caption` 600). tokens.json'da ayrı stil değildir.
+  final TextStyle arcNumberSmall;
+
+  /// AgreementArc L'nin yay içi yüzdesi (34 bold). M `title` kullanır.
+  final TextStyle arcNumberLarge;
+
   /// Bold Text erişilebilirlik ayarı: bütün ağırlıklar +100 (en fazla 900).
   AppTypography bold() {
     return AppTypography(
@@ -128,6 +148,8 @@ class AppTypography {
       buttonSmall: _bolder(buttonSmall),
       caption: _bolder(caption),
       overline: _bolder(overline),
+      arcNumberSmall: _bolder(arcNumberSmall),
+      arcNumberLarge: _bolder(arcNumberLarge),
     );
   }
 

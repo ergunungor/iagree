@@ -10,6 +10,9 @@
   "participantJoined": "{name}, joined",
   "participantChoosing": "{name}, choosing, {percent} percent",
   "participantReady": "{name}, ready",
+  "agreementArcPeople": "{positive}/{total} people",
+  "agreementArcSemantics": "Agreement {percent} percent. {positive} of {total} people are in favor.",
+  "agreementArcSemanticsLove": "Agreement {percent} percent. {positive} of {total} people are in favor, {love} of them really want it.",
   "commonBack": "Back",
   "commonClose": "Close",
   "offlineBannerMessage": "No connection. Your changes will be sent when you reconnect."

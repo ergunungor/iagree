@@ -60,8 +60,8 @@ class _AppSkeletonState extends State<AppSkeleton>
       _started = false;
     } else if (!_started) {
       _started = true;
-      // Her yön expressive süre; 1 → 0,6 → 1.
-      _pulse.duration = motion.expressive;
+      // Her yön emphasis süre (expressive yalnızca Arc ve karar anı); 1 → 0,6 → 1.
+      _pulse.duration = motion.emphasis;
       _pulse.repeat(reverse: true);
     }
   }
