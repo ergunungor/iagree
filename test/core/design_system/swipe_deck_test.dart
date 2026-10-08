@@ -117,44 +117,75 @@ void main() {
       await tester.pumpAndSettle();
     });
 
-    testWidgets('yumuşak kilit: yatayda dikey sapma 24pt\'yi geçmez', (
+    testWidgets('baskın eksende diğer eksen 24pt ile sınırlı, dönme yok', (
       tester,
     ) async {
       _phone(tester);
       await pumpApp(tester, _deck(_Log()));
       final start = _pivot(tester, 'a');
       final g = await tester.startGesture(start - const Offset(0, 200));
-      await g.moveBy(const Offset(60, 8)); // yatay baskın
-      await g.moveBy(const Offset(0, 300));
+      await g.moveBy(const Offset(20, -200));
       await tester.pump();
       final moved = _pivot(tester, 'a') - start;
-      expect(moved.dx, closeTo(60, 0.5));
-      expect(moved.dy, greaterThan(15));
-      expect(moved.dy, lessThanOrEqualTo(24.01));
+      expect(moved.dy, closeTo(-200, 0.5));
+      expect(moved.dx.abs(), lessThanOrEqualTo(24.01));
+      expect(
+        tester.getTopLeft(_card('a')).dx,
+        closeTo(tester.getBottomLeft(_card('a')).dx, 0.5),
+      );
       await g.up();
       await tester.pumpAndSettle();
     });
 
-    testWidgets('dikeyde yatay sapma 24pt\'yi geçmez, dönme yok', (
+    testWidgets(
+      'bırakmadan eksen değiştirilir: sağa çekip yukarı çıkınca Çok isterim',
+      (tester) async {
+        _phone(tester);
+        final log = _Log();
+        await pumpApp(tester, _deck(log));
+        final start = _pivot(tester, 'a');
+        final g = await tester.startGesture(start - const Offset(0, 200));
+        await g.moveBy(const Offset(100, 0));
+        await tester.pump();
+        expect(find.text('Olur'), findsOneWidget);
+        expect(_pivot(tester, 'a').dx - start.dx, closeTo(100, 0.5));
+
+        // Vazgeç: parmak bırakılmadan yukarı çıkar.
+        await g.moveBy(const Offset(0, -150));
+        await g.moveBy(const Offset(0, -150));
+        await tester.pump();
+        expect(find.text('Olur'), findsNothing);
+        expect(find.text('Çok isterim'), findsOneWidget);
+        final moved = _pivot(tester, 'a') - start;
+        expect(moved.dy, closeTo(-300, 0.5));
+        expect(
+          moved.dx,
+          lessThanOrEqualTo(24.01),
+        ); // yatay hareket geri çekildi
+
+        await g.up();
+        await tester.pumpAndSettle();
+        expect(log.swiped, [('a', DeckDecision.love)]);
+      },
+    );
+
+    testWidgets('sağa çekip vazgeçip merkeze dönünce karar yok', (
       tester,
     ) async {
       _phone(tester);
-      await pumpApp(tester, _deck(_Log()));
+      final log = _Log();
+      await pumpApp(tester, _deck(log));
       final start = _pivot(tester, 'a');
       final g = await tester.startGesture(start - const Offset(0, 200));
-      await g.moveBy(const Offset(4, -60));
-      await g.moveBy(const Offset(400, 0));
+      await g.moveBy(const Offset(130, 0));
       await tester.pump();
-      final moved = _pivot(tester, 'a') - start;
-      expect(moved.dx.abs(), lessThanOrEqualTo(24.01));
-      expect(moved.dy, closeTo(-60, 0.5));
-      // Dönme yok: üst köşeler alt köşelerle aynı yatay hizada.
-      expect(
-        tester.getTopLeft(_card('a')).dx,
-        closeTo(tester.getBottomLeft(_card('a')).dx, 0.01),
-      );
+      expect(find.text('Olur'), findsOneWidget);
+      await g.moveBy(const Offset(-130, 0)); // başlangıca döndü
+      await tester.pump();
+      expect(find.text('Olur'), findsNothing);
       await g.up();
       await tester.pumpAndSettle();
+      expect(log.swiped, isEmpty);
     });
 
     testWidgets('yatayda alt ortadan dönme (dx/genişlik × 12°)', (

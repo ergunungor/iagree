@@ -73,13 +73,11 @@ class _SwipeDeckState<T> extends State<SwipeDeck<T>>
   Size _card = Size.zero;
   Offset _finger = Offset.zero;
   Offset _origin = Offset.zero;
-  DeckAxis? _axis;
   bool _tracking = false;
   bool _armed = false;
 
   Offset _flightFrom = Offset.zero;
   Offset _flightTo = Offset.zero;
-  DeckAxis? _flightAxis;
 
   @override
   void didUpdateWidget(SwipeDeck<T> old) {
@@ -108,7 +106,6 @@ class _SwipeDeckState<T> extends State<SwipeDeck<T>>
     // Dönüş sırasında yakalanırsa kart olduğu yerden devam eder.
     _flight.stop();
     _origin = _frame.value.offset;
-    if (_origin == Offset.zero) _axis = null;
     _finger = Offset.zero;
     _tracking = true;
   }
@@ -116,12 +113,9 @@ class _SwipeDeckState<T> extends State<SwipeDeck<T>>
   void _onPanUpdate(DragUpdateDetails d) {
     if (!_tracking) return;
     _finger += d.delta;
-    _axis ??= SwipePhysics.lockAxis(_finger);
-    final axis = _axis;
-    final offset = axis == null
-        ? _origin + _finger
-        : _origin + SwipePhysics.cardOffset(_finger, axis);
-    final frame = SwipePhysics.frame(offset, axis, _card);
+    // Eksen kilitli değil: baskın yön her harekette yeniden bulunur, bırakmadan değiştirilebilir.
+    final offset = _origin + SwipePhysics.cardOffset(_finger);
+    final frame = SwipePhysics.frame(offset, _card);
     // Eşiğe her girişte bir kez.
     if (frame.armed && !_armed) AppHaptics.selection();
     _armed = frame.armed;
@@ -131,21 +125,17 @@ class _SwipeDeckState<T> extends State<SwipeDeck<T>>
   void _onPanEnd(DragEndDetails d) {
     if (!_tracking) return;
     _tracking = false;
-    final axis = _axis;
     final velocity = d.velocity.pixelsPerSecond;
-    if (axis != null) {
-      final decision = SwipePhysics.decide(
-        offset: _frame.value.offset,
-        axis: axis,
-        velocity: velocity,
-        card: _card,
-      );
-      if (decision != null) {
-        _commit(decision, velocity);
-        return;
-      }
+    final decision = SwipePhysics.decide(
+      offset: _frame.value.offset,
+      velocity: velocity,
+      card: _card,
+    );
+    if (decision != null) {
+      _commit(decision, velocity);
+    } else {
+      _springBack(velocity);
     }
-    _springBack(velocity);
   }
 
   void _onPanCancel() {
@@ -161,12 +151,9 @@ class _SwipeDeckState<T> extends State<SwipeDeck<T>>
     final motion = context.motion;
     final screen = MediaQuery.sizeOf(context);
     final from = _frame.value.offset;
-    final axis = switch (decision) {
-      DeckDecision.ok || DeckDecision.pass => DeckAxis.horizontal,
-      DeckDecision.love || DeckDecision.veto => DeckAxis.vertical,
-    };
     final to = SwipePhysics.flyTarget(decision, from, screen);
-    final horizontal = axis == DeckAxis.horizontal;
+    final horizontal =
+        decision == DeckDecision.ok || decision == DeckDecision.pass;
     final distance = horizontal ? (to.dx - from.dx) : (to.dy - from.dy);
     final speed = horizontal ? velocity.dx : velocity.dy;
     final duration = SwipePhysics.flyDuration(
@@ -179,8 +166,6 @@ class _SwipeDeckState<T> extends State<SwipeDeck<T>>
     final item = widget.items[_index];
     _flightFrom = from;
     _flightTo = to;
-    _flightAxis = axis;
-    _axis = axis;
     _armed = false;
     setState(() {
       _leavingIndex = _index;
@@ -204,7 +189,6 @@ class _SwipeDeckState<T> extends State<SwipeDeck<T>>
   void _finishFlight() {
     if (!mounted) return;
     _frame.value = SwipeFrame.rest;
-    _axis = null;
     setState(() => _leavingIndex = null);
     if (_index >= widget.items.length) widget.onCompleted?.call();
   }
@@ -220,7 +204,6 @@ class _SwipeDeckState<T> extends State<SwipeDeck<T>>
     }
     _flightFrom = from;
     _flightTo = Offset.zero;
-    _flightAxis = _axis;
     final toward = _flightTo - from;
     final v =
         ((velocity.dx * toward.dx + velocity.dy * toward.dy) /
@@ -235,12 +218,11 @@ class _SwipeDeckState<T> extends State<SwipeDeck<T>>
   void _settle() {
     if (!mounted) return;
     _frame.value = SwipeFrame.rest;
-    _axis = null;
   }
 
   void _onFlightTick() {
     final offset = Offset.lerp(_flightFrom, _flightTo, _flight.value)!;
-    _frame.value = SwipePhysics.frame(offset, _flightAxis, _card);
+    _frame.value = SwipePhysics.frame(offset, _card);
   }
 
   // ───────────── görünüm ─────────────

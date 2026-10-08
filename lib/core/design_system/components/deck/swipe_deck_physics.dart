@@ -6,16 +6,12 @@ import 'package:flutter/foundation.dart';
 /// Kart destesinin dört kararı. Yön: → Olur, ← Pas, ↑ Çok isterim, ↓ Olmaz.
 enum DeckDecision { ok, pass, love, veto }
 
-/// Sürüklemenin kilitlendiği eksen.
-enum DeckAxis { horizontal, vertical }
-
 /// Kartın o anki görsel durumu: ofset, dönme ve yön/ilerleme (etiket ve ton için).
 @immutable
 class SwipeFrame {
   const SwipeFrame({
     required this.offset,
     this.rotation = 0,
-    this.axis,
     this.direction,
     this.progress = 0,
   });
@@ -27,7 +23,6 @@ class SwipeFrame {
 
   /// Radyan; pivot kartın alt ortası.
   final double rotation;
-  final DeckAxis? axis;
 
   /// Kartın şu an yöneldiği karar; hareket yoksa null.
   final DeckDecision? direction;
@@ -48,19 +43,18 @@ class SwipeFrame {
       other is SwipeFrame &&
       other.offset == offset &&
       other.rotation == rotation &&
-      other.axis == axis &&
       other.direction == direction &&
       other.progress == progress;
 
   @override
-  int get hashCode => Object.hash(offset, rotation, axis, direction, progress);
+  int get hashCode => Object.hash(offset, rotation, direction, progress);
 }
 
 /// Deste fiziği (DESIGN_SYSTEM.md §10 "SwipeDeck" tablosu ve "Fizik" maddesi). Saf hesap;
 /// widget'a bağlı değildir ve birim testle doğrulanır.
 abstract final class SwipePhysics {
-  /// İlk bu kadar harekette baskın eksen seçilir.
-  static const double axisLockDistance = 12;
+  /// Kart bu kadar (pt) hareket etmeden yön/etiket belirmez; hız tek başına da karar saymaz.
+  static const double minDirectionDistance = 12;
 
   /// Yatayda kart dönme sınırı (derece).
   static const double maxRotationDegrees = 12;
@@ -68,7 +62,7 @@ abstract final class SwipePhysics {
   /// Aşağı yönde kartın parmağa oranı.
   static const double downResistance = 0.55;
 
-  /// Kilitli eksenin dışına izin verilen en fazla hareket (pt). Yumuşak kilit: ilk hareket
+  /// Baskın eksenin dışına izin verilen en fazla hareket (pt). Yumuşak sınır: ilk hareket
   /// 1:1, sınıra yaklaştıkça yavaşlar.
   static const double crossAxisAllowance = 24;
 
@@ -105,96 +99,109 @@ abstract final class SwipePhysics {
     return (l * (e - 1) / (e + 1)).clamp(-l, l);
   }
 
-  /// Parmağın toplam hareketinden baskın eksen; henüz [axisLockDistance] katedilmediyse null.
-  static DeckAxis? lockAxis(Offset finger) {
-    if (finger.distance < axisLockDistance) return null;
-    return finger.dx.abs() >= finger.dy.abs()
-        ? DeckAxis.horizontal
-        : DeckAxis.vertical;
+  /// Parmağın başlangıçtan toplam hareketi → kart ofseti.
+  ///
+  /// Eksen **kilitli değildir**: baskın eksen her harekette parmağın konumundan yeniden
+  /// bulunur, böylece parmağı kaldırmadan yatayda başlayıp dikeye (ya da tersine) geçilebilir.
+  /// Baskın eksen 1:1 (aşağı 0,55), diğer eksen yumuşak sınırlı. İki eksen arasındaki geçiş
+  /// bir bantta sürekli harmanlanır ([_dominance]); kart hiçbir zaman sıçramaz.
+  static Offset cardOffset(Offset finger) {
+    final s = _dominance(finger);
+    final crossX = (1 - s) / 2; // x ne kadar "çapraz" sayılıyor
+    final crossY = (1 + s) / 2;
+    final yMain = finger.dy > 0 ? finger.dy * downResistance : finger.dy;
+    final x = finger.dx + (softCross(finger.dx) - finger.dx) * crossX;
+    final y = yMain + (softCross(finger.dy) - yMain) * crossY;
+    return Offset(x, y);
   }
 
-  /// Kilitli eksende parmak hareketi → kart ofseti. Ana eksende yatay/yukarı 1:1, aşağı 0,55;
-  /// çapraz eksen yumuşak sınırlı.
-  static Offset cardOffset(Offset finger, DeckAxis axis) {
-    switch (axis) {
-      case DeckAxis.horizontal:
-        return Offset(finger.dx, softCross(finger.dy));
-      case DeckAxis.vertical:
-        final main = finger.dy > 0 ? finger.dy * downResistance : finger.dy;
-        return Offset(softCross(finger.dx), main);
+  /// Baskın eksen ölçüsü: +1 yatay baskın, −1 dikey baskın, 0 köşegen. Geçiş bandı hareket
+  /// büyüdükçe genişler (en az [crossAxisAllowance], en çok hareketin %60'ı): uzak
+  /// konumlarda eksen değişirken kart aşırı hızlı yer değiştirmez.
+  static double _dominance(Offset o) {
+    final a = o.dx.abs();
+    final b = o.dy.abs();
+    final band = math.max(crossAxisAllowance, 0.6 * math.max(a, b));
+    return ((a - b) / band).clamp(-1.0, 1.0);
+  }
+
+  /// Kart ofsetinden görsel durum. Yön, eşiğe göre daha ilerlemiş eksenin yönüdür; dönme
+  /// yatay baskınlıkla orantılı olarak devreye girer (dikeyde dönme yok).
+  static SwipeFrame frame(Offset offset, Size card) {
+    if (offset.distance < minDirectionDistance) {
+      return SwipeFrame(offset: offset, rotation: _rotation(offset, card));
     }
+    final h = offset.dx > 0 ? DeckDecision.ok : DeckDecision.pass;
+    final v = offset.dy < 0 ? DeckDecision.love : DeckDecision.veto;
+    final ph = offset.dx.abs() / thresholdOf(h, card);
+    final pv = offset.dy.abs() / thresholdOf(v, card);
+    final horizontal = ph >= pv;
+    return SwipeFrame(
+      offset: offset,
+      rotation: _rotation(offset, card),
+      direction: horizontal ? h : v,
+      progress: horizontal ? ph : pv,
+    );
   }
 
-  /// Kart ofsetinden görsel durum. Dönme yalnızca yatay kilitte; karar ve ilerleme yalnızca
-  /// ana eksenden hesaplanır.
-  static SwipeFrame frame(Offset offset, DeckAxis? axis, Size card) {
-    if (axis == null) return SwipeFrame(offset: offset);
-    switch (axis) {
-      case DeckAxis.horizontal:
-        final dx = offset.dx;
-        final maxRad = maxRotationDegrees * math.pi / 180;
-        final rotation = (dx / card.width * maxRad).clamp(-maxRad, maxRad);
-        final dir = dx == 0
-            ? null
-            : (dx > 0 ? DeckDecision.ok : DeckDecision.pass);
-        return SwipeFrame(
-          offset: offset,
-          rotation: rotation,
-          axis: axis,
-          direction: dir,
-          progress: dir == null
-              ? 0
-              : dx.abs() / thresholdOf(DeckDecision.ok, card),
-        );
-      case DeckAxis.vertical:
-        final dy = offset.dy;
-        final dir = dy == 0
-            ? null
-            : (dy < 0 ? DeckDecision.love : DeckDecision.veto);
-        return SwipeFrame(
-          offset: offset,
-          axis: axis,
-          direction: dir,
-          progress: dir == null ? 0 : dy.abs() / thresholdOf(dir, card),
-        );
-    }
+  static double _rotation(Offset offset, Size card) {
+    final maxRad = maxRotationDegrees * math.pi / 180;
+    final horizontalWeight = (1 + _dominance(offset)) / 2;
+    return (offset.dx / card.width * maxRad).clamp(-maxRad, maxRad) *
+        horizontalWeight;
   }
 
-  /// Bırakınca karar: mesafe veya (↓ hariç) hız. Hız, kartın gittiği yönle aynı olmalı;
-  /// çelişiyorsa karar yok, kart geri döner. [velocity] parmağın pt/s hızıdır.
+  /// Bırakınca karar: mesafe veya (↓ hariç) hız. Önce daha ilerlemiş eksen, olmazsa diğer
+  /// eksen denenir. Hız, kartın gittiği yönle aynı olmalı ve kart en az
+  /// [minDirectionDistance] oynamış olmalı; aksi hâlde karar yok, kart geri döner.
+  /// [velocity] parmağın pt/s hızıdır.
   static DeckDecision? decide({
     required Offset offset,
-    required DeckAxis axis,
     required Offset velocity,
     required Size card,
   }) {
-    switch (axis) {
-      case DeckAxis.horizontal:
-        final dx = offset.dx;
-        final v = velocity.dx;
-        if (dx > 0 &&
-            (dx >= thresholdOf(DeckDecision.ok, card) || v > flingVelocity)) {
-          return DeckDecision.ok;
-        }
-        if (dx < 0 &&
-            (-dx >= thresholdOf(DeckDecision.pass, card) ||
-                -v > flingVelocity)) {
-          return DeckDecision.pass;
-        }
-        return null;
-      case DeckAxis.vertical:
-        final dy = offset.dy;
-        final v = velocity.dy;
-        if (dy < 0 &&
-            (-dy >= thresholdOf(DeckDecision.love, card) ||
-                -v > flingVelocity)) {
-          return DeckDecision.love;
-        }
+    final primary = frame(offset, card).direction;
+    final h = offset.dx > 0 ? DeckDecision.ok : DeckDecision.pass;
+    final v = offset.dy < 0 ? DeckDecision.love : DeckDecision.veto;
+    final horizontal =
+        primary == DeckDecision.ok || primary == DeckDecision.pass;
+    final order = primary == null
+        ? [h, v]
+        : horizontal
+        ? [primary, v]
+        : [primary, h];
+    for (final d in order) {
+      if (_qualifies(d, offset, velocity, card)) return d;
+    }
+    return null;
+  }
+
+  static bool _qualifies(
+    DeckDecision d,
+    Offset offset,
+    Offset velocity,
+    Size card,
+  ) {
+    final threshold = thresholdOf(d, card);
+    switch (d) {
+      case DeckDecision.ok:
+        return offset.dx > 0 &&
+            (offset.dx >= threshold ||
+                (offset.dx >= minDirectionDistance &&
+                    velocity.dx > flingVelocity));
+      case DeckDecision.pass:
+        return offset.dx < 0 &&
+            (-offset.dx >= threshold ||
+                (-offset.dx >= minDirectionDistance &&
+                    -velocity.dx > flingVelocity));
+      case DeckDecision.love:
+        return offset.dy < 0 &&
+            (-offset.dy >= threshold ||
+                (-offset.dy >= minDirectionDistance &&
+                    -velocity.dy > flingVelocity));
+      case DeckDecision.veto:
         // Olmaz yalnızca mesafeyle; hız tek başına sayılmaz.
-        if (dy > 0 && dy >= thresholdOf(DeckDecision.veto, card)) {
-          return DeckDecision.veto;
-        }
-        return null;
+        return offset.dy > 0 && offset.dy >= threshold;
     }
   }
 
