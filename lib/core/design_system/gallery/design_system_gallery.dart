@@ -5,6 +5,7 @@ import 'package:flutter/physics.dart';
 import '../components/brand/app_logo.dart';
 import '../components/buttons/app_button.dart';
 import '../components/buttons/app_icon_button.dart';
+import '../components/inputs/app_search_field.dart';
 import '../components/inputs/app_text_field.dart';
 import '../foundations/app_haptics.dart';
 import '../foundations/app_icons.dart';
@@ -142,6 +143,7 @@ class _Sections extends StatelessWidget {
           _Section('Buton', _ButtonSection()),
           _Section('İkon butonu', _IconButtonSection()),
           _Section('Metin alanı', _TextFieldSection()),
+          _Section('Arama alanı', _SearchFieldSection()),
           _Section('Haptik', _HapticsSection()),
         ],
       ),
@@ -1132,6 +1134,24 @@ class _TextFieldSectionState extends State<_TextFieldSection> {
           hintText: 'Düzenlenemez',
           enabled: false,
         ),
+      ],
+    );
+  }
+}
+
+// ---------------------------------------------------------------- Arama alanı
+
+class _SearchFieldSection extends StatelessWidget {
+  const _SearchFieldSection();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        AppSearchField(hintText: 'Mekan ara'),
+        SizedBox(height: AppSpacing.md),
+        AppSearchField(hintText: 'Pasif', enabled: false),
       ],
     );
   }

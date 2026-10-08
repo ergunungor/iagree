@@ -2,5 +2,6 @@
   "@@locale": "en",
   "appTitle": "iAgree",
   "commonLoading": "Loading",
-  "commonClear": "Clear"
+  "commonClear": "Clear",
+  "commonCancel": "Cancel"
 }

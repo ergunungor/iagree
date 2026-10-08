@@ -17,4 +17,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get commonClear => 'Temizle';
+
+  @override
+  String get commonCancel => 'Vazgeç';
 }

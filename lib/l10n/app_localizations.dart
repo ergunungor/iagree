@@ -115,6 +115,12 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Temizle'**
   String get commonClear;
+
+  /// Vazgeç butonu (arama alanı gibi geri alınabilir işlemler).
+  ///
+  /// In tr, this message translates to:
+  /// **'Vazgeç'**
+  String get commonCancel;
 }
 
 class _AppLocalizationsDelegate

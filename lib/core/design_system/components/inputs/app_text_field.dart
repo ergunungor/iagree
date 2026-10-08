@@ -5,6 +5,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../foundations/app_icons.dart';
 import '../../foundations/app_pressable.dart';
 import '../../foundations/context_extensions.dart';
+import '../../foundations/text_input_controllers.dart';
 import '../../tokens/app_motion.dart';
 import '../../tokens/app_radius.dart';
 import '../../tokens/app_spacing.dart';
@@ -57,75 +58,38 @@ class AppTextField extends StatefulWidget {
   State<AppTextField> createState() => _AppTextFieldState();
 }
 
-class _AppTextFieldState extends State<AppTextField> {
+class _AppTextFieldState extends State<AppTextField>
+    with TextInputControllersMixin<AppTextField> {
   static const double _minHeight = 52;
   static const double _borderWidth = 1.5;
 
-  late TextEditingController _controller;
-  late FocusNode _focusNode;
-  bool _ownsController = false;
-  bool _ownsFocusNode = false;
-
-  bool get _focused => _focusNode.hasFocus;
-  bool get _hasText => _controller.text.isNotEmpty;
+  @override
+  TextEditingController? get externalController => widget.controller;
+  @override
+  FocusNode? get externalFocusNode => widget.focusNode;
 
   @override
   void initState() {
     super.initState();
-    _attachController();
-    _attachFocusNode();
-  }
-
-  void _attachController() {
-    _ownsController = widget.controller == null;
-    _controller = widget.controller ?? TextEditingController();
-    _controller.addListener(_rebuild);
-  }
-
-  void _attachFocusNode() {
-    _ownsFocusNode = widget.focusNode == null;
-    _focusNode = widget.focusNode ?? FocusNode();
-    _focusNode.addListener(_rebuild);
-  }
-
-  void _detachController() {
-    _controller.removeListener(_rebuild);
-    if (_ownsController) _controller.dispose();
-  }
-
-  void _detachFocusNode() {
-    _focusNode.removeListener(_rebuild);
-    if (_ownsFocusNode) _focusNode.dispose();
-  }
-
-  void _rebuild() {
-    if (mounted) setState(() {});
+    initControllers();
   }
 
   @override
   void didUpdateWidget(AppTextField old) {
     super.didUpdateWidget(old);
-    if (old.controller != widget.controller) {
-      _detachController();
-      _attachController();
-    }
-    if (old.focusNode != widget.focusNode) {
-      _detachFocusNode();
-      _attachFocusNode();
-    }
+    didUpdateControllers(old.controller, old.focusNode);
   }
 
   @override
   void dispose() {
-    _detachController();
-    _detachFocusNode();
+    disposeControllers();
     super.dispose();
   }
 
   void _clear() {
-    _controller.clear();
+    controller.clear();
     widget.onChanged?.call('');
-    _focusNode.requestFocus();
+    focusNode.requestFocus();
   }
 
   @override
@@ -134,17 +98,17 @@ class _AppTextFieldState extends State<AppTextField> {
     final motion = context.motion;
     final text = context.text;
     final hasError = widget.errorText != null;
-    final showClear = widget.enabled && _focused && _hasText;
+    final showClear = widget.enabled && hasFocus && hasText;
 
     final Color fill = !widget.enabled
         ? c.surfaceMuted
-        : (_focused ? c.surfaceInputFocus : c.surfaceMuted);
+        : (hasFocus ? c.surfaceInputFocus : c.surfaceMuted);
     // Kenarlık her zaman aynı kalınlıkta (idle'da saydam): odak değişince yerleşim kaymaz.
     final Color borderColor = !widget.enabled
         ? Colors.transparent
         : hasError
         ? c.error
-        : (_focused ? c.brand : Colors.transparent);
+        : (hasFocus ? c.brand : Colors.transparent);
     final inputColor = widget.enabled ? c.textPrimary : c.textDisabled;
 
     final field = AnimatedContainer(
@@ -172,8 +136,8 @@ class _AppTextFieldState extends State<AppTextField> {
                 child: Semantics(
                   label: widget.label,
                   child: TextField(
-                    controller: _controller,
-                    focusNode: _focusNode,
+                    controller: controller,
+                    focusNode: focusNode,
                     enabled: widget.enabled,
                     autofocus: widget.autofocus,
                     keyboardType: widget.keyboardType,
@@ -230,7 +194,7 @@ class _AppTextFieldState extends State<AppTextField> {
       children: [
         GestureDetector(
           behavior: HitTestBehavior.opaque,
-          onTap: widget.enabled ? _focusNode.requestFocus : null,
+          onTap: widget.enabled ? focusNode.requestFocus : null,
           child: ExcludeSemantics(
             child: Text(
               widget.label,
@@ -241,7 +205,7 @@ class _AppTextFieldState extends State<AppTextField> {
         const SizedBox(height: AppSpacing.xs),
         GestureDetector(
           behavior: HitTestBehavior.translucent,
-          onTap: widget.enabled ? _focusNode.requestFocus : null,
+          onTap: widget.enabled ? focusNode.requestFocus : null,
           child: field,
         ),
         AnimatedSize(

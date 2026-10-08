@@ -11,5 +11,9 @@
   "commonClear": "Temizle",
   "@commonClear": {
     "description": "Metin alanındaki temizle ikonunun VoiceOver etiketi."
+  },
+  "commonCancel": "Vazgeç",
+  "@commonCancel": {
+    "description": "Vazgeç butonu (arama alanı gibi geri alınabilir işlemler)."
   }
 }
