@@ -133,6 +133,30 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Azalt'**
   String get commonDecrease;
+
+  /// Davet edilmiş ama henüz katılmamış katılımcı (VoiceOver).
+  ///
+  /// In tr, this message translates to:
+  /// **'{name}, bekleniyor'**
+  String participantInvited(String name);
+
+  /// Katılmış katılımcı (VoiceOver).
+  ///
+  /// In tr, this message translates to:
+  /// **'{name}, katıldı'**
+  String participantJoined(String name);
+
+  /// Seçim yapan katılımcı ve ilerlemesi (VoiceOver).
+  ///
+  /// In tr, this message translates to:
+  /// **'{name}, seçiyor, yüzde {percent}'**
+  String participantChoosing(String name, int percent);
+
+  /// Seçimini bitiren katılımcı (VoiceOver).
+  ///
+  /// In tr, this message translates to:
+  /// **'{name}, hazır'**
+  String participantReady(String name);
 }
 
 class _AppLocalizationsDelegate

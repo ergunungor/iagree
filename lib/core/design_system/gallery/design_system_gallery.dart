@@ -10,6 +10,9 @@ import '../components/content/app_list_group.dart';
 import '../components/inputs/app_search_field.dart';
 import '../components/inputs/app_slider.dart';
 import '../components/inputs/app_stepper.dart';
+import '../components/people/app_avatar.dart';
+import '../components/people/app_avatar_group.dart';
+import '../components/people/participant_ring.dart';
 import '../components/selection/app_check_circle.dart';
 import '../components/selection/app_checkbox.dart';
 import '../components/selection/app_chip.dart';
@@ -156,6 +159,7 @@ class _Sections extends StatelessWidget {
           _Section('Stepper ve slider', _StepperSliderSection()),
           _Section('Seçim', _SelectionSection()),
           _Section('Kart ve liste', _CardListSection()),
+          _Section('Avatar', _AvatarSection()),
           _Section('Haptik', _HapticsSection()),
         ],
       ),
@@ -1514,6 +1518,151 @@ class _CardListSectionState extends State<_CardListSection> {
               subtitle: '★ 4,2 · ₺ · 0,8 km',
               trailing: Text('%60', style: context.text.caption.tabular),
               onPressed: () {},
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+// ---------------------------------------------------------------- Avatar
+
+class _AvatarSection extends StatefulWidget {
+  const _AvatarSection();
+
+  @override
+  State<_AvatarSection> createState() => _AvatarSectionState();
+}
+
+class _AvatarSectionState extends State<_AvatarSection> {
+  int _percent = 60;
+
+  static const _people = [
+    AppAvatarPerson(userId: 'u-ayse', name: 'Ayşe Yılmaz'),
+    AppAvatarPerson(userId: 'u-can', name: 'Can Demir'),
+    AppAvatarPerson(userId: 'u-deniz', name: 'Deniz Kaya'),
+    AppAvatarPerson(userId: 'u-mert', name: 'Mert Aksoy'),
+    AppAvatarPerson(userId: 'u-zeynep', name: 'Zeynep Öz'),
+    AppAvatarPerson(userId: 'u-ece', name: 'Ece Tan'),
+    AppAvatarPerson(userId: 'u-ilker', name: 'İlker Işık'),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    final c = context.colors;
+    Widget label(String text) => Padding(
+      padding: const EdgeInsets.only(bottom: AppSpacing.xs),
+      child: Text(
+        text,
+        style: context.text.overline.copyWith(color: c.textSecondary),
+      ),
+    );
+    const gap = SizedBox(height: AppSpacing.lg);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        label('boyutlar · xs 20, sm 28, md 40, lg 56, xl 88'),
+        Wrap(
+          spacing: AppSpacing.md,
+          runSpacing: AppSpacing.md,
+          crossAxisAlignment: WrapCrossAlignment.end,
+          children: [
+            for (final s in AppAvatarSize.values)
+              AppAvatar(userId: 'u-ayse', name: 'Ayşe Yılmaz', size: s),
+          ],
+        ),
+        gap,
+        label('5 tint · userId\'den kalıcı'),
+        Wrap(
+          spacing: AppSpacing.md,
+          runSpacing: AppSpacing.md,
+          children: [
+            for (final p in _people.take(5))
+              AppAvatar(userId: p.userId, name: p.name, size: AppAvatarSize.lg),
+          ],
+        ),
+        gap,
+        label('mekan (radius sm kare) · fotoğrafsız'),
+        const Wrap(
+          spacing: AppSpacing.md,
+          children: [
+            AppAvatar.place(name: 'Trattoria Lume', size: AppAvatarSize.md),
+            AppAvatar.place(name: 'Trattoria Lume', size: AppAvatarSize.lg),
+          ],
+        ),
+        gap,
+        label('grup · 3 kişi, 7 kişi (4 + sayaç)'),
+        Row(
+          children: [
+            AppAvatarGroup(people: _people.take(3).toList()),
+            const SizedBox(width: AppSpacing.xl),
+            AppAvatarGroup(people: _people),
+          ],
+        ),
+        gap,
+        label('participant ring · invited, joined, choosing, ready'),
+        Wrap(
+          spacing: AppSpacing.md,
+          runSpacing: AppSpacing.md,
+          children: [
+            const ParticipantRing(
+              userId: 'u-ayse',
+              name: 'Ayşe',
+              status: ParticipantStatus.invited,
+            ),
+            const ParticipantRing(
+              userId: 'u-can',
+              name: 'Can',
+              status: ParticipantStatus.joined,
+            ),
+            ParticipantRing(
+              userId: 'u-deniz',
+              name: 'Deniz',
+              status: ParticipantStatus.choosing,
+              progress: _percent / 100,
+            ),
+            const ParticipantRing(
+              userId: 'u-mert',
+              name: 'Mert',
+              status: ParticipantStatus.ready,
+            ),
+          ],
+        ),
+        const SizedBox(height: AppSpacing.xs),
+        label('choosing ilerlemesi (stepper: %0–100, 20\'şer)'),
+        AppStepper(
+          value: _percent,
+          min: 0,
+          max: 100,
+          step: 20,
+          semanticLabel: 'İlerleme',
+          valueFormatter: (v) => '%$v',
+          onChanged: (v) => setState(() => _percent = v),
+        ),
+        gap,
+        label('participant ring · lg'),
+        Wrap(
+          spacing: AppSpacing.md,
+          children: const [
+            ParticipantRing(
+              userId: 'u-ayse',
+              name: 'Ayşe',
+              status: ParticipantStatus.invited,
+              size: AppAvatarSize.lg,
+            ),
+            ParticipantRing(
+              userId: 'u-can',
+              name: 'Can',
+              status: ParticipantStatus.choosing,
+              progress: 0.4,
+              size: AppAvatarSize.lg,
+            ),
+            ParticipantRing(
+              userId: 'u-mert',
+              name: 'Mert',
+              status: ParticipantStatus.ready,
+              size: AppAvatarSize.lg,
             ),
           ],
         ),

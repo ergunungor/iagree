@@ -26,4 +26,24 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get commonDecrease => 'Azalt';
+
+  @override
+  String participantInvited(String name) {
+    return '$name, bekleniyor';
+  }
+
+  @override
+  String participantJoined(String name) {
+    return '$name, katıldı';
+  }
+
+  @override
+  String participantChoosing(String name, int percent) {
+    return '$name, seçiyor, yüzde $percent';
+  }
+
+  @override
+  String participantReady(String name) {
+    return '$name, hazır';
+  }
 }

@@ -26,4 +26,24 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get commonDecrease => 'Decrease';
+
+  @override
+  String participantInvited(String name) {
+    return '$name, waiting';
+  }
+
+  @override
+  String participantJoined(String name) {
+    return '$name, joined';
+  }
+
+  @override
+  String participantChoosing(String name, int percent) {
+    return '$name, choosing, $percent percent';
+  }
+
+  @override
+  String participantReady(String name) {
+    return '$name, ready';
+  }
 }

@@ -23,5 +23,44 @@
   },
   "@commonDecrease": {
     "description": "Stepper − butonunun VoiceOver etiketi."
+  },
+  "participantInvited": "{name}, bekleniyor",
+  "@participantInvited": {
+    "description": "Davet edilmiş ama henüz katılmamış katılımcı (VoiceOver).",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "participantJoined": "{name}, katıldı",
+  "@participantJoined": {
+    "description": "Katılmış katılımcı (VoiceOver).",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "participantChoosing": "{name}, seçiyor, yüzde {percent}",
+  "@participantChoosing": {
+    "description": "Seçim yapan katılımcı ve ilerlemesi (VoiceOver).",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "participantReady": "{name}, hazır",
+  "@participantReady": {
+    "description": "Seçimini bitiren katılımcı (VoiceOver).",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   }
 }
