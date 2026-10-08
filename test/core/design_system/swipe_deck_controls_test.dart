@@ -226,80 +226,156 @@ void main() {
       expect(log.swiped.length, 1);
     });
 
-    testWidgets('sürüklerken ilgili buton vurgulanır, diğerleri soluklaşır', (
-      tester,
-    ) async {
-      _phone(tester);
-      await pumpApp(tester, _screen(_Log()));
-      final base = tester.getSize(_button(3)).width;
-      final g = await tester.startGesture(
-        _pivot(tester, 'a') - const Offset(0, 200),
-      );
-      await g.moveBy(const Offset(110, 0)); // eşik 105: ilerleme 1
-      await tester.pump();
-      final scaled = tester
-          .getRect(
-            find
-                .descendant(of: _button(3), matching: find.byType(SizedBox))
-                .first,
-          )
-          .width;
-      expect(scaled, closeTo(base * DeckActionBar.highlightScale, 0.5));
-      double opacityOf(int i) => tester
-          .widget<Opacity>(
-            find
-                .descendant(of: _button(i), matching: find.byType(Opacity))
-                .first,
-          )
-          .opacity;
-      expect(opacityOf(0), closeTo(DeckActionBar.fadedOpacity, 0.01));
-      expect(opacityOf(1), closeTo(DeckActionBar.fadedOpacity, 0.01));
-      expect(opacityOf(3), 1);
-      await g.up();
-      await tester.pumpAndSettle();
-      expect(
-        tester
-            .getRect(
-              find
-                  .descendant(of: _button(3), matching: find.byType(SizedBox))
-                  .first,
-            )
-            .width,
-        closeTo(base, 0.5),
-      );
-      expect(opacityOf(0), 1);
-    });
+    testWidgets(
+      'sürüklerken alt butonlar sabit kalır (vurgu ve soluklaşma yok)',
+      (tester) async {
+        _phone(tester);
+        await pumpApp(tester, _screen(_Log()));
+        final rects = [for (var i = 0; i < 4; i++) tester.getRect(_button(i))];
+        final g = await tester.startGesture(
+          _pivot(tester, 'a') - const Offset(0, 200),
+        );
+        await g.moveBy(const Offset(120, 0));
+        await tester.pump();
+        for (var i = 0; i < 4; i++) {
+          expect(tester.getRect(_button(i)), rects[i]);
+          expect(
+            find.descendant(of: _button(i), matching: find.byType(Opacity)),
+            findsNothing,
+          );
+        }
+        await g.up();
+        await tester.pumpAndSettle();
+      },
+    );
+  });
 
-    testWidgets('Çok isterim vurgusu: brand dolgu + onBrand ikon', (
-      tester,
-    ) async {
-      _phone(tester);
-      await pumpApp(tester, _screen(_Log()));
-      final g = await tester.startGesture(
-        _pivot(tester, 'a') - const Offset(0, 200),
-      );
-      await g.moveBy(const Offset(0, -120));
-      await tester.pump();
-      final fill = tester
-          .widgetList<DecoratedBox>(
+  group('ekran rengi', () {
+    /// Ekran tonu katmanı ağaçta içeriğin önünde (arkasında çizilen) ilk ColoredBox'tır.
+    /// Verilen ton renginde ise opaklığı, değilse null.
+    double? tintAlpha(WidgetTester tester, Color tone) {
+      final first = tester
+          .widgetList<ColoredBox>(
             find.descendant(
-              of: _button(2),
-              matching: find.byType(DecoratedBox),
+              of: find.byType(SwipeDeckScaffold<String>),
+              matching: find.byType(ColoredBox),
             ),
           )
-          .map((d) => d.decoration)
-          .whereType<ShapeDecoration>()
           .first
-          .color!;
-      expect(fill.toARGB32(), _light.brand.toARGB32());
-      expect(
-        tester
-            .widget<Icon>(
-              find.descendant(of: _button(2), matching: find.byType(Icon)),
-            )
-            .color,
-        _light.onBrand,
+          .color;
+      final sameTone =
+          (first.toARGB32() & 0xFFFFFF) == (tone.toARGB32() & 0xFFFFFF);
+      return sameTone && first.a > 0 && first.a < 1 ? first.a : null;
+    }
+
+    testWidgets('dinlenmede ton yok', (tester) async {
+      _phone(tester);
+      await pumpApp(tester, _screen(_Log()));
+      for (final tone in [
+        _light.brandMuted,
+        _light.textTertiary,
+        _light.brand,
+        _light.error,
+      ]) {
+        expect(tintAlpha(tester, tone), isNull);
+      }
+    });
+
+    final tones = {
+      'Olur': (const Offset(120, 0), _light.brandMuted),
+      'Pas': (const Offset(-120, 0), _light.textTertiary),
+      'Çok isterim': (const Offset(0, -130), _light.brand),
+      'Olmaz': (const Offset(0, 300), _light.error),
+    };
+    for (final e in tones.entries) {
+      testWidgets('${e.key}: ekran eşikte kararın tonuna %12 boyanır', (
+        tester,
+      ) async {
+        _phone(tester);
+        await pumpApp(tester, _screen(_Log(), items: const ['a', 'b']));
+        final g = await tester.startGesture(
+          _pivot(tester, 'a') - const Offset(0, 200),
+        );
+        await g.moveBy(e.value.$1);
+        await tester.pump();
+        expect(tintAlpha(tester, e.value.$2), closeTo(0.12, 0.01));
+        await g.up();
+        await tester.pumpAndSettle();
+        expect(tintAlpha(tester, e.value.$2), isNull);
+      });
+    }
+
+    testWidgets('ton eşiğe kadar artar: yarıda ~%6', (tester) async {
+      _phone(tester);
+      await pumpApp(tester, _screen(_Log()));
+      final g = await tester.startGesture(
+        _pivot(tester, 'a') - const Offset(0, 200),
       );
+      await g.moveBy(const Offset(52.5, 0));
+      await tester.pump();
+      expect(tintAlpha(tester, _light.brandMuted), closeTo(0.06, 0.01));
+      await g.up();
+      await tester.pumpAndSettle();
+    });
+
+    testWidgets('bırakmadan yön değişince ton da değişir', (tester) async {
+      _phone(tester);
+      await pumpApp(tester, _screen(_Log()));
+      final g = await tester.startGesture(
+        _pivot(tester, 'a') - const Offset(0, 200),
+      );
+      await g.moveBy(const Offset(110, 0));
+      await tester.pump();
+      expect(tintAlpha(tester, _light.brandMuted), isNotNull);
+      await g.moveBy(const Offset(0, -300));
+      await tester.pump();
+      expect(tintAlpha(tester, _light.brandMuted), isNull);
+      expect(tintAlpha(tester, _light.brand), closeTo(0.12, 0.01));
+      await g.up();
+      await tester.pumpAndSettle();
+    });
+
+    testWidgets('karar verilince ton bir anda kesilmez, uçuştan sonra solar', (
+      tester,
+    ) async {
+      _phone(tester);
+      await pumpApp(tester, _screen(_Log()));
+      await _tapButton(tester, 3);
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 150));
+      expect(tintAlpha(tester, _light.brandMuted), greaterThan(0.02));
+      await tester.pump(const Duration(milliseconds: 200)); // uçuş bitti
+      await tester.pump(const Duration(milliseconds: 100)); // solma sürüyor
+      final fading = tintAlpha(tester, _light.brandMuted);
+      expect(fading == null || fading < 0.12, isTrue);
+      await tester.pumpAndSettle();
+      expect(tintAlpha(tester, _light.brandMuted), isNull);
+    });
+
+    testWidgets('ton dokunmayı engellemez', (tester) async {
+      _phone(tester);
+      final log = _Log();
+      await pumpApp(tester, _screen(log));
+      await tester.timedDrag(
+        _card('a'),
+        const Offset(130, 0),
+        const Duration(seconds: 2),
+      );
+      await tester.pumpAndSettle();
+      await _tapButton(tester, 3);
+      await tester.pumpAndSettle();
+      expect(log.swiped.length, 2);
+    });
+
+    testWidgets('dark temada dark ton rengi', (tester) async {
+      _phone(tester);
+      await pumpApp(tester, _screen(_Log()), dark: true);
+      final g = await tester.startGesture(
+        _pivot(tester, 'a') - const Offset(0, 200),
+      );
+      await g.moveBy(const Offset(120, 0));
+      await tester.pump();
+      expect(tintAlpha(tester, AppColors.dark.brandMuted), closeTo(0.12, 0.01));
       await g.up();
       await tester.pumpAndSettle();
     });

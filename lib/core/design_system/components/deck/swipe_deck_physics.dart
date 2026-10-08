@@ -35,8 +35,11 @@ class SwipeFrame {
   /// Etiket opaklığı: eşiğe kadar 0→1.
   double get labelOpacity => progress.clamp(0.0, 1.0);
 
-  /// Renk tonu: eşikte en fazla `tintMaxAlpha`.
+  /// Kart renk tonu: eşikte en fazla `tintMaxAlpha`.
   double get tintAlpha => SwipePhysics.tintMaxAlpha * labelOpacity;
+
+  /// Ekran zemin tonu: eşikte en fazla `screenTintMaxAlpha`.
+  double get screenTintAlpha => SwipePhysics.screenTintMaxAlpha * labelOpacity;
 
   @override
   bool operator ==(Object other) =>
@@ -78,6 +81,9 @@ abstract final class SwipePhysics {
 
   /// Renk tonunun eşikteki en yüksek opaklığı.
   static const double tintMaxAlpha = 0.20;
+
+  /// Sürükleme sırasında ekran zemininin eşikteki en yüksek ton opaklığı (karttan daha yumuşak).
+  static const double screenTintMaxAlpha = 0.12;
 
   /// Ekranın alt kenarında bu kadar pt'lik şeritte başlayan dokunuş deste hareketi sayılmaz.
   static const double bottomGuard = 20;

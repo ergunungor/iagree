@@ -5,6 +5,7 @@ import 'package:flutter/semantics.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../foundations/app_icons.dart';
 import '../../foundations/context_extensions.dart';
+import '../../tokens/app_colors.dart';
 import '../../tokens/app_radius.dart';
 import 'swipe_deck_physics.dart';
 
@@ -124,25 +125,25 @@ class DeckDecisionOverlay extends StatelessWidget {
     final c = context.colors;
     return switch (d) {
       DeckDecision.ok => _Style(
-        tint: c.brandMuted,
+        tint: deckDecisionTint(c, d),
         background: c.brandSoft,
         foreground: c.brand,
         icon: AppIcons.check,
       ),
       DeckDecision.pass => _Style(
-        tint: c.textTertiary,
+        tint: deckDecisionTint(c, d),
         background: c.surfaceMuted,
         foreground: c.textPrimary,
         icon: AppIcons.close,
       ),
       DeckDecision.love => _Style(
-        tint: c.brand,
+        tint: deckDecisionTint(c, d),
         background: c.brand,
         foreground: c.onBrand,
         icon: AppIcons.heartFill,
       ),
       DeckDecision.veto => _Style(
-        tint: c.error,
+        tint: deckDecisionTint(c, d),
         background: c.surface,
         foreground: c.error,
         icon: AppIcons.prohibit,
@@ -150,6 +151,15 @@ class DeckDecisionOverlay extends StatelessWidget {
     };
   }
 }
+
+/// Kararın renk tonu: kart fotoğrafının ve ekran zemininin sürükleme sırasındaki tonu.
+/// Olur `brandMuted`, Pas nötr (`textTertiary`), Çok isterim `brand`, Olmaz `error`.
+Color deckDecisionTint(AppColors c, DeckDecision d) => switch (d) {
+  DeckDecision.ok => c.brandMuted,
+  DeckDecision.pass => c.textTertiary,
+  DeckDecision.love => c.brand,
+  DeckDecision.veto => c.error,
+};
 
 class _Style {
   const _Style({
