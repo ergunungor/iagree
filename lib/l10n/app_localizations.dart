@@ -158,6 +158,12 @@ abstract class AppLocalizations {
   /// **'{name}, hazır'**
   String participantReady(String name);
 
+  /// Navigasyon çubuğundaki geri chevron'unun VoiceOver etiketi.
+  ///
+  /// In tr, this message translates to:
+  /// **'Geri'**
+  String get commonBack;
+
   /// Sheet kapatma ✕ ikonunun ve scrim'in VoiceOver etiketi.
   ///
   /// In tr, this message translates to:

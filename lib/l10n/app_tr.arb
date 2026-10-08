@@ -63,6 +63,10 @@
       }
     }
   },
+  "commonBack": "Geri",
+  "@commonBack": {
+    "description": "Navigasyon çubuğundaki geri chevron'unun VoiceOver etiketi."
+  },
   "commonClose": "Kapat",
   "@commonClose": {
     "description": "Sheet kapatma ✕ ikonunun ve scrim'in VoiceOver etiketi."

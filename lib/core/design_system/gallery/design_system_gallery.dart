@@ -26,6 +26,7 @@ import '../components/selection/app_chip.dart';
 import '../components/selection/app_segmented_control.dart';
 import '../components/selection/app_toggle.dart';
 import '../components/inputs/app_text_field.dart';
+import '../components/navigation/app_nav_bar.dart';
 import '../foundations/app_haptics.dart';
 import '../foundations/app_icons.dart';
 import '../foundations/app_theme.dart';
@@ -168,6 +169,7 @@ class _Sections extends StatelessWidget {
           _Section('Kart ve liste', _CardListSection()),
           _Section('Avatar', _AvatarSection()),
           _Section('Geri bildirim ve katmanlar', _FeedbackSection()),
+          _Section('Navigasyon', _NavigationSection()),
           _Section('Haptik', _HapticsSection()),
         ],
       ),
@@ -1885,6 +1887,113 @@ class _FeedbackSectionState extends State<_FeedbackSection> {
           ),
         ),
       ],
+    );
+  }
+}
+
+class _NavigationSection extends StatelessWidget {
+  const _NavigationSection();
+
+  @override
+  Widget build(BuildContext context) {
+    return Wrap(
+      spacing: AppSpacing.xs,
+      runSpacing: AppSpacing.xs,
+      children: [
+        AppButton.secondary(
+          label: 'Large title (push)',
+          size: AppButtonSize.medium,
+          onPressed: () => Navigator.of(context).push(
+            CupertinoPageRoute<void>(builder: (_) => const _LargeTitleDemo()),
+          ),
+        ),
+        AppButton.secondary(
+          label: 'Modal + progress',
+          size: AppButtonSize.medium,
+          onPressed: () => Navigator.of(context).push(
+            CupertinoPageRoute<void>(
+              fullscreenDialog: true,
+              builder: (_) => const _ModalFlowDemo(),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _LargeTitleDemo extends StatelessWidget {
+  const _LargeTitleDemo();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: CustomScrollView(
+        slivers: [
+          AppNavBar(
+            title: 'Odalarım',
+            onBack: () => Navigator.of(context).pop(),
+            actions: [
+              AppNavBarAction(
+                icon: AppIcons.plus,
+                semanticLabel: 'Oda oluştur',
+                onPressed: () {},
+              ),
+              AppNavBarAction(
+                icon: AppIcons.userPlus,
+                semanticLabel: 'Profil',
+                onPressed: () {},
+              ),
+            ],
+          ),
+          SliverList.builder(
+            itemCount: 30,
+            itemBuilder: (context, i) => Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppSpacing.screenPadding,
+                vertical: AppSpacing.sm,
+              ),
+              child: Text('Cuma akşamı ${i + 1}', style: context.text.body),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ModalFlowDemo extends StatefulWidget {
+  const _ModalFlowDemo();
+
+  @override
+  State<_ModalFlowDemo> createState() => _ModalFlowDemoState();
+}
+
+class _ModalFlowDemoState extends State<_ModalFlowDemo> {
+  int _step = 1;
+  static const _steps = 4;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppInlineNavBar(
+        title: 'Oda oluştur',
+        onClose: () => Navigator.of(context).pop(),
+        progress: _step / _steps,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(AppSpacing.screenPadding),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const Spacer(),
+            AppButton.primary(
+              label: 'İleri',
+              onPressed: () => setState(() => _step = _step % _steps + 1),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

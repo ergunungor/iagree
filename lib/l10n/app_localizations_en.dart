@@ -48,6 +48,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get commonBack => 'Back';
+
+  @override
   String get commonClose => 'Close';
 
   @override

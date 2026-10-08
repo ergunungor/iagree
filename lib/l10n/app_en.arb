@@ -10,6 +10,7 @@
   "participantJoined": "{name}, joined",
   "participantChoosing": "{name}, choosing, {percent} percent",
   "participantReady": "{name}, ready",
+  "commonBack": "Back",
   "commonClose": "Close",
   "offlineBannerMessage": "No connection. Your changes will be sent when you reconnect."
 }
