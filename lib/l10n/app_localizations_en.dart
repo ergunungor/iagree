@@ -381,4 +381,152 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get offlineBannerMessage =>
       'No connection. Your changes will be sent when you reconnect.';
+
+  @override
+  String get comingSoon => 'This screen is coming soon';
+
+  @override
+  String get homeTitle => 'My rooms';
+
+  @override
+  String get homeCreateRoom => 'Create room';
+
+  @override
+  String get homeProfile => 'Profile';
+
+  @override
+  String get homeOtherRooms => 'Other rooms';
+
+  @override
+  String get homePastDecisions => 'Past decisions';
+
+  @override
+  String get homeEmptyTitle => 'You have no rooms yet';
+
+  @override
+  String get homeEmptyBody =>
+      'Start a room, invite your friends, decide together. If you got an invite, just tap the link.';
+
+  @override
+  String get homeLoadFailedTitle => 'Couldn’t load your rooms';
+
+  @override
+  String get homeLoadFailedBody => 'Check your connection and try again.';
+
+  @override
+  String get homeRetry => 'Try again';
+
+  @override
+  String get homeHeroResultsLabel => 'Results are in';
+
+  @override
+  String homeHeroResultsBody(int count) {
+    return 'Everyone has picked. The top $count places are ready, vote on the final call.';
+  }
+
+  @override
+  String get homeHeroVote => 'Vote';
+
+  @override
+  String get homeHeroTurnLabel => 'Your turn';
+
+  @override
+  String homeHeroTurnBody(int ready, int total) {
+    return '$ready/$total people are done picking. It’s your turn.';
+  }
+
+  @override
+  String get homeHeroPick => 'Pick';
+
+  @override
+  String get homeHeroWaitLabel => 'Waiting';
+
+  @override
+  String homeHeroWaitBody(int ready, int total) {
+    return '$ready/$total people have picked. Results open when everyone is done.';
+  }
+
+  @override
+  String get homeHeroOpen => 'Open room';
+
+  @override
+  String homeHeroMeta(String category, String when, int count) {
+    return '$category · $when · $count people';
+  }
+
+  @override
+  String homeRoomMeta(String category, String when) {
+    return '$category · $when';
+  }
+
+  @override
+  String get homeTagYourTurn => 'Your turn';
+
+  @override
+  String get homeTagResults => 'Results ready';
+
+  @override
+  String homeReadyCount(int ready, int total) {
+    return '$ready/$total ready';
+  }
+
+  @override
+  String homeAgreement(int percent) {
+    return '$percent% match';
+  }
+
+  @override
+  String homeRoomSemantics(String name, String meta, String status) {
+    return '$name. $meta. $status';
+  }
+
+  @override
+  String homePreviewSemantics(String name, int percent) {
+    return '$name, $percent% match';
+  }
+
+  @override
+  String get accountEdit => 'Edit';
+
+  @override
+  String get accountNotifications => 'Notifications';
+
+  @override
+  String get accountAppearance => 'Appearance';
+
+  @override
+  String get accountThemeSystem => 'System';
+
+  @override
+  String get accountThemeLight => 'Light';
+
+  @override
+  String get accountThemeDark => 'Dark';
+
+  @override
+  String get accountPrivacy => 'Privacy and terms';
+
+  @override
+  String get accountContact => 'Contact us';
+
+  @override
+  String get accountSignOut => 'Sign out';
+
+  @override
+  String get accountDelete => 'Delete account';
+
+  @override
+  String get accountDeleteTitle => 'Delete your account?';
+
+  @override
+  String get accountDeleteMessage =>
+      'Your rooms and past decisions will be permanently deleted. This can’t be undone.';
+
+  @override
+  String get accountDeleteConfirm => 'Delete account';
+
+  @override
+  String accountVersion(String version) {
+    return 'iAgree $version';
+  }
 }

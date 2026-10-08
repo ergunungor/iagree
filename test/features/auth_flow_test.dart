@@ -4,6 +4,7 @@ import 'package:iagree/app/app.dart';
 import 'package:iagree/core/data/mock/mock_auth_repository.dart';
 import 'package:iagree/core/design_system/components/buttons/app_icon_button.dart';
 import 'package:iagree/core/design_system/components/inputs/app_code_field.dart';
+import 'package:iagree/core/design_system/components/people/app_avatar.dart';
 import 'package:iagree/core/design_system/foundations/app_icons.dart';
 import 'package:iagree/features/auth/code_screen.dart';
 import 'package:iagree/features/auth/email_screen.dart';
@@ -142,7 +143,10 @@ void main() {
       await toCode(tester, MockAuthRepository.knownEmail);
       await _enterCode(tester, '482910');
       expect(find.byType(HomeScreen), findsOneWidget);
-      expect(find.text('Ayşe Yılmaz'), findsOneWidget);
+      expect(
+        find.text('A'),
+        findsOneWidget,
+      ); // profil avatarı (küçük: tek harf)
       expect(find.byType(CodeScreen), findsNothing);
       expect(
         Navigator.of(tester.element(find.byType(HomeScreen))).canPop(),
@@ -246,7 +250,7 @@ void main() {
         await tester.tap(find.text('Başla'));
         await _nav(tester);
         expect(find.byType(HomeScreen), findsOneWidget);
-        expect(find.text('Can Kaya'), findsOneWidget);
+        expect(find.text('C'), findsOneWidget);
       },
     );
 
@@ -286,6 +290,9 @@ void main() {
     await _sendEmail(tester, MockAuthRepository.knownEmail);
     await _enterCode(tester, '482910');
     expect(find.byType(HomeScreen), findsOneWidget);
+    await tester.tap(find.byType(AppAvatar));
+    await _nav(tester);
+    expect(find.text('Çıkış yap'), findsOneWidget);
     await tester.tap(find.text('Çıkış yap'));
     await _nav(tester);
     expect(find.byType(WelcomeScreen), findsOneWidget);

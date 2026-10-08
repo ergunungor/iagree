@@ -380,4 +380,152 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get offlineBannerMessage =>
       'Bağlantı yok. Değişikliklerin bağlanınca gönderilecek.';
+
+  @override
+  String get comingSoon => 'Bu ekran yakında eklenecek';
+
+  @override
+  String get homeTitle => 'Odalarım';
+
+  @override
+  String get homeCreateRoom => 'Oda oluştur';
+
+  @override
+  String get homeProfile => 'Profil';
+
+  @override
+  String get homeOtherRooms => 'Diğer odalar';
+
+  @override
+  String get homePastDecisions => 'Geçmiş kararlar';
+
+  @override
+  String get homeEmptyTitle => 'Henüz bir odan yok';
+
+  @override
+  String get homeEmptyBody =>
+      'Bir oda aç, arkadaşlarını çağır, birlikte karar verin. Bir davet aldıysan linke dokunman yeterli.';
+
+  @override
+  String get homeLoadFailedTitle => 'Odalar yüklenemedi';
+
+  @override
+  String get homeLoadFailedBody => 'Bağlantını kontrol edip tekrar dene.';
+
+  @override
+  String get homeRetry => 'Tekrar dene';
+
+  @override
+  String get homeHeroResultsLabel => 'Sonuçlar hazır';
+
+  @override
+  String homeHeroResultsBody(int count) {
+    return 'Herkes seçti. En çok uyuşan $count mekan hazır, son kararı oylayın.';
+  }
+
+  @override
+  String get homeHeroVote => 'Oy ver';
+
+  @override
+  String get homeHeroTurnLabel => 'Şimdi senin sıran';
+
+  @override
+  String homeHeroTurnBody(int ready, int total) {
+    return '$ready/$total kişi seçimini bitirdi. Sıra sende.';
+  }
+
+  @override
+  String get homeHeroPick => 'Seç';
+
+  @override
+  String get homeHeroWaitLabel => 'Bekleniyor';
+
+  @override
+  String homeHeroWaitBody(int ready, int total) {
+    return '$ready/$total kişi seçti. Herkes bitirince sonuçlar açılır.';
+  }
+
+  @override
+  String get homeHeroOpen => 'Odaya git';
+
+  @override
+  String homeHeroMeta(String category, String when, int count) {
+    return '$category · $when · $count kişi';
+  }
+
+  @override
+  String homeRoomMeta(String category, String when) {
+    return '$category · $when';
+  }
+
+  @override
+  String get homeTagYourTurn => 'Sıra sende';
+
+  @override
+  String get homeTagResults => 'Sonuçlar hazır';
+
+  @override
+  String homeReadyCount(int ready, int total) {
+    return '$ready/$total hazır';
+  }
+
+  @override
+  String homeAgreement(int percent) {
+    return '%$percent uyum';
+  }
+
+  @override
+  String homeRoomSemantics(String name, String meta, String status) {
+    return '$name. $meta. $status';
+  }
+
+  @override
+  String homePreviewSemantics(String name, int percent) {
+    return '$name, %$percent uyum';
+  }
+
+  @override
+  String get accountEdit => 'Düzenle';
+
+  @override
+  String get accountNotifications => 'Bildirimler';
+
+  @override
+  String get accountAppearance => 'Görünüm';
+
+  @override
+  String get accountThemeSystem => 'Sistem';
+
+  @override
+  String get accountThemeLight => 'Açık';
+
+  @override
+  String get accountThemeDark => 'Koyu';
+
+  @override
+  String get accountPrivacy => 'Gizlilik ve koşullar';
+
+  @override
+  String get accountContact => 'Bize yaz';
+
+  @override
+  String get accountSignOut => 'Çıkış yap';
+
+  @override
+  String get accountDelete => 'Hesabı sil';
+
+  @override
+  String get accountDeleteTitle => 'Hesabın silinsin mi?';
+
+  @override
+  String get accountDeleteMessage =>
+      'Odaların ve geçmiş kararların kalıcı olarak silinir. Bu işlem geri alınamaz.';
+
+  @override
+  String get accountDeleteConfirm => 'Hesabı sil';
+
+  @override
+  String accountVersion(String version) {
+    return 'iAgree $version';
+  }
 }

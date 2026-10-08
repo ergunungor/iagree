@@ -4,6 +4,7 @@ import '../core/data/auth_repository.dart';
 import '../core/domain/user_profile.dart';
 import '../features/auth/code_screen.dart';
 import '../features/auth/email_screen.dart';
+import '../features/account/account_screen.dart';
 import '../features/auth/profile_setup_screen.dart';
 import 'app_scope.dart';
 
@@ -17,6 +18,7 @@ abstract final class AppRoutes {
   static const String email = '/auth/email';
   static const String code = '/auth/code';
   static const String profile = '/auth/profile';
+  static const String account = '/account';
 
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -28,6 +30,8 @@ abstract final class AppRoutes {
       case profile:
         final pending = settings.arguments! as NeedsProfile;
         return _push(settings, (_) => ProfileSetupScreen(pending: pending));
+      case account:
+        return _push(settings, (_) => const AccountScreen());
     }
     return null;
   }
@@ -43,6 +47,9 @@ abstract final class AppRoutes {
 
   static void pushProfile(BuildContext context, NeedsProfile pending) =>
       Navigator.of(context).pushNamed(profile, arguments: pending);
+
+  static void pushAccount(BuildContext context) =>
+      Navigator.of(context).pushNamed(account);
 
   /// Giriş akışı bitti: giriş ekranları yığından kalkar, oturum açılır ve kök ekran ana
   /// ekrana geçer.

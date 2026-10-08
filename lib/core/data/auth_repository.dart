@@ -48,4 +48,7 @@ abstract interface class AuthRepository {
   });
 
   Future<void> signOut();
+
+  /// Hesabı ve ona bağlı tüm veriyi siler (App Store zorunluluğu). Oturum kapanır.
+  Future<void> deleteAccount();
 }

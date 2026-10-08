@@ -672,6 +672,258 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Bağlantı yok. Değişikliklerin bağlanınca gönderilecek.'**
   String get offlineBannerMessage;
+
+  /// Henüz yapılmamış ekranlara gidildiğinde gösterilen bilgi.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu ekran yakında eklenecek'**
+  String get comingSoon;
+
+  /// Ana ekran başlığı.
+  ///
+  /// In tr, this message translates to:
+  /// **'Odalarım'**
+  String get homeTitle;
+
+  /// Oda oluşturma butonu / ikon etiketi.
+  ///
+  /// In tr, this message translates to:
+  /// **'Oda oluştur'**
+  String get homeCreateRoom;
+
+  /// Profil avatarı etiketi.
+  ///
+  /// In tr, this message translates to:
+  /// **'Profil'**
+  String get homeProfile;
+
+  /// Kompakt oda listesi başlığı.
+  ///
+  /// In tr, this message translates to:
+  /// **'Diğer odalar'**
+  String get homeOtherRooms;
+
+  /// Geçmiş karar karoları başlığı.
+  ///
+  /// In tr, this message translates to:
+  /// **'Geçmiş kararlar'**
+  String get homePastDecisions;
+
+  /// Boş durum başlığı.
+  ///
+  /// In tr, this message translates to:
+  /// **'Henüz bir odan yok'**
+  String get homeEmptyTitle;
+
+  /// Boş durum açıklaması.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bir oda aç, arkadaşlarını çağır, birlikte karar verin. Bir davet aldıysan linke dokunman yeterli.'**
+  String get homeEmptyBody;
+
+  /// Yükleme hatası başlığı.
+  ///
+  /// In tr, this message translates to:
+  /// **'Odalar yüklenemedi'**
+  String get homeLoadFailedTitle;
+
+  /// Yükleme hatası açıklaması.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bağlantını kontrol edip tekrar dene.'**
+  String get homeLoadFailedBody;
+
+  /// Yeniden deneme butonu.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tekrar dene'**
+  String get homeRetry;
+
+  /// Hero kart etiketi: sonuçlar hazır.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sonuçlar hazır'**
+  String get homeHeroResultsLabel;
+
+  /// Hero kart açıklaması: sonuçlar hazır.
+  ///
+  /// In tr, this message translates to:
+  /// **'Herkes seçti. En çok uyuşan {count} mekan hazır, son kararı oylayın.'**
+  String homeHeroResultsBody(int count);
+
+  /// Hero kart butonu: oylama.
+  ///
+  /// In tr, this message translates to:
+  /// **'Oy ver'**
+  String get homeHeroVote;
+
+  /// Hero kart etiketi: sıra sende.
+  ///
+  /// In tr, this message translates to:
+  /// **'Şimdi senin sıran'**
+  String get homeHeroTurnLabel;
+
+  /// Hero kart açıklaması: sıra sende.
+  ///
+  /// In tr, this message translates to:
+  /// **'{ready}/{total} kişi seçimini bitirdi. Sıra sende.'**
+  String homeHeroTurnBody(int ready, int total);
+
+  /// Hero kart butonu: seçmeye başla.
+  ///
+  /// In tr, this message translates to:
+  /// **'Seç'**
+  String get homeHeroPick;
+
+  /// Hero kart etiketi: başkaları bekleniyor.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bekleniyor'**
+  String get homeHeroWaitLabel;
+
+  /// Hero kart açıklaması: bekleme.
+  ///
+  /// In tr, this message translates to:
+  /// **'{ready}/{total} kişi seçti. Herkes bitirince sonuçlar açılır.'**
+  String homeHeroWaitBody(int ready, int total);
+
+  /// Hero kart butonu: odayı aç.
+  ///
+  /// In tr, this message translates to:
+  /// **'Odaya git'**
+  String get homeHeroOpen;
+
+  /// Hero kart meta satırı.
+  ///
+  /// In tr, this message translates to:
+  /// **'{category} · {when} · {count} kişi'**
+  String homeHeroMeta(String category, String when, int count);
+
+  /// Oda satırı meta metni.
+  ///
+  /// In tr, this message translates to:
+  /// **'{category} · {when}'**
+  String homeRoomMeta(String category, String when);
+
+  /// Oda satırı durum etiketi.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sıra sende'**
+  String get homeTagYourTurn;
+
+  /// Oda satırı durum etiketi.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sonuçlar hazır'**
+  String get homeTagResults;
+
+  /// Oda satırı bekleme durumu.
+  ///
+  /// In tr, this message translates to:
+  /// **'{ready}/{total} hazır'**
+  String homeReadyCount(int ready, int total);
+
+  /// Hero önizleme uyum yüzdesi.
+  ///
+  /// In tr, this message translates to:
+  /// **'%{percent} uyum'**
+  String homeAgreement(int percent);
+
+  /// Oda satırı VoiceOver etiketi.
+  ///
+  /// In tr, this message translates to:
+  /// **'{name}. {meta}. {status}'**
+  String homeRoomSemantics(String name, String meta, String status);
+
+  /// Hero önizleme VoiceOver etiketi.
+  ///
+  /// In tr, this message translates to:
+  /// **'{name}, %{percent} uyum'**
+  String homePreviewSemantics(String name, int percent);
+
+  /// Profil düzenleme butonu.
+  ///
+  /// In tr, this message translates to:
+  /// **'Düzenle'**
+  String get accountEdit;
+
+  /// Profil listesi satırı.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bildirimler'**
+  String get accountNotifications;
+
+  /// Profil listesi satırı.
+  ///
+  /// In tr, this message translates to:
+  /// **'Görünüm'**
+  String get accountAppearance;
+
+  /// Görünüm seçeneği.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sistem'**
+  String get accountThemeSystem;
+
+  /// Görünüm seçeneği.
+  ///
+  /// In tr, this message translates to:
+  /// **'Açık'**
+  String get accountThemeLight;
+
+  /// Görünüm seçeneği.
+  ///
+  /// In tr, this message translates to:
+  /// **'Koyu'**
+  String get accountThemeDark;
+
+  /// Profil listesi satırı.
+  ///
+  /// In tr, this message translates to:
+  /// **'Gizlilik ve koşullar'**
+  String get accountPrivacy;
+
+  /// Profil listesi satırı.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bize yaz'**
+  String get accountContact;
+
+  /// Profil listesi satırı.
+  ///
+  /// In tr, this message translates to:
+  /// **'Çıkış yap'**
+  String get accountSignOut;
+
+  /// Profil listesi satırı (yıkıcı).
+  ///
+  /// In tr, this message translates to:
+  /// **'Hesabı sil'**
+  String get accountDelete;
+
+  /// Hesap silme alert başlığı.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hesabın silinsin mi?'**
+  String get accountDeleteTitle;
+
+  /// Hesap silme alert açıklaması.
+  ///
+  /// In tr, this message translates to:
+  /// **'Odaların ve geçmiş kararların kalıcı olarak silinir. Bu işlem geri alınamaz.'**
+  String get accountDeleteMessage;
+
+  /// Hesap silme alert onay butonu.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hesabı sil'**
+  String get accountDeleteConfirm;
+
+  /// Sürüm etiketi.
+  ///
+  /// In tr, this message translates to:
+  /// **'iAgree {version}'**
+  String accountVersion(String version);
 }
 
 class _AppLocalizationsDelegate

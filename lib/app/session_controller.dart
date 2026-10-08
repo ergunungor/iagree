@@ -36,6 +36,14 @@ class SessionController extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Hesabı siler; sonuç çıkış yapmakla aynıdır (karşılamaya döner).
+  Future<void> deleteAccount() async {
+    await auth.deleteAccount();
+    _user = null;
+    _status = SessionStatus.signedOut;
+    notifyListeners();
+  }
+
   Future<void> signOut() async {
     await auth.signOut();
     _user = null;

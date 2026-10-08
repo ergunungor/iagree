@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../core/data/auth_repository.dart';
 import '../core/data/mock/mock_auth_repository.dart';
+import '../core/data/mock/mock_rooms_repository.dart';
 import '../core/design_system/foundations/app_theme.dart';
 import '../core/design_system/foundations/context_extensions.dart';
 import '../core/design_system/gallery/design_system_gallery.dart';
@@ -10,18 +11,29 @@ import '../features/home/home_screen.dart';
 import '../l10n/app_localizations.dart';
 import 'app_router.dart';
 import 'app_scope.dart';
+import 'rooms_controller.dart';
 import 'session_controller.dart';
+import 'settings_controller.dart';
 
 /// Uygulamanın kökü: tema, yerelleştirme, bağımlılıklar ([AppScope]) ve rotalar.
 ///
 /// [home] verilirse (test) kök ekran olarak o gösterilir. [auth] ve [session] test için
 /// değiştirilebilir; varsayılan sahte giriş ([MockAuthRepository]).
 class IAgreeApp extends StatefulWidget {
-  const IAgreeApp({super.key, this.home, this.auth, this.session});
+  const IAgreeApp({
+    super.key,
+    this.home,
+    this.auth,
+    this.session,
+    this.rooms,
+    this.settings,
+  });
 
   final Widget? home;
   final AuthRepository? auth;
   final SessionController? session;
+  final RoomsController? rooms;
+  final SettingsController? settings;
 
   /// Geliştirme kısayolu: `--dart-define=DEMO=...` verilirse tasarım galerisi (ve demo
   /// sayfaları) açılır.
@@ -35,26 +47,35 @@ class _IAgreeAppState extends State<IAgreeApp> {
   late final AuthRepository _auth = widget.auth ?? MockAuthRepository();
   late final SessionController _session =
       widget.session ?? (SessionController(auth: _auth)..restore());
+  late final SettingsController _settings =
+      widget.settings ?? (SettingsController()..load());
+  late final RoomsController _rooms =
+      widget.rooms ?? RoomsController(repository: MockRoomsRepository());
 
   @override
   Widget build(BuildContext context) {
     return AppScope(
       session: _session,
       auth: _auth,
-      child: MaterialApp(
-        onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        localeResolutionCallback: resolveLocale,
-        theme: AppTheme.light,
-        darkTheme: AppTheme.dark,
-        themeMode: ThemeMode.system,
-        onGenerateRoute: AppRoutes.onGenerateRoute,
-        home:
-            widget.home ??
-            (IAgreeApp.demo.isNotEmpty
-                ? const DesignSystemGallery()
-                : const RootGate()),
+      rooms: _rooms,
+      settings: _settings,
+      child: ListenableBuilder(
+        listenable: _settings,
+        builder: (context, _) => MaterialApp(
+          onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          localeResolutionCallback: resolveLocale,
+          theme: AppTheme.light,
+          darkTheme: AppTheme.dark,
+          themeMode: _settings.themeMode,
+          onGenerateRoute: AppRoutes.onGenerateRoute,
+          home:
+              widget.home ??
+              (IAgreeApp.demo.isNotEmpty
+                  ? const DesignSystemGallery()
+                  : const RootGate()),
+        ),
       ),
     );
   }

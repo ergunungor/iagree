@@ -60,4 +60,7 @@ class MockAuthRepository implements AuthRepository {
 
   @override
   Future<void> signOut() async => _user = null;
+
+  @override
+  Future<void> deleteAccount() async => _user = null;
 }

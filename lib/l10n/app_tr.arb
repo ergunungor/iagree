@@ -67,48 +67,72 @@
   "@agreementArcPeople": {
     "description": "AgreementArc altındaki kişi sayısı: olumlu / toplam.",
     "placeholders": {
-      "positive": {"type": "int"},
-      "total": {"type": "int"}
+      "positive": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
     }
   },
   "agreementArcSemantics": "Uyum yüzde {percent}. Toplam {total} kişi, olumlu {positive}.",
   "@agreementArcSemantics": {
     "description": "AgreementArc VoiceOver cümlesi (çok isteyen yoksa). Sayıya ek getirilmez: Türkçe ünlü uyumu sayıya göre değişir.",
     "placeholders": {
-      "percent": {"type": "int"},
-      "total": {"type": "int"},
-      "positive": {"type": "int"}
+      "percent": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "positive": {
+        "type": "int"
+      }
     }
   },
   "agreementArcSemanticsLove": "Uyum yüzde {percent}. Toplam {total} kişi, olumlu {positive}, çok isteyen {love}.",
   "@agreementArcSemanticsLove": {
     "description": "AgreementArc VoiceOver cümlesi (çok isteyen varsa).",
     "placeholders": {
-      "percent": {"type": "int"},
-      "total": {"type": "int"},
-      "positive": {"type": "int"},
-      "love": {"type": "int"}
+      "percent": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "positive": {
+        "type": "int"
+      },
+      "love": {
+        "type": "int"
+      }
     }
   },
   "deckClosing": "Kapanıyor · {minutes} dk",
   "@deckClosing": {
     "description": "Görünür 'Kapanıyor' satırı (istisna).",
     "placeholders": {
-      "minutes": {"type": "int"}
+      "minutes": {
+        "type": "int"
+      }
     }
   },
   "deckClosingSemantics": "Kapanıyor, {minutes} dakika sonra",
   "@deckClosingSemantics": {
     "description": "'Kapanıyor' satırının VoiceOver metni.",
     "placeholders": {
-      "minutes": {"type": "int"}
+      "minutes": {
+        "type": "int"
+      }
     }
   },
   "deckRatingSemantics": "{rating} puan",
   "@deckRatingSemantics": {
     "description": "Puanın VoiceOver metni.",
     "placeholders": {
-      "rating": {"type": "String"}
+      "rating": {
+        "type": "String"
+      }
     }
   },
   "deckPriceLow": "uygun fiyat",
@@ -127,73 +151,99 @@
   "@deckDistance": {
     "description": "Görünür mesafe.",
     "placeholders": {
-      "distance": {"type": "String"}
+      "distance": {
+        "type": "String"
+      }
     }
   },
   "deckDistanceSemantics": "{distance} kilometre",
   "@deckDistanceSemantics": {
     "description": "Mesafenin VoiceOver metni.",
     "placeholders": {
-      "distance": {"type": "String"}
+      "distance": {
+        "type": "String"
+      }
     }
   },
   "deckDurationHM": "{hours} sa {minutes} dk",
   "@deckDurationHM": {
     "description": "Süre: saat ve dakika.",
     "placeholders": {
-      "hours": {"type": "int"},
-      "minutes": {"type": "int"}
+      "hours": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      }
     }
   },
   "deckDurationH": "{hours} sa",
   "@deckDurationH": {
     "description": "Süre: tam saat.",
     "placeholders": {
-      "hours": {"type": "int"}
+      "hours": {
+        "type": "int"
+      }
     }
   },
   "deckDurationM": "{minutes} dk",
   "@deckDurationM": {
     "description": "Süre: yalnızca dakika.",
     "placeholders": {
-      "minutes": {"type": "int"}
+      "minutes": {
+        "type": "int"
+      }
     }
   },
   "deckDurationHMSemantics": "{hours} saat {minutes} dakika",
   "@deckDurationHMSemantics": {
     "description": "Süre (VoiceOver).",
     "placeholders": {
-      "hours": {"type": "int"},
-      "minutes": {"type": "int"}
+      "hours": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      }
     }
   },
   "deckDurationHSemantics": "{hours} saat",
   "@deckDurationHSemantics": {
     "description": "Süre (VoiceOver).",
     "placeholders": {
-      "hours": {"type": "int"}
+      "hours": {
+        "type": "int"
+      }
     }
   },
   "deckDurationMSemantics": "{minutes} dakika",
   "@deckDurationMSemantics": {
     "description": "Süre (VoiceOver).",
     "placeholders": {
-      "minutes": {"type": "int"}
+      "minutes": {
+        "type": "int"
+      }
     }
   },
   "deckPhotoSemantics": "Fotoğraf {index}/{total}",
   "@deckPhotoSemantics": {
     "description": "Kartın fotoğraf alanı (VoiceOver).",
     "placeholders": {
-      "index": {"type": "int"},
-      "total": {"type": "int"}
+      "index": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
     }
   },
   "deckPosterSemantics": "{name} afişi",
   "@deckPosterSemantics": {
     "description": "Film afişi (VoiceOver).",
     "placeholders": {
-      "name": {"type": "String"}
+      "name": {
+        "type": "String"
+      }
     }
   },
   "deckDetails": "Ayrıntılar",
@@ -228,80 +278,120 @@
   "@deckProgressSemantics": {
     "description": "Deste ilerlemesi (VoiceOver).",
     "placeholders": {
-      "position": {"type": "int"},
-      "total": {"type": "int"}
+      "position": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
     }
   },
   "placeDistanceMeters": "{meters} m",
   "@placeDistanceMeters": {
     "description": "Görünür mesafe, 1 km'nin altında.",
     "placeholders": {
-      "meters": {"type": "int"}
+      "meters": {
+        "type": "int"
+      }
     }
   },
   "placeDistanceMetersSemantics": "{meters} metre",
   "@placeDistanceMetersSemantics": {
     "description": "Mesafenin VoiceOver metni, 1 km'nin altında.",
     "placeholders": {
-      "meters": {"type": "int"}
+      "meters": {
+        "type": "int"
+      }
     }
   },
   "resultLovers1": "{a} çok istiyor",
   "@resultLovers1": {
     "description": "Çok isteyen tek kişi.",
     "placeholders": {
-      "a": {"type": "String"}
+      "a": {
+        "type": "String"
+      }
     }
   },
   "resultLovers2": "{a} ve {b} çok istiyor",
   "@resultLovers2": {
     "description": "Çok isteyen iki kişi.",
     "placeholders": {
-      "a": {"type": "String"},
-      "b": {"type": "String"}
+      "a": {
+        "type": "String"
+      },
+      "b": {
+        "type": "String"
+      }
     }
   },
   "resultLovers3": "{a}, {b} ve {c} çok istiyor",
   "@resultLovers3": {
     "description": "Çok isteyen üç kişi.",
     "placeholders": {
-      "a": {"type": "String"},
-      "b": {"type": "String"},
-      "c": {"type": "String"}
+      "a": {
+        "type": "String"
+      },
+      "b": {
+        "type": "String"
+      },
+      "c": {
+        "type": "String"
+      }
     }
   },
   "resultLoversMore": "{a}, {b} ve {count} kişi daha çok istiyor",
   "@resultLoversMore": {
     "description": "Çok isteyen dört ya da daha fazla kişi.",
     "placeholders": {
-      "a": {"type": "String"},
-      "b": {"type": "String"},
-      "count": {"type": "int"}
+      "a": {
+        "type": "String"
+      },
+      "b": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
     }
   },
   "voteOptionVotes": "{name}, {count} oy: {names}",
   "@voteOptionVotes": {
     "description": "Oy almış seçenek (VoiceOver).",
     "placeholders": {
-      "name": {"type": "String"},
-      "count": {"type": "int"},
-      "names": {"type": "String"}
+      "name": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      },
+      "names": {
+        "type": "String"
+      }
     }
   },
   "voteOptionVotesLeading": "{name}, önde, {count} oy: {names}",
   "@voteOptionVotesLeading": {
     "description": "Önde olan seçenek (VoiceOver).",
     "placeholders": {
-      "name": {"type": "String"},
-      "count": {"type": "int"},
-      "names": {"type": "String"}
+      "name": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      },
+      "names": {
+        "type": "String"
+      }
     }
   },
   "voteOptionNoVotes": "{name}, oy yok",
   "@voteOptionNoVotes": {
     "description": "Oy almamış seçenek (VoiceOver).",
     "placeholders": {
-      "name": {"type": "String"}
+      "name": {
+        "type": "String"
+      }
     }
   },
   "voteOptionMine": "Senin oyun.",
@@ -328,8 +418,12 @@
   "@decisionVotes": {
     "description": "Çoğunluk etiketi.",
     "placeholders": {
-      "votes": {"type": "int"},
-      "total": {"type": "int"}
+      "votes": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
     }
   },
   "decisionCardOverline": "Karar",
@@ -340,15 +434,21 @@
   "@decisionCardSemantics": {
     "description": "Karar kartı (VoiceOver).",
     "placeholders": {
-      "name": {"type": "String"},
-      "time": {"type": "String"}
+      "name": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
     }
   },
   "decisionParticipants": "Katılımcılar: {names}",
   "@decisionParticipants": {
     "description": "Karar anındaki avatar kümesi (VoiceOver).",
     "placeholders": {
-      "names": {"type": "String"}
+      "names": {
+        "type": "String"
+      }
     }
   },
   "authEmailTitle": "E-posta adresin",
@@ -379,7 +479,9 @@
   "@authCodeSubtitle": {
     "description": "Kod ekranı açıklaması; adres kalın yazılır.",
     "placeholders": {
-      "email": {"type": "String"}
+      "email": {
+        "type": "String"
+      }
     }
   },
   "authChangeAddress": "Adresi değiştir",
@@ -394,7 +496,9 @@
   "@authResendIn": {
     "description": "Geri sayım sürerken pasif yeniden gönder metni.",
     "placeholders": {
-      "time": {"type": "String"}
+      "time": {
+        "type": "String"
+      }
     }
   },
   "authResend": "Yeniden gönder",
@@ -413,15 +517,21 @@
   "@authCodeEmptySemantics": {
     "description": "Boş kod alanı (VoiceOver).",
     "placeholders": {
-      "length": {"type": "int"}
+      "length": {
+        "type": "int"
+      }
     }
   },
   "authCodeSemantics": "Kod: {digits}, {remaining} hane kaldı",
   "@authCodeSemantics": {
     "description": "Kısmen dolu kod alanı (VoiceOver).",
     "placeholders": {
-      "digits": {"type": "String"},
-      "remaining": {"type": "int"}
+      "digits": {
+        "type": "String"
+      },
+      "remaining": {
+        "type": "int"
+      }
     }
   },
   "authProfileTitle": "Son bir adım",
@@ -484,8 +594,12 @@
   "@welcomeTerms": {
     "description": "Koşullar metni; iki bağlantı kalın/renkli yazılır.",
     "placeholders": {
-      "terms": {"type": "String"},
-      "privacy": {"type": "String"}
+      "terms": {
+        "type": "String"
+      },
+      "privacy": {
+        "type": "String"
+      }
     }
   },
   "welcomeTermsLabel": "Kullanım Koşulları",
@@ -527,5 +641,250 @@
   "offlineBannerMessage": "Bağlantı yok. Değişikliklerin bağlanınca gönderilecek.",
   "@offlineBannerMessage": {
     "description": "Çevrimdışı banner metni (nav bar altında kalıcı)."
+  },
+  "comingSoon": "Bu ekran yakında eklenecek",
+  "@comingSoon": {
+    "description": "Henüz yapılmamış ekranlara gidildiğinde gösterilen bilgi."
+  },
+  "homeTitle": "Odalarım",
+  "@homeTitle": {
+    "description": "Ana ekran başlığı."
+  },
+  "homeCreateRoom": "Oda oluştur",
+  "@homeCreateRoom": {
+    "description": "Oda oluşturma butonu / ikon etiketi."
+  },
+  "homeProfile": "Profil",
+  "@homeProfile": {
+    "description": "Profil avatarı etiketi."
+  },
+  "homeOtherRooms": "Diğer odalar",
+  "@homeOtherRooms": {
+    "description": "Kompakt oda listesi başlığı."
+  },
+  "homePastDecisions": "Geçmiş kararlar",
+  "@homePastDecisions": {
+    "description": "Geçmiş karar karoları başlığı."
+  },
+  "homeEmptyTitle": "Henüz bir odan yok",
+  "@homeEmptyTitle": {
+    "description": "Boş durum başlığı."
+  },
+  "homeEmptyBody": "Bir oda aç, arkadaşlarını çağır, birlikte karar verin. Bir davet aldıysan linke dokunman yeterli.",
+  "@homeEmptyBody": {
+    "description": "Boş durum açıklaması."
+  },
+  "homeLoadFailedTitle": "Odalar yüklenemedi",
+  "@homeLoadFailedTitle": {
+    "description": "Yükleme hatası başlığı."
+  },
+  "homeLoadFailedBody": "Bağlantını kontrol edip tekrar dene.",
+  "@homeLoadFailedBody": {
+    "description": "Yükleme hatası açıklaması."
+  },
+  "homeRetry": "Tekrar dene",
+  "@homeRetry": {
+    "description": "Yeniden deneme butonu."
+  },
+  "homeHeroResultsLabel": "Sonuçlar hazır",
+  "@homeHeroResultsLabel": {
+    "description": "Hero kart etiketi: sonuçlar hazır."
+  },
+  "homeHeroResultsBody": "Herkes seçti. En çok uyuşan {count} mekan hazır, son kararı oylayın.",
+  "@homeHeroResultsBody": {
+    "description": "Hero kart açıklaması: sonuçlar hazır.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "homeHeroVote": "Oy ver",
+  "@homeHeroVote": {
+    "description": "Hero kart butonu: oylama."
+  },
+  "homeHeroTurnLabel": "Şimdi senin sıran",
+  "@homeHeroTurnLabel": {
+    "description": "Hero kart etiketi: sıra sende."
+  },
+  "homeHeroTurnBody": "{ready}/{total} kişi seçimini bitirdi. Sıra sende.",
+  "@homeHeroTurnBody": {
+    "description": "Hero kart açıklaması: sıra sende.",
+    "placeholders": {
+      "ready": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "homeHeroPick": "Seç",
+  "@homeHeroPick": {
+    "description": "Hero kart butonu: seçmeye başla."
+  },
+  "homeHeroWaitLabel": "Bekleniyor",
+  "@homeHeroWaitLabel": {
+    "description": "Hero kart etiketi: başkaları bekleniyor."
+  },
+  "homeHeroWaitBody": "{ready}/{total} kişi seçti. Herkes bitirince sonuçlar açılır.",
+  "@homeHeroWaitBody": {
+    "description": "Hero kart açıklaması: bekleme.",
+    "placeholders": {
+      "ready": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "homeHeroOpen": "Odaya git",
+  "@homeHeroOpen": {
+    "description": "Hero kart butonu: odayı aç."
+  },
+  "homeHeroMeta": "{category} · {when} · {count} kişi",
+  "@homeHeroMeta": {
+    "description": "Hero kart meta satırı.",
+    "placeholders": {
+      "category": {
+        "type": "String"
+      },
+      "when": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "homeRoomMeta": "{category} · {when}",
+  "@homeRoomMeta": {
+    "description": "Oda satırı meta metni.",
+    "placeholders": {
+      "category": {
+        "type": "String"
+      },
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "homeTagYourTurn": "Sıra sende",
+  "@homeTagYourTurn": {
+    "description": "Oda satırı durum etiketi."
+  },
+  "homeTagResults": "Sonuçlar hazır",
+  "@homeTagResults": {
+    "description": "Oda satırı durum etiketi."
+  },
+  "homeReadyCount": "{ready}/{total} hazır",
+  "@homeReadyCount": {
+    "description": "Oda satırı bekleme durumu.",
+    "placeholders": {
+      "ready": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "homeAgreement": "%{percent} uyum",
+  "@homeAgreement": {
+    "description": "Hero önizleme uyum yüzdesi.",
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "homeRoomSemantics": "{name}. {meta}. {status}",
+  "@homeRoomSemantics": {
+    "description": "Oda satırı VoiceOver etiketi.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "meta": {
+        "type": "String"
+      },
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "homePreviewSemantics": "{name}, %{percent} uyum",
+  "@homePreviewSemantics": {
+    "description": "Hero önizleme VoiceOver etiketi.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "accountEdit": "Düzenle",
+  "@accountEdit": {
+    "description": "Profil düzenleme butonu."
+  },
+  "accountNotifications": "Bildirimler",
+  "@accountNotifications": {
+    "description": "Profil listesi satırı."
+  },
+  "accountAppearance": "Görünüm",
+  "@accountAppearance": {
+    "description": "Profil listesi satırı."
+  },
+  "accountThemeSystem": "Sistem",
+  "@accountThemeSystem": {
+    "description": "Görünüm seçeneği."
+  },
+  "accountThemeLight": "Açık",
+  "@accountThemeLight": {
+    "description": "Görünüm seçeneği."
+  },
+  "accountThemeDark": "Koyu",
+  "@accountThemeDark": {
+    "description": "Görünüm seçeneği."
+  },
+  "accountPrivacy": "Gizlilik ve koşullar",
+  "@accountPrivacy": {
+    "description": "Profil listesi satırı."
+  },
+  "accountContact": "Bize yaz",
+  "@accountContact": {
+    "description": "Profil listesi satırı."
+  },
+  "accountSignOut": "Çıkış yap",
+  "@accountSignOut": {
+    "description": "Profil listesi satırı."
+  },
+  "accountDelete": "Hesabı sil",
+  "@accountDelete": {
+    "description": "Profil listesi satırı (yıkıcı)."
+  },
+  "accountDeleteTitle": "Hesabın silinsin mi?",
+  "@accountDeleteTitle": {
+    "description": "Hesap silme alert başlığı."
+  },
+  "accountDeleteMessage": "Odaların ve geçmiş kararların kalıcı olarak silinir. Bu işlem geri alınamaz.",
+  "@accountDeleteMessage": {
+    "description": "Hesap silme alert açıklaması."
+  },
+  "accountDeleteConfirm": "Hesabı sil",
+  "@accountDeleteConfirm": {
+    "description": "Hesap silme alert onay butonu."
+  },
+  "accountVersion": "iAgree {version}",
+  "@accountVersion": {
+    "description": "Sürüm etiketi.",
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
   }
 }
