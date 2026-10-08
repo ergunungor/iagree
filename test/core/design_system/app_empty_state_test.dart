@@ -261,4 +261,33 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Oda oluştur'), findsOneWidget);
   });
+
+  group('galeri kutusu', () {
+    // Galeri kutuları 300 × yazı ölçeği yüksekliğinde; içerik kaydırma gerektirmemeli.
+    for (final scale in [1.0, 2.0]) {
+      testWidgets('hata durumu ${scale}x: 300×ölçek kutuda kesilmez', (
+        tester,
+      ) async {
+        _phone(tester);
+        await pumpApp(
+          tester,
+          SizedBox(
+            width: 350,
+            height: 300 * scale,
+            child: AppEmptyState.error(
+              title: 'Yüklenemedi',
+              message: 'Bağlantını kontrol edip tekrar dene.',
+              actionLabel: 'Tekrar dene',
+              onAction: () {},
+            ),
+          ),
+          textScale: scale,
+        );
+        final position = tester
+            .state<ScrollableState>(find.byType(Scrollable))
+            .position;
+        expect(position.maxScrollExtent, 0);
+      });
+    }
+  });
 }

@@ -1733,6 +1733,10 @@ class _FeedbackSectionState extends State<_FeedbackSection> {
   @override
   Widget build(BuildContext context) {
     final c = context.colors;
+    // Sabit yükseklikli kutular büyük yazıda içeriği kesmesin: kutu yazıyla birlikte büyür.
+    final emptyScale = MediaQuery.textScalerOf(context)
+        .scale(1)
+        .clamp(1.0, 3.0);
     Widget label(String text) => Padding(
       padding: const EdgeInsets.only(bottom: AppSpacing.xs),
       child: Text(
@@ -1860,7 +1864,7 @@ class _FeedbackSectionState extends State<_FeedbackSection> {
         gap,
         label('boş durum · hata durumu'),
         SizedBox(
-          height: 360,
+          height: 360 * emptyScale,
           child: DecoratedBox(
             decoration: AppRadius.decoration(
               radius: AppRadius.lg,
@@ -1876,7 +1880,7 @@ class _FeedbackSectionState extends State<_FeedbackSection> {
         ),
         const SizedBox(height: AppSpacing.md),
         SizedBox(
-          height: 300,
+          height: 300 * emptyScale,
           child: DecoratedBox(
             decoration: AppRadius.decoration(
               radius: AppRadius.lg,
