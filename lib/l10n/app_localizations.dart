@@ -181,6 +181,108 @@ abstract class AppLocalizations {
     int love,
   );
 
+  /// Görünür 'Kapanıyor' satırı (istisna).
+  ///
+  /// In tr, this message translates to:
+  /// **'Kapanıyor · {minutes} dk'**
+  String deckClosing(int minutes);
+
+  /// 'Kapanıyor' satırının VoiceOver metni.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kapanıyor, {minutes} dakika sonra'**
+  String deckClosingSemantics(int minutes);
+
+  /// Puanın VoiceOver metni.
+  ///
+  /// In tr, this message translates to:
+  /// **'{rating} puan'**
+  String deckRatingSemantics(String rating);
+
+  /// Fiyat seviyesi 1 (VoiceOver).
+  ///
+  /// In tr, this message translates to:
+  /// **'uygun fiyat'**
+  String get deckPriceLow;
+
+  /// Fiyat seviyesi 2 (VoiceOver).
+  ///
+  /// In tr, this message translates to:
+  /// **'orta fiyat'**
+  String get deckPriceMid;
+
+  /// Fiyat seviyesi 3 (VoiceOver).
+  ///
+  /// In tr, this message translates to:
+  /// **'yüksek fiyat'**
+  String get deckPriceHigh;
+
+  /// Görünür mesafe.
+  ///
+  /// In tr, this message translates to:
+  /// **'{distance} km'**
+  String deckDistance(String distance);
+
+  /// Mesafenin VoiceOver metni.
+  ///
+  /// In tr, this message translates to:
+  /// **'{distance} kilometre'**
+  String deckDistanceSemantics(String distance);
+
+  /// Süre: saat ve dakika.
+  ///
+  /// In tr, this message translates to:
+  /// **'{hours} sa {minutes} dk'**
+  String deckDurationHM(int hours, int minutes);
+
+  /// Süre: tam saat.
+  ///
+  /// In tr, this message translates to:
+  /// **'{hours} sa'**
+  String deckDurationH(int hours);
+
+  /// Süre: yalnızca dakika.
+  ///
+  /// In tr, this message translates to:
+  /// **'{minutes} dk'**
+  String deckDurationM(int minutes);
+
+  /// Süre (VoiceOver).
+  ///
+  /// In tr, this message translates to:
+  /// **'{hours} saat {minutes} dakika'**
+  String deckDurationHMSemantics(int hours, int minutes);
+
+  /// Süre (VoiceOver).
+  ///
+  /// In tr, this message translates to:
+  /// **'{hours} saat'**
+  String deckDurationHSemantics(int hours);
+
+  /// Süre (VoiceOver).
+  ///
+  /// In tr, this message translates to:
+  /// **'{minutes} dakika'**
+  String deckDurationMSemantics(int minutes);
+
+  /// Kartın fotoğraf alanı (VoiceOver).
+  ///
+  /// In tr, this message translates to:
+  /// **'Fotoğraf {index}/{total}'**
+  String deckPhotoSemantics(int index, int total);
+
+  /// Film afişi (VoiceOver).
+  ///
+  /// In tr, this message translates to:
+  /// **'{name} afişi'**
+  String deckPosterSemantics(String name);
+
+  /// Kart bilgi panelinin eylem ipucu.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ayrıntılar'**
+  String get deckDetails;
+
   /// Navigasyon çubuğundaki geri chevron'unun VoiceOver etiketi.
   ///
   /// In tr, this message translates to:

@@ -68,6 +68,83 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
+  String deckClosing(int minutes) {
+    return 'Kapanıyor · $minutes dk';
+  }
+
+  @override
+  String deckClosingSemantics(int minutes) {
+    return 'Kapanıyor, $minutes dakika sonra';
+  }
+
+  @override
+  String deckRatingSemantics(String rating) {
+    return '$rating puan';
+  }
+
+  @override
+  String get deckPriceLow => 'uygun fiyat';
+
+  @override
+  String get deckPriceMid => 'orta fiyat';
+
+  @override
+  String get deckPriceHigh => 'yüksek fiyat';
+
+  @override
+  String deckDistance(String distance) {
+    return '$distance km';
+  }
+
+  @override
+  String deckDistanceSemantics(String distance) {
+    return '$distance kilometre';
+  }
+
+  @override
+  String deckDurationHM(int hours, int minutes) {
+    return '$hours sa $minutes dk';
+  }
+
+  @override
+  String deckDurationH(int hours) {
+    return '$hours sa';
+  }
+
+  @override
+  String deckDurationM(int minutes) {
+    return '$minutes dk';
+  }
+
+  @override
+  String deckDurationHMSemantics(int hours, int minutes) {
+    return '$hours saat $minutes dakika';
+  }
+
+  @override
+  String deckDurationHSemantics(int hours) {
+    return '$hours saat';
+  }
+
+  @override
+  String deckDurationMSemantics(int minutes) {
+    return '$minutes dakika';
+  }
+
+  @override
+  String deckPhotoSemantics(int index, int total) {
+    return 'Fotoğraf $index/$total';
+  }
+
+  @override
+  String deckPosterSemantics(String name) {
+    return '$name afişi';
+  }
+
+  @override
+  String get deckDetails => 'Ayrıntılar';
+
+  @override
   String get commonBack => 'Geri';
 
   @override

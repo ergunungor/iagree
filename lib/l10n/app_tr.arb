@@ -90,6 +90,116 @@
       "love": {"type": "int"}
     }
   },
+  "deckClosing": "Kapanıyor · {minutes} dk",
+  "@deckClosing": {
+    "description": "Görünür 'Kapanıyor' satırı (istisna).",
+    "placeholders": {
+      "minutes": {"type": "int"}
+    }
+  },
+  "deckClosingSemantics": "Kapanıyor, {minutes} dakika sonra",
+  "@deckClosingSemantics": {
+    "description": "'Kapanıyor' satırının VoiceOver metni.",
+    "placeholders": {
+      "minutes": {"type": "int"}
+    }
+  },
+  "deckRatingSemantics": "{rating} puan",
+  "@deckRatingSemantics": {
+    "description": "Puanın VoiceOver metni.",
+    "placeholders": {
+      "rating": {"type": "String"}
+    }
+  },
+  "deckPriceLow": "uygun fiyat",
+  "@deckPriceLow": {
+    "description": "Fiyat seviyesi 1 (VoiceOver)."
+  },
+  "deckPriceMid": "orta fiyat",
+  "@deckPriceMid": {
+    "description": "Fiyat seviyesi 2 (VoiceOver)."
+  },
+  "deckPriceHigh": "yüksek fiyat",
+  "@deckPriceHigh": {
+    "description": "Fiyat seviyesi 3 (VoiceOver)."
+  },
+  "deckDistance": "{distance} km",
+  "@deckDistance": {
+    "description": "Görünür mesafe.",
+    "placeholders": {
+      "distance": {"type": "String"}
+    }
+  },
+  "deckDistanceSemantics": "{distance} kilometre",
+  "@deckDistanceSemantics": {
+    "description": "Mesafenin VoiceOver metni.",
+    "placeholders": {
+      "distance": {"type": "String"}
+    }
+  },
+  "deckDurationHM": "{hours} sa {minutes} dk",
+  "@deckDurationHM": {
+    "description": "Süre: saat ve dakika.",
+    "placeholders": {
+      "hours": {"type": "int"},
+      "minutes": {"type": "int"}
+    }
+  },
+  "deckDurationH": "{hours} sa",
+  "@deckDurationH": {
+    "description": "Süre: tam saat.",
+    "placeholders": {
+      "hours": {"type": "int"}
+    }
+  },
+  "deckDurationM": "{minutes} dk",
+  "@deckDurationM": {
+    "description": "Süre: yalnızca dakika.",
+    "placeholders": {
+      "minutes": {"type": "int"}
+    }
+  },
+  "deckDurationHMSemantics": "{hours} saat {minutes} dakika",
+  "@deckDurationHMSemantics": {
+    "description": "Süre (VoiceOver).",
+    "placeholders": {
+      "hours": {"type": "int"},
+      "minutes": {"type": "int"}
+    }
+  },
+  "deckDurationHSemantics": "{hours} saat",
+  "@deckDurationHSemantics": {
+    "description": "Süre (VoiceOver).",
+    "placeholders": {
+      "hours": {"type": "int"}
+    }
+  },
+  "deckDurationMSemantics": "{minutes} dakika",
+  "@deckDurationMSemantics": {
+    "description": "Süre (VoiceOver).",
+    "placeholders": {
+      "minutes": {"type": "int"}
+    }
+  },
+  "deckPhotoSemantics": "Fotoğraf {index}/{total}",
+  "@deckPhotoSemantics": {
+    "description": "Kartın fotoğraf alanı (VoiceOver).",
+    "placeholders": {
+      "index": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
+  "deckPosterSemantics": "{name} afişi",
+  "@deckPosterSemantics": {
+    "description": "Film afişi (VoiceOver).",
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "deckDetails": "Ayrıntılar",
+  "@deckDetails": {
+    "description": "Kart bilgi panelinin eylem ipucu."
+  },
   "commonBack": "Geri",
   "@commonBack": {
     "description": "Navigasyon çubuğundaki geri chevron'unun VoiceOver etiketi."

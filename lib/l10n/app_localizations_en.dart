@@ -68,6 +68,83 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String deckClosing(int minutes) {
+    return 'Closing · $minutes min';
+  }
+
+  @override
+  String deckClosingSemantics(int minutes) {
+    return 'Closing in $minutes minutes';
+  }
+
+  @override
+  String deckRatingSemantics(String rating) {
+    return '$rating rating';
+  }
+
+  @override
+  String get deckPriceLow => 'low price';
+
+  @override
+  String get deckPriceMid => 'medium price';
+
+  @override
+  String get deckPriceHigh => 'high price';
+
+  @override
+  String deckDistance(String distance) {
+    return '$distance km';
+  }
+
+  @override
+  String deckDistanceSemantics(String distance) {
+    return '$distance kilometers';
+  }
+
+  @override
+  String deckDurationHM(int hours, int minutes) {
+    return '${hours}h ${minutes}m';
+  }
+
+  @override
+  String deckDurationH(int hours) {
+    return '${hours}h';
+  }
+
+  @override
+  String deckDurationM(int minutes) {
+    return '${minutes}m';
+  }
+
+  @override
+  String deckDurationHMSemantics(int hours, int minutes) {
+    return '$hours hours $minutes minutes';
+  }
+
+  @override
+  String deckDurationHSemantics(int hours) {
+    return '$hours hours';
+  }
+
+  @override
+  String deckDurationMSemantics(int minutes) {
+    return '$minutes minutes';
+  }
+
+  @override
+  String deckPhotoSemantics(int index, int total) {
+    return 'Photo $index/$total';
+  }
+
+  @override
+  String deckPosterSemantics(String name) {
+    return '$name poster';
+  }
+
+  @override
+  String get deckDetails => 'Details';
+
+  @override
   String get commonBack => 'Back';
 
   @override

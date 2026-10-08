@@ -7,6 +7,7 @@ import '../components/brand/app_logo.dart';
 import '../components/buttons/app_button.dart';
 import '../components/buttons/app_icon_button.dart';
 import '../components/content/app_card.dart';
+import '../components/deck/deck_card.dart';
 import '../components/content/app_list_group.dart';
 import '../components/feedback/app_alert.dart';
 import '../components/feedback/app_empty_state.dart';
@@ -171,6 +172,7 @@ class _Sections extends StatelessWidget {
           _Section('Avatar', _AvatarSection()),
           _Section('Geri bildirim ve katmanlar', _FeedbackSection()),
           _Section('Uyum yayı', _ArcSection()),
+          _Section('Deste kartı', _DeckCardSection()),
           _Section('Navigasyon', _NavigationSection()),
           _Section('Haptik', _HapticsSection()),
         ],
@@ -2091,6 +2093,64 @@ class _ArcSectionState extends State<_ArcSection> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _DeckCardSection extends StatelessWidget {
+  const _DeckCardSection();
+
+  /// Örnek fotoğraf yerine düz renkli kutular (projede görsel asset yok).
+  static List<Widget> _photos(List<Color> colors) => [
+    for (final c in colors) ColoredBox(color: c),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    const gap = SizedBox(height: AppSpacing.md);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const _Caption('mekan · 4 fotoğraf (sağ/sol yarıya dokun)'),
+        const SizedBox(height: AppSpacing.xs),
+        DeckCard.place(
+          name: 'Trattoria Lume',
+          photos: _photos(const [
+            Color(0xFF3A2A24),
+            Color(0xFF7C8A4C),
+            Color(0xFFB9573A),
+            Color(0xFF2A3A4A),
+          ]),
+          rating: 4.6,
+          category: 'İtalyan',
+          priceLevel: 2,
+          distanceKm: 1.2,
+          onDetailsTap: () {},
+        ),
+        gap,
+        const _Caption('mekan · istisna: kapanıyor'),
+        const SizedBox(height: AppSpacing.xs),
+        DeckCard.place(
+          name: 'Bahçe Kafe',
+          photos: _photos(const [Color(0xFFE9E1D6)]),
+          rating: 4.2,
+          category: 'Kafe',
+          priceLevel: 1,
+          distanceKm: 0.8,
+          closingInMinutes: 45,
+        ),
+        gap,
+        const _Caption('film · 2:3 afiş, platform etiketi'),
+        const SizedBox(height: AppSpacing.xs),
+        const DeckCard.film(
+          name: 'Son Kış',
+          poster: ColoredBox(color: Color(0xFF1F2A3A)),
+          rating: 7.8,
+          genre: 'Dram',
+          durationMinutes: 130,
+          platform: 'Netflix',
+        ),
+      ],
     );
   }
 }
