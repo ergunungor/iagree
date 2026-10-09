@@ -528,4 +528,146 @@ class AppLocalizationsTr extends AppLocalizations {
   String accountVersion(String version) {
     return 'iAgree $version';
   }
+
+  @override
+  String get createWhatTitle => 'Ne yapıyorsunuz?';
+
+  @override
+  String get createThemesTitle => 'Bugüne özel';
+
+  @override
+  String get createCategoriesTitle => 'Kategoriler';
+
+  @override
+  String get createDetailsTitle => 'Nerede, ne zaman?';
+
+  @override
+  String get createWhere => 'Nerede';
+
+  @override
+  String get createWherePlaceholder => 'Konum seç';
+
+  @override
+  String get createWhereSheetTitle => 'Semt seç';
+
+  @override
+  String get createDistance => 'Mesafe';
+
+  @override
+  String createDistanceKm(int km) {
+    return '$km km';
+  }
+
+  @override
+  String get createWhen => 'Ne zaman';
+
+  @override
+  String get createWhenNow => 'Şimdi';
+
+  @override
+  String get createWhenTonight => 'Bu akşam';
+
+  @override
+  String get createWhenWeekend => 'Hafta sonu';
+
+  @override
+  String get createWhenPickDate => 'Tarih seç';
+
+  @override
+  String get createDateSheetTitle => 'Tarih seç';
+
+  @override
+  String get createDateConfirm => 'Seç';
+
+  @override
+  String get createBudget => 'Bütçe';
+
+  @override
+  String get createPlatform => 'Hangi platform?';
+
+  @override
+  String get createRoomName => 'Oda adı';
+
+  @override
+  String createRoomNameDefault(String when, String category) {
+    return '$when $category';
+  }
+
+  @override
+  String get createRoomNameRequired => 'Oda adı gir.';
+
+  @override
+  String get createLocationRequired => 'Bir konum seç.';
+
+  @override
+  String get createPlatformRequired => 'En az bir platform seç.';
+
+  @override
+  String get createSubmit => 'Odayı kur';
+
+  @override
+  String createPlaceTag(String place, int km) {
+    return '$place · $km km';
+  }
+
+  @override
+  String get createFailed => 'Oda kurulamadı. Tekrar dene.';
+
+  @override
+  String roomMembersSemantics(int count) {
+    return 'Odada $count kişi';
+  }
+
+  @override
+  String get roomOnlyYouSemantics => 'Odada sadece sen varsın';
+
+  @override
+  String get roomInviteTitle => 'Arkadaşlarını çağır';
+
+  @override
+  String roomMembersTitle(int count) {
+    return '$count kişi odada';
+  }
+
+  @override
+  String get roomLinkCopy => 'Kopyala';
+
+  @override
+  String get roomLinkCopied => 'Link kopyalandı';
+
+  @override
+  String roomLinkSemantics(String link) {
+    return 'Davet linki: $link';
+  }
+
+  @override
+  String get roomShare => 'Linki paylaş';
+
+  @override
+  String get roomPickFirst => 'Önce ben seçeyim';
+
+  @override
+  String get roomStartPicking => 'Seçmeye başla';
+
+  @override
+  String get roomSettings => 'Oda ayarları';
+
+  @override
+  String get roomRename => 'Oda adını değiştir';
+
+  @override
+  String get roomRenameSave => 'Kaydet';
+
+  @override
+  String get roomDelete => 'Odayı sil';
+
+  @override
+  String get roomDeleteTitle => 'Oda silinsin mi?';
+
+  @override
+  String get roomDeleteMessage =>
+      'Oda ve içindeki seçimler herkes için silinir. Bu işlem geri alınamaz.';
+
+  @override
+  String get roomDeleteConfirm => 'Odayı sil';
 }

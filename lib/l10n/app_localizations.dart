@@ -924,6 +924,264 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'iAgree {version}'**
   String accountVersion(String version);
+
+  /// Oda oluşturma 1. adım başlığı.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ne yapıyorsunuz?'**
+  String get createWhatTitle;
+
+  /// Tema kartları başlığı.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bugüne özel'**
+  String get createThemesTitle;
+
+  /// Kategori ızgarası başlığı.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kategoriler'**
+  String get createCategoriesTitle;
+
+  /// Oda oluşturma 2. adım başlığı.
+  ///
+  /// In tr, this message translates to:
+  /// **'Nerede, ne zaman?'**
+  String get createDetailsTitle;
+
+  /// Konum alanı etiketi.
+  ///
+  /// In tr, this message translates to:
+  /// **'Nerede'**
+  String get createWhere;
+
+  /// Konum alanı boşken.
+  ///
+  /// In tr, this message translates to:
+  /// **'Konum seç'**
+  String get createWherePlaceholder;
+
+  /// Konum sheet başlığı.
+  ///
+  /// In tr, this message translates to:
+  /// **'Semt seç'**
+  String get createWhereSheetTitle;
+
+  /// Slider VoiceOver etiketi.
+  ///
+  /// In tr, this message translates to:
+  /// **'Mesafe'**
+  String get createDistance;
+
+  /// Mesafe değeri.
+  ///
+  /// In tr, this message translates to:
+  /// **'{km} km'**
+  String createDistanceKm(int km);
+
+  /// Zaman alanı etiketi.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ne zaman'**
+  String get createWhen;
+
+  /// Zaman seçeneği.
+  ///
+  /// In tr, this message translates to:
+  /// **'Şimdi'**
+  String get createWhenNow;
+
+  /// Zaman seçeneği.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu akşam'**
+  String get createWhenTonight;
+
+  /// Zaman seçeneği.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hafta sonu'**
+  String get createWhenWeekend;
+
+  /// Zaman seçeneği: tarih seçici.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tarih seç'**
+  String get createWhenPickDate;
+
+  /// Tarih sheet başlığı.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tarih seç'**
+  String get createDateSheetTitle;
+
+  /// Tarih sheet onay butonu.
+  ///
+  /// In tr, this message translates to:
+  /// **'Seç'**
+  String get createDateConfirm;
+
+  /// Bütçe alanı etiketi.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bütçe'**
+  String get createBudget;
+
+  /// Film ve dizi için platform alanı.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hangi platform?'**
+  String get createPlatform;
+
+  /// Oda adı alanı etiketi.
+  ///
+  /// In tr, this message translates to:
+  /// **'Oda adı'**
+  String get createRoomName;
+
+  /// Oda adı önerisi: "Bu akşam yemek".
+  ///
+  /// In tr, this message translates to:
+  /// **'{when} {category}'**
+  String createRoomNameDefault(String when, String category);
+
+  /// Oda adı boşken hata.
+  ///
+  /// In tr, this message translates to:
+  /// **'Oda adı gir.'**
+  String get createRoomNameRequired;
+
+  /// Konum seçilmeden hata.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bir konum seç.'**
+  String get createLocationRequired;
+
+  /// Platform seçilmeden hata.
+  ///
+  /// In tr, this message translates to:
+  /// **'En az bir platform seç.'**
+  String get createPlatformRequired;
+
+  /// Oda kurma butonu.
+  ///
+  /// In tr, this message translates to:
+  /// **'Odayı kur'**
+  String get createSubmit;
+
+  /// Çerçeve etiketi: konum ve mesafe.
+  ///
+  /// In tr, this message translates to:
+  /// **'{place} · {km} km'**
+  String createPlaceTag(String place, int km);
+
+  /// Oda kurma hatası.
+  ///
+  /// In tr, this message translates to:
+  /// **'Oda kurulamadı. Tekrar dene.'**
+  String get createFailed;
+
+  /// Katılımcı satırı VoiceOver.
+  ///
+  /// In tr, this message translates to:
+  /// **'Odada {count} kişi'**
+  String roomMembersSemantics(int count);
+
+  /// Katılımcı satırı VoiceOver (yalnız).
+  ///
+  /// In tr, this message translates to:
+  /// **'Odada sadece sen varsın'**
+  String get roomOnlyYouSemantics;
+
+  /// Davet başlığı.
+  ///
+  /// In tr, this message translates to:
+  /// **'Arkadaşlarını çağır'**
+  String get roomInviteTitle;
+
+  /// Katılımcı başlığı.
+  ///
+  /// In tr, this message translates to:
+  /// **'{count} kişi odada'**
+  String roomMembersTitle(int count);
+
+  /// Link kopyalama butonu.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kopyala'**
+  String get roomLinkCopy;
+
+  /// Kopyalama toast.
+  ///
+  /// In tr, this message translates to:
+  /// **'Link kopyalandı'**
+  String get roomLinkCopied;
+
+  /// Link satırı VoiceOver.
+  ///
+  /// In tr, this message translates to:
+  /// **'Davet linki: {link}'**
+  String roomLinkSemantics(String link);
+
+  /// Paylaş butonu.
+  ///
+  /// In tr, this message translates to:
+  /// **'Linki paylaş'**
+  String get roomShare;
+
+  /// Davet beklerken ikincil buton.
+  ///
+  /// In tr, this message translates to:
+  /// **'Önce ben seçeyim'**
+  String get roomPickFirst;
+
+  /// Katılımcı gelince Primary.
+  ///
+  /// In tr, this message translates to:
+  /// **'Seçmeye başla'**
+  String get roomStartPicking;
+
+  /// "…" butonu etiketi.
+  ///
+  /// In tr, this message translates to:
+  /// **'Oda ayarları'**
+  String get roomSettings;
+
+  /// Oda ayarları satırı.
+  ///
+  /// In tr, this message translates to:
+  /// **'Oda adını değiştir'**
+  String get roomRename;
+
+  /// Ad değiştirme sheet butonu.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kaydet'**
+  String get roomRenameSave;
+
+  /// Oda ayarları satırı (yıkıcı).
+  ///
+  /// In tr, this message translates to:
+  /// **'Odayı sil'**
+  String get roomDelete;
+
+  /// Oda silme alert başlığı.
+  ///
+  /// In tr, this message translates to:
+  /// **'Oda silinsin mi?'**
+  String get roomDeleteTitle;
+
+  /// Oda silme alert açıklaması.
+  ///
+  /// In tr, this message translates to:
+  /// **'Oda ve içindeki seçimler herkes için silinir. Bu işlem geri alınamaz.'**
+  String get roomDeleteMessage;
+
+  /// Oda silme alert onay butonu.
+  ///
+  /// In tr, this message translates to:
+  /// **'Odayı sil'**
+  String get roomDeleteConfirm;
 }
 
 class _AppLocalizationsDelegate

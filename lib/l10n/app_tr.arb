@@ -886,5 +886,213 @@
         "type": "String"
       }
     }
+  },
+  "createWhatTitle": "Ne yapıyorsunuz?",
+  "@createWhatTitle": {
+    "description": "Oda oluşturma 1. adım başlığı."
+  },
+  "createThemesTitle": "Bugüne özel",
+  "@createThemesTitle": {
+    "description": "Tema kartları başlığı."
+  },
+  "createCategoriesTitle": "Kategoriler",
+  "@createCategoriesTitle": {
+    "description": "Kategori ızgarası başlığı."
+  },
+  "createDetailsTitle": "Nerede, ne zaman?",
+  "@createDetailsTitle": {
+    "description": "Oda oluşturma 2. adım başlığı."
+  },
+  "createWhere": "Nerede",
+  "@createWhere": {
+    "description": "Konum alanı etiketi."
+  },
+  "createWherePlaceholder": "Konum seç",
+  "@createWherePlaceholder": {
+    "description": "Konum alanı boşken."
+  },
+  "createWhereSheetTitle": "Semt seç",
+  "@createWhereSheetTitle": {
+    "description": "Konum sheet başlığı."
+  },
+  "createDistance": "Mesafe",
+  "@createDistance": {
+    "description": "Slider VoiceOver etiketi."
+  },
+  "createDistanceKm": "{km} km",
+  "@createDistanceKm": {
+    "description": "Mesafe değeri.",
+    "placeholders": {
+      "km": {
+        "type": "int"
+      }
+    }
+  },
+  "createWhen": "Ne zaman",
+  "@createWhen": {
+    "description": "Zaman alanı etiketi."
+  },
+  "createWhenNow": "Şimdi",
+  "@createWhenNow": {
+    "description": "Zaman seçeneği."
+  },
+  "createWhenTonight": "Bu akşam",
+  "@createWhenTonight": {
+    "description": "Zaman seçeneği."
+  },
+  "createWhenWeekend": "Hafta sonu",
+  "@createWhenWeekend": {
+    "description": "Zaman seçeneği."
+  },
+  "createWhenPickDate": "Tarih seç",
+  "@createWhenPickDate": {
+    "description": "Zaman seçeneği: tarih seçici."
+  },
+  "createDateSheetTitle": "Tarih seç",
+  "@createDateSheetTitle": {
+    "description": "Tarih sheet başlığı."
+  },
+  "createDateConfirm": "Seç",
+  "@createDateConfirm": {
+    "description": "Tarih sheet onay butonu."
+  },
+  "createBudget": "Bütçe",
+  "@createBudget": {
+    "description": "Bütçe alanı etiketi."
+  },
+  "createPlatform": "Hangi platform?",
+  "@createPlatform": {
+    "description": "Film ve dizi için platform alanı."
+  },
+  "createRoomName": "Oda adı",
+  "@createRoomName": {
+    "description": "Oda adı alanı etiketi."
+  },
+  "createRoomNameDefault": "{when} {category}",
+  "@createRoomNameDefault": {
+    "description": "Oda adı önerisi: \"Bu akşam yemek\".",
+    "placeholders": {
+      "when": {
+        "type": "String"
+      },
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "createRoomNameRequired": "Oda adı gir.",
+  "@createRoomNameRequired": {
+    "description": "Oda adı boşken hata."
+  },
+  "createLocationRequired": "Bir konum seç.",
+  "@createLocationRequired": {
+    "description": "Konum seçilmeden hata."
+  },
+  "createPlatformRequired": "En az bir platform seç.",
+  "@createPlatformRequired": {
+    "description": "Platform seçilmeden hata."
+  },
+  "createSubmit": "Odayı kur",
+  "@createSubmit": {
+    "description": "Oda kurma butonu."
+  },
+  "createPlaceTag": "{place} · {km} km",
+  "@createPlaceTag": {
+    "description": "Çerçeve etiketi: konum ve mesafe.",
+    "placeholders": {
+      "place": {
+        "type": "String"
+      },
+      "km": {
+        "type": "int"
+      }
+    }
+  },
+  "createFailed": "Oda kurulamadı. Tekrar dene.",
+  "@createFailed": {
+    "description": "Oda kurma hatası."
+  },
+  "roomMembersSemantics": "Odada {count} kişi",
+  "@roomMembersSemantics": {
+    "description": "Katılımcı satırı VoiceOver.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "roomOnlyYouSemantics": "Odada sadece sen varsın",
+  "@roomOnlyYouSemantics": {
+    "description": "Katılımcı satırı VoiceOver (yalnız)."
+  },
+  "roomInviteTitle": "Arkadaşlarını çağır",
+  "@roomInviteTitle": {
+    "description": "Davet başlığı."
+  },
+  "roomMembersTitle": "{count} kişi odada",
+  "@roomMembersTitle": {
+    "description": "Katılımcı başlığı.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "roomLinkCopy": "Kopyala",
+  "@roomLinkCopy": {
+    "description": "Link kopyalama butonu."
+  },
+  "roomLinkCopied": "Link kopyalandı",
+  "@roomLinkCopied": {
+    "description": "Kopyalama toast."
+  },
+  "roomLinkSemantics": "Davet linki: {link}",
+  "@roomLinkSemantics": {
+    "description": "Link satırı VoiceOver.",
+    "placeholders": {
+      "link": {
+        "type": "String"
+      }
+    }
+  },
+  "roomShare": "Linki paylaş",
+  "@roomShare": {
+    "description": "Paylaş butonu."
+  },
+  "roomPickFirst": "Önce ben seçeyim",
+  "@roomPickFirst": {
+    "description": "Davet beklerken ikincil buton."
+  },
+  "roomStartPicking": "Seçmeye başla",
+  "@roomStartPicking": {
+    "description": "Katılımcı gelince Primary."
+  },
+  "roomSettings": "Oda ayarları",
+  "@roomSettings": {
+    "description": "\"…\" butonu etiketi."
+  },
+  "roomRename": "Oda adını değiştir",
+  "@roomRename": {
+    "description": "Oda ayarları satırı."
+  },
+  "roomRenameSave": "Kaydet",
+  "@roomRenameSave": {
+    "description": "Ad değiştirme sheet butonu."
+  },
+  "roomDelete": "Odayı sil",
+  "@roomDelete": {
+    "description": "Oda ayarları satırı (yıkıcı)."
+  },
+  "roomDeleteTitle": "Oda silinsin mi?",
+  "@roomDeleteTitle": {
+    "description": "Oda silme alert başlığı."
+  },
+  "roomDeleteMessage": "Oda ve içindeki seçimler herkes için silinir. Bu işlem geri alınamaz.",
+  "@roomDeleteMessage": {
+    "description": "Oda silme alert açıklaması."
+  },
+  "roomDeleteConfirm": "Odayı sil",
+  "@roomDeleteConfirm": {
+    "description": "Oda silme alert onay butonu."
   }
 }

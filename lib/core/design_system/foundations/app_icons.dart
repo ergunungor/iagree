@@ -199,4 +199,109 @@ abstract final class AppIcons {
     fontFamily: _regular,
     fontPackage: _package,
   );
+
+  /// Phosphor `forkKnife` (regular).
+  static const IconData food = IconData(
+    0xe262,
+    fontFamily: _regular,
+    fontPackage: _package,
+  );
+
+  /// Phosphor `coffee` (regular).
+  static const IconData coffee = IconData(
+    0xe1c2,
+    fontFamily: _regular,
+    fontPackage: _package,
+  );
+
+  /// Phosphor `filmSlate` (regular).
+  static const IconData film = IconData(
+    0xe8c2,
+    fontFamily: _regular,
+    fontPackage: _package,
+  );
+
+  /// Phosphor `soccerBall` (regular).
+  static const IconData sport = IconData(
+    0xe716,
+    fontFamily: _regular,
+    fontPackage: _package,
+  );
+
+  /// Phosphor `martini` (regular).
+  static const IconData bar = IconData(
+    0xe31c,
+    fontFamily: _regular,
+    fontPackage: _package,
+  );
+
+  /// Phosphor `musicNotes` (regular).
+  static const IconData concert = IconData(
+    0xe340,
+    fontFamily: _regular,
+    fontPackage: _package,
+  );
+
+  /// Phosphor `gameController` (regular).
+  static const IconData game = IconData(
+    0xe26e,
+    fontFamily: _regular,
+    fontPackage: _package,
+  );
+
+  /// Phosphor `tree` (regular).
+  static const IconData outdoor = IconData(
+    0xe6da,
+    fontFamily: _regular,
+    fontPackage: _package,
+  );
+
+  /// Phosphor `bank` (regular).
+  static const IconData culture = IconData(
+    0xe0b4,
+    fontFamily: _regular,
+    fontPackage: _package,
+  );
+
+  /// Phosphor `shuffle` (regular).
+  static const IconData anything = IconData(
+    0xe422,
+    fontFamily: _regular,
+    fontPackage: _package,
+  );
+
+  /// Phosphor `cloudRain` (regular).
+  static const IconData rain = IconData(
+    0xe1b4,
+    fontFamily: _regular,
+    fontPackage: _package,
+  );
+
+  /// Phosphor `television` (regular).
+  static const IconData tv = IconData(
+    0xe754,
+    fontFamily: _regular,
+    fontPackage: _package,
+  );
+
+  /// Phosphor `moon` (regular).
+  static const IconData moon = IconData(
+    0xe330,
+    fontFamily: _regular,
+    fontPackage: _package,
+  );
+
+  /// Phosphor `dotsThree` (regular).
+  static const IconData more = IconData(
+    0xe1fe,
+    fontFamily: _regular,
+    fontPackage: _package,
+  );
+
+  /// Phosphor `pencilSimple` (regular).
+  static const IconData edit = IconData(
+    0xe3b4,
+    fontFamily: _regular,
+    fontPackage: _package,
+  );
 }

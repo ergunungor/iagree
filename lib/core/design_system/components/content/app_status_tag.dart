@@ -7,10 +7,16 @@ import '../../tokens/app_spacing.dart';
 /// Liste satırı sağındaki durum etiketi (SCREENS C1 "Sıra sende"): soft seçili stil, yani
 /// `brandSoft` zemin, `onBrandSoft` metin ve 1,5px `brand` kenar. Dokunulmaz; satırın
 /// VoiceOver etiketi durumu zaten taşır, bu yüzden kendi Semantics'i yoktur.
+///
+/// [AppStatusTag.neutral]: oda çerçevesi etiketi (SCREENS D2): `surfaceMuted` zemin,
+/// `textSecondary` metin, kenarsız.
 class AppStatusTag extends StatelessWidget {
-  const AppStatusTag({super.key, required this.label});
+  const AppStatusTag({super.key, required this.label}) : neutral = false;
+
+  const AppStatusTag.neutral({super.key, required this.label}) : neutral = true;
 
   final String label;
+  final bool neutral;
 
   static const double _minHeight = 28;
   static const double _border = 1.5;
@@ -24,12 +30,12 @@ class AppStatusTag extends StatelessWidget {
         child: DecoratedBox(
           decoration: AppRadius.decoration(
             radius: AppRadius.pill,
-            color: c.brandSoft,
-            side: BorderSide(color: c.brand, width: _border),
+            color: neutral ? c.surfaceMuted : c.brandSoft,
+            side: neutral ? null : BorderSide(color: c.brand, width: _border),
           ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.sm,
+            padding: EdgeInsets.symmetric(
+              horizontal: neutral ? AppSpacing.xs + 2 : AppSpacing.sm,
               vertical: AppSpacing.xxs / 2,
             ),
             child: Center(
@@ -37,8 +43,8 @@ class AppStatusTag extends StatelessWidget {
               child: Text(
                 label,
                 style: context.text.caption.copyWith(
-                  color: c.onBrandSoft,
-                  fontWeight: FontWeight.w600,
+                  color: neutral ? c.textSecondary : c.onBrandSoft,
+                  fontWeight: neutral ? FontWeight.w500 : FontWeight.w600,
                 ),
               ),
             ),

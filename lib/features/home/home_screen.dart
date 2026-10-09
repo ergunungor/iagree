@@ -45,6 +45,16 @@ class _HomeScreenState extends State<HomeScreen> {
   void _soon() =>
       AppToast.show(context, message: AppLocalizations.of(context).comingSoon);
 
+  /// Davet aşamasındaki oda (D2) açılır; diğer aşamalar (deste, bekleme, sonuçlar) sonraki
+  /// ekranlarla bağlanacak.
+  void _openRoom(Room room) {
+    if (room.isInviting && room.members.isNotEmpty) {
+      AppRoutes.pushRoom(context, room);
+    } else {
+      _soon();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final rooms = AppScope.of(context).rooms;
@@ -59,12 +69,12 @@ class _HomeScreenState extends State<HomeScreen> {
               RoomsStatus.idle || RoomsStatus.loading => const _Loading(),
               RoomsStatus.failed => _Failed(onRetry: rooms.load),
               RoomsStatus.ready when rooms.rooms.isEmpty => _Empty(
-                onCreate: _soon,
+                onCreate: () => AppRoutes.pushCreateWhat(context),
               ),
               RoomsStatus.ready => _Loaded(
                 rooms: rooms,
-                onCreate: _soon,
-                onOpenRoom: (_) => _soon(),
+                onCreate: () => AppRoutes.pushCreateWhat(context),
+                onOpenRoom: _openRoom,
                 onOpenDecision: (_) => _soon(),
               ),
             };

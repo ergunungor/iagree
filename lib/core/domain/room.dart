@@ -37,6 +37,9 @@ class Room {
     required this.participantCount,
     this.readyCount = 0,
     this.previews = const [],
+    this.frameTags = const [],
+    this.members = const [],
+    this.inviteSlug = '',
   });
 
   final String id;
@@ -51,6 +54,46 @@ class Room {
 
   /// En çok uyuşan mekanlar; yalnızca [RoomStage.resultsReady].
   final List<PlacePreview> previews;
+
+  /// Oda çerçevesi etiketleri (kategori, zaman, bütçe, yer/platform); oda ekranında başlığın
+  /// altında.
+  final List<String> frameTags;
+
+  /// Odadaki kişiler; oda sahibi ilk sırada. Boşsa yalnızca [participantCount] bilinir.
+  final List<RoomMember> members;
+
+  /// Davet linkinin son parçası (`iagree.app/r/<slug>`).
+  final String inviteSlug;
+
+  /// Henüz kimse katılmadı: oda ekranı davet durumunda açılır.
+  bool get isInviting => participantCount <= 1;
+
+  Room copyWith({
+    String? name,
+    int? participantCount,
+    List<RoomMember>? members,
+  }) => Room(
+    id: id,
+    name: name ?? this.name,
+    categoryLabel: categoryLabel,
+    whenLabel: whenLabel,
+    stage: stage,
+    participantCount: participantCount ?? this.participantCount,
+    readyCount: readyCount,
+    previews: previews,
+    frameTags: frameTags,
+    members: members ?? this.members,
+    inviteSlug: inviteSlug,
+  );
+}
+
+/// Odadaki bir kişi.
+@immutable
+class RoomMember {
+  const RoomMember({required this.id, required this.name});
+
+  final String id;
+  final String name;
 }
 
 /// Geçmiş karar (Odalarım altında yatay karo).

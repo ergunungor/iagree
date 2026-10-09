@@ -529,4 +529,146 @@ class AppLocalizationsEn extends AppLocalizations {
   String accountVersion(String version) {
     return 'iAgree $version';
   }
+
+  @override
+  String get createWhatTitle => 'What are you up to?';
+
+  @override
+  String get createThemesTitle => 'For today';
+
+  @override
+  String get createCategoriesTitle => 'Categories';
+
+  @override
+  String get createDetailsTitle => 'Where and when?';
+
+  @override
+  String get createWhere => 'Where';
+
+  @override
+  String get createWherePlaceholder => 'Choose a place';
+
+  @override
+  String get createWhereSheetTitle => 'Choose a district';
+
+  @override
+  String get createDistance => 'Distance';
+
+  @override
+  String createDistanceKm(int km) {
+    return '$km km';
+  }
+
+  @override
+  String get createWhen => 'When';
+
+  @override
+  String get createWhenNow => 'Now';
+
+  @override
+  String get createWhenTonight => 'Tonight';
+
+  @override
+  String get createWhenWeekend => 'This weekend';
+
+  @override
+  String get createWhenPickDate => 'Pick a date';
+
+  @override
+  String get createDateSheetTitle => 'Pick a date';
+
+  @override
+  String get createDateConfirm => 'Select';
+
+  @override
+  String get createBudget => 'Budget';
+
+  @override
+  String get createPlatform => 'Which platform?';
+
+  @override
+  String get createRoomName => 'Room name';
+
+  @override
+  String createRoomNameDefault(String when, String category) {
+    return '$when $category';
+  }
+
+  @override
+  String get createRoomNameRequired => 'Enter a room name.';
+
+  @override
+  String get createLocationRequired => 'Choose a place.';
+
+  @override
+  String get createPlatformRequired => 'Choose at least one platform.';
+
+  @override
+  String get createSubmit => 'Create room';
+
+  @override
+  String createPlaceTag(String place, int km) {
+    return '$place · $km km';
+  }
+
+  @override
+  String get createFailed => 'Couldn’t create the room. Try again.';
+
+  @override
+  String roomMembersSemantics(int count) {
+    return '$count people in the room';
+  }
+
+  @override
+  String get roomOnlyYouSemantics => 'Only you are in the room';
+
+  @override
+  String get roomInviteTitle => 'Invite your friends';
+
+  @override
+  String roomMembersTitle(int count) {
+    return '$count people in the room';
+  }
+
+  @override
+  String get roomLinkCopy => 'Copy';
+
+  @override
+  String get roomLinkCopied => 'Link copied';
+
+  @override
+  String roomLinkSemantics(String link) {
+    return 'Invite link: $link';
+  }
+
+  @override
+  String get roomShare => 'Share link';
+
+  @override
+  String get roomPickFirst => 'Let me pick first';
+
+  @override
+  String get roomStartPicking => 'Start picking';
+
+  @override
+  String get roomSettings => 'Room settings';
+
+  @override
+  String get roomRename => 'Rename room';
+
+  @override
+  String get roomRenameSave => 'Save';
+
+  @override
+  String get roomDelete => 'Delete room';
+
+  @override
+  String get roomDeleteTitle => 'Delete this room?';
+
+  @override
+  String get roomDeleteMessage =>
+      'The room and everyone’s picks in it will be deleted. This can’t be undone.';
+
+  @override
+  String get roomDeleteConfirm => 'Delete room';
 }
