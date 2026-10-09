@@ -804,4 +804,27 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get notifFooter =>
       'İstediğin zaman iOS Ayarları\'ndan da kapatabilirsin.';
+
+  @override
+  String get tieTitle => 'Oylar eşit çıktı';
+
+  @override
+  String get tieOwnerBody =>
+      'Son söz sende. Eşit çıkan seçeneklerden birini seç.';
+
+  @override
+  String tieOthersBody(String name) {
+    return 'Son kararı oda sahibi $name verecek.';
+  }
+
+  @override
+  String get tieConfirm => 'Bunu seç';
+
+  @override
+  String tieVoteCount(int count) {
+    return '$count oy';
+  }
+
+  @override
+  String get tieFailed => 'Karar kaydedilemedi. Tekrar dene.';
 }

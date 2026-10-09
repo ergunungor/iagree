@@ -807,4 +807,27 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get notifFooter =>
       'You can also turn these off any time in iOS Settings.';
+
+  @override
+  String get tieTitle => 'The vote is tied';
+
+  @override
+  String get tieOwnerBody =>
+      'You have the final say. Pick one of the tied options.';
+
+  @override
+  String tieOthersBody(String name) {
+    return 'The room owner, $name, will make the final call.';
+  }
+
+  @override
+  String get tieConfirm => 'Choose this one';
+
+  @override
+  String tieVoteCount(int count) {
+    return '$count votes';
+  }
+
+  @override
+  String get tieFailed => 'Couldn’t save the decision. Try again.';
 }

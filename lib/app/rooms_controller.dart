@@ -135,4 +135,9 @@ class RoomsController extends ChangeNotifier {
     _rooms = [for (final r in _rooms) r.id == updated.id ? updated : r];
     notifyListeners();
   }
+
+  Future<void> breakTie(String roomId, String candidateId) async {
+    final updated = await repository.breakTie(roomId, candidateId);
+    _replace(updated);
+  }
 }

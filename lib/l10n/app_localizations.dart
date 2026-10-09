@@ -1434,6 +1434,42 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'İstediğin zaman iOS Ayarları\'ndan da kapatabilirsin.'**
   String get notifFooter;
+
+  /// Eşitlik başlığı.
+  ///
+  /// In tr, this message translates to:
+  /// **'Oylar eşit çıktı'**
+  String get tieTitle;
+
+  /// Oda sahibine eşitlik açıklaması.
+  ///
+  /// In tr, this message translates to:
+  /// **'Son söz sende. Eşit çıkan seçeneklerden birini seç.'**
+  String get tieOwnerBody;
+
+  /// Diğer üyelere eşitlik açıklaması.
+  ///
+  /// In tr, this message translates to:
+  /// **'Son kararı oda sahibi {name} verecek.'**
+  String tieOthersBody(String name);
+
+  /// Eşitlikte onay butonu.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bunu seç'**
+  String get tieConfirm;
+
+  /// Seçenek oy sayısı.
+  ///
+  /// In tr, this message translates to:
+  /// **'{count} oy'**
+  String tieVoteCount(int count);
+
+  /// Son söz hatası.
+  ///
+  /// In tr, this message translates to:
+  /// **'Karar kaydedilemedi. Tekrar dene.'**
+  String get tieFailed;
 }
 
 class _AppLocalizationsDelegate

@@ -299,6 +299,66 @@ void main() {
     });
   });
 
+  group('eşitlik: son söz', () {
+    Future<void> toVoted(WidgetTester tester) async {
+      await _launch(tester);
+      await _openYourTurnRoom(tester);
+      await _finishDeck(tester);
+      await tester.tap(find.text('Herkes bitirdi: oylama (debug)'));
+      await _settle(tester, 300);
+      await _settle(tester);
+      await tester.tap(find.text('Oyumu ver'));
+      await _settle(tester, 300);
+      await _settle(tester);
+    }
+
+    Future<void> tie(WidgetTester tester, String label) async {
+      await tester.scrollUntilVisible(
+        find.text(label),
+        100,
+        scrollable: find.byType(Scrollable).first,
+      );
+      await tester.ensureVisible(find.text(label));
+      await tester.pump();
+      await tester.tap(find.text(label));
+      await _settle(tester, 300);
+      await _settle(tester);
+    }
+
+    testWidgets(
+      'oda sahibi: iki seçenek, seçince Primary açılır, karar verilir',
+      (tester) async {
+        await toVoted(tester);
+        await tie(tester, 'Eşitlik: son söz bende (debug)');
+        expect(find.text('Oylar eşit çıktı'), findsOneWidget);
+        expect(
+          find.text('Son söz sende. Eşit çıkan seçeneklerden birini seç.'),
+          findsOneWidget,
+        );
+        final confirm = find.widgetWithText(AppButton, 'Bunu seç');
+        expect(tester.widget<AppButton>(confirm).onPressed, isNull);
+        await tester.tap(find.text('Mavi Kapı Kahve').first);
+        await tester.pump();
+        expect(tester.widget<AppButton>(confirm).onPressed, isNotNull);
+        await tester.tap(confirm);
+        await _settle(tester, 300);
+        await tester.pumpAndSettle();
+        expect(find.byType(DecisionScreen), findsOneWidget);
+        expect(find.text('Karar verildi.'), findsOneWidget);
+      },
+    );
+
+    testWidgets('diğer üyeler: karar sahibi yazılır, buton yok', (
+      tester,
+    ) async {
+      await toVoted(tester);
+      await tie(tester, 'Eşitlik: son söz başkasında (debug)');
+      expect(find.text('Oylar eşit çıktı'), findsOneWidget);
+      expect(find.textContaining('Son kararı oda sahibi'), findsOneWidget);
+      expect(find.text('Bunu seç'), findsNothing);
+    });
+  });
+
   for (final dark in [false, true]) {
     for (final scale in [1.0, 2.0]) {
       testWidgets('taşma yok: ${dark ? 'dark' : 'light'}, ${scale}x', (

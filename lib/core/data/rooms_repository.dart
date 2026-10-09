@@ -32,4 +32,7 @@ abstract interface class RoomsRepository {
 
   /// Kullanıcının oyunu verir.
   Future<Room> vote(String roomId, String candidateId);
+
+  /// Eşitlikte oda sahibinin son sözü: seçilen seçenek karar olur.
+  Future<Room> breakTie(String roomId, String candidateId);
 }

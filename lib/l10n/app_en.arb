@@ -221,5 +221,11 @@
   "notifDecisionHint": "Tell me when the group settles on a place.",
   "notifNudge": "Reminders",
   "notifNudgeHint": "Tell me when a friend nudges me.",
-  "notifFooter": "You can also turn these off any time in iOS Settings."
+  "notifFooter": "You can also turn these off any time in iOS Settings.",
+  "tieTitle": "The vote is tied",
+  "tieOwnerBody": "You have the final say. Pick one of the tied options.",
+  "tieOthersBody": "The room owner, {name}, will make the final call.",
+  "tieConfirm": "Choose this one",
+  "tieVoteCount": "{count} votes",
+  "tieFailed": "Couldn’t save the decision. Try again."
 }

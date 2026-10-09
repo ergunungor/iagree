@@ -66,6 +66,8 @@ class _ResultsScreenState extends State<ResultsScreen> {
     if (room?.stage == RoomStage.decided) {
       _left = true;
       AppRoutes.replaceWithDecision(context, widget.roomId, animate: true);
+    } else {
+      _load(); // örn. oylar eşitlendi
     }
   }
 
@@ -179,6 +181,9 @@ class _Body extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     final options = results.options;
     final voted = results.iVoted;
+    if (voted && results.tie != null) {
+      return _TieView(results: results, roomId: roomId);
+    }
 
     AppListRow optionRow(int i) {
       final o = options[i];
@@ -278,6 +283,106 @@ class _Body extends StatelessWidget {
   }
 }
 
+/// Eşitlik (SCREENS D7): son söz oda sahibinde. Sahibi eşit çıkan seçeneklerden birini seçip
+/// onaylar; diğer üyeler bekler.
+class _TieView extends StatefulWidget {
+  const _TieView({required this.results, required this.roomId});
+
+  final RoomResults results;
+  final String roomId;
+
+  @override
+  State<_TieView> createState() => _TieViewState();
+}
+
+class _TieViewState extends State<_TieView> {
+  static const double _thumb = 56;
+
+  String? _selected;
+  bool _busy = false;
+
+  Future<void> _confirm() async {
+    final id = _selected;
+    if (id == null || _busy) return;
+    final rooms = AppScope.of(context).rooms;
+    final l10n = AppLocalizations.of(context);
+    setState(() => _busy = true);
+    try {
+      await rooms.breakTie(widget.roomId, id);
+      AppHaptics.success();
+    } on Object {
+      if (!mounted) return;
+      AppHaptics.error();
+      AppToast.show(context, message: l10n.tieFailed, kind: AppToastKind.error);
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final c = context.colors;
+    final results = widget.results;
+    final tie = results.tie!;
+    final tied = [
+      for (final o in results.options)
+        if (tie.tiedIds.contains(o.candidate.id)) o,
+    ];
+
+    return ListView(
+      padding: const EdgeInsets.all(AppSpacing.screenPadding),
+      children: [
+        Semantics(
+          header: true,
+          liveRegion: true,
+          child: Text(l10n.tieTitle, style: context.text.h1),
+        ),
+        const SizedBox(height: AppSpacing.xs),
+        Text(
+          tie.iAmOwner ? l10n.tieOwnerBody : l10n.tieOthersBody(tie.owner.name),
+          style: context.text.body.copyWith(color: c.textSecondary),
+        ),
+        const SizedBox(height: AppSpacing.lg),
+        AppListGroup(
+          children: [
+            for (final o in tied)
+              AppListRow(
+                title: o.candidate.name,
+                subtitle: l10n.tieVoteCount(
+                  results.votes[o.candidate.id]?.length ?? 0,
+                ),
+                leading: ClipPath(
+                  clipper: ShapeBorderClipper(
+                    shape: AppRadius.border(AppRadius.sm),
+                  ),
+                  child: SizedBox.square(
+                    dimension: _thumb,
+                    child: CandidateViews.photo(context, o.candidate),
+                  ),
+                ),
+                leadingExtent: _thumb,
+                verticalPadding: AppSpacing.xs,
+                // Seçim yalnızca son sözü olan kişide.
+                selected: tie.iAmOwner ? _selected == o.candidate.id : null,
+                onPressed: tie.iAmOwner
+                    ? () => setState(() => _selected = o.candidate.id)
+                    : null,
+              ),
+          ],
+        ),
+        const SizedBox(height: AppSpacing.xl),
+        if (tie.iAmOwner)
+          AppButton.primary(
+            label: l10n.tieConfirm,
+            isLoading: _busy,
+            onPressed: _selected == null ? null : _confirm,
+          ),
+      ],
+    );
+  }
+}
+
 /// Debug: diğer kişilerin oy vermesini taklit eder.
 class _DebugVote extends StatelessWidget {
   const _DebugVote({required this.roomId});
@@ -289,16 +394,33 @@ class _DebugVote extends StatelessWidget {
     final rooms = AppScope.of(context).rooms;
     final repo = rooms.repository;
     if (repo is! MockRoomsRepository) return const SizedBox.shrink();
+    Widget button(String label, VoidCallback action) => AppButton.tertiary(
+      label: label,
+      size: AppButtonSize.small,
+      fullWidth: false,
+      onPressed: () {
+        action();
+        rooms.refresh();
+      },
+    );
     return Padding(
       padding: const EdgeInsets.only(top: AppSpacing.xs),
-      child: AppButton.tertiary(
-        label: 'Herkes oy verdi (debug)',
-        size: AppButtonSize.small,
-        fullWidth: false,
-        onPressed: () {
-          repo.simulateEveryoneVoted(roomId);
-          rooms.refresh();
-        },
+      child: Wrap(
+        alignment: WrapAlignment.center,
+        children: [
+          button(
+            'Herkes oy verdi (debug)',
+            () => repo.simulateEveryoneVoted(roomId),
+          ),
+          button(
+            'Eşitlik: son söz bende (debug)',
+            () => repo.simulateTie(roomId, iAmOwner: true),
+          ),
+          button(
+            'Eşitlik: son söz başkasında (debug)',
+            () => repo.simulateTie(roomId, iAmOwner: false),
+          ),
+        ],
       ),
     );
   }

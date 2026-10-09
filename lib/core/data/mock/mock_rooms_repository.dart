@@ -39,6 +39,7 @@ class MockRoomsRepository implements RoomsRepository {
     _store = null;
     _picks.clear();
     _myVote.clear();
+    _tie.clear();
   }
 
   List<Room> get _rooms => _store ??= [
@@ -135,6 +136,9 @@ class MockRoomsRepository implements RoomsRepository {
   final Map<String, Map<String, Pick>> _picks = {};
   final Map<String, String> _myVote = {};
 
+  /// Eşitlik senaryosu: oda → "kullanıcı oda sahibi mi".
+  final Map<String, bool> _tie = {};
+
   static const List<String> _guestNames = [
     'Can Kaya',
     'Deniz Er',
@@ -223,7 +227,23 @@ class MockRoomsRepository implements RoomsRepository {
     final members = _members(room);
     final myVote = _myVote[roomId];
     final votes = <String, List<RoomMember>>{};
-    if (myVote != null) {
+    TieBreak? tie;
+    final iAmOwner = _tie[roomId];
+    if (iAmOwner != null && options.length > 1) {
+      // Eşitlik: ilk iki seçenek oyları dönüşümlü paylaşır; kullanıcı kendi seçtiğindedir.
+      final a = options[0].candidate.id;
+      final b = options[1].candidate.id;
+      final mine = myVote == b ? b : a;
+      final other = mine == a ? b : a;
+      for (var i = 0; i < members.length; i++) {
+        (votes[i.isEven ? mine : other] ??= []).add(members[i]);
+      }
+      tie = TieBreak(
+        tiedIds: [a, b],
+        owner: iAmOwner ? members.first : members[1 % members.length],
+        iAmOwner: iAmOwner,
+      );
+    } else if (myVote != null) {
       votes[myVote] = [members.first];
     }
     return RoomResults(
@@ -231,7 +251,40 @@ class MockRoomsRepository implements RoomsRepository {
       members: members,
       votes: votes,
       myVoteId: myVote,
+      tie: tie,
     );
+  }
+
+  @override
+  Future<Room> breakTie(String roomId, String candidateId) async {
+    await _wait();
+    final room = _room(roomId);
+    final options = _options(room);
+    final members = _members(room);
+    final total = members.length < 2 ? 2 : members.length;
+    final chosen = options.firstWhere((o) => o.candidate.id == candidateId);
+    final updated = room.copyWith(
+      stage: RoomStage.decided,
+      decision: Decision(
+        candidate: chosen.candidate,
+        unanimous: false,
+        loveCount: chosen.loveCount,
+        okCount: chosen.okCount,
+        total: total,
+        votes: (total / 2).ceil(),
+        totalVotes: total,
+        members: members,
+        whenLabel: room.whenLabel,
+      ),
+    );
+    _put(updated);
+    _tie.remove(roomId);
+    return updated;
+  }
+
+  /// Debug: herkes oy verdi ve oylar eşit. [iAmOwner] false ise son söz başkasında.
+  void simulateTie(String roomId, {required bool iAmOwner}) {
+    _tie[roomId] = iAmOwner;
   }
 
   @override

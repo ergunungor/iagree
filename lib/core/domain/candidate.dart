@@ -67,6 +67,21 @@ class ResultOption {
   final List<RoomMember> lovers;
 }
 
+/// Oylar eşit çıktığında son söz oda sahibinindir (SCREENS D7).
+@immutable
+class TieBreak {
+  const TieBreak({
+    required this.tiedIds,
+    required this.owner,
+    required this.iAmOwner,
+  });
+
+  /// Eşit çıkan seçeneklerin kimlikleri.
+  final List<String> tiedIds;
+  final RoomMember owner;
+  final bool iAmOwner;
+}
+
 /// Oy aşamasının durumu.
 @immutable
 class RoomResults {
@@ -75,6 +90,7 @@ class RoomResults {
     required this.members,
     this.votes = const {},
     this.myVoteId,
+    this.tie,
   });
 
   /// En fazla 3, uyuma göre sıralı.
@@ -84,6 +100,9 @@ class RoomResults {
   /// Seçenek kimliği → oy verenler. Yalnızca kullanıcı oy verdikten sonra gösterilir.
   final Map<String, List<RoomMember>> votes;
   final String? myVoteId;
+
+  /// Doluysa oylar eşit: karar oda sahibinde.
+  final TieBreak? tie;
 
   bool get iVoted => myVoteId != null;
 

@@ -1280,5 +1280,39 @@
   "notifFooter": "İstediğin zaman iOS Ayarları'ndan da kapatabilirsin.",
   "@notifFooter": {
     "description": "Ekran altı notu."
+  },
+  "tieTitle": "Oylar eşit çıktı",
+  "@tieTitle": {
+    "description": "Eşitlik başlığı."
+  },
+  "tieOwnerBody": "Son söz sende. Eşit çıkan seçeneklerden birini seç.",
+  "@tieOwnerBody": {
+    "description": "Oda sahibine eşitlik açıklaması."
+  },
+  "tieOthersBody": "Son kararı oda sahibi {name} verecek.",
+  "@tieOthersBody": {
+    "description": "Diğer üyelere eşitlik açıklaması.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "tieConfirm": "Bunu seç",
+  "@tieConfirm": {
+    "description": "Eşitlikte onay butonu."
+  },
+  "tieVoteCount": "{count} oy",
+  "@tieVoteCount": {
+    "description": "Seçenek oy sayısı.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "tieFailed": "Karar kaydedilemedi. Tekrar dene.",
+  "@tieFailed": {
+    "description": "Son söz hatası."
   }
 }
