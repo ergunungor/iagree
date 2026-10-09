@@ -20,6 +20,7 @@ class AppScope extends InheritedWidget {
     required this.location,
     required this.opener,
     required this.notifications,
+    required this.photos,
     required super.child,
   });
 
@@ -31,6 +32,7 @@ class AppScope extends InheritedWidget {
   final LocationService location;
   final UrlOpener opener;
   final NotificationService notifications;
+  final PhotoPicker photos;
 
   static AppScope of(BuildContext context) {
     final scope = context.getInheritedWidgetOfExactType<AppScope>();

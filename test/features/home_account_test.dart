@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:iagree/app/app.dart';
+import 'package:iagree/app/platform_services.dart';
 import 'package:iagree/app/rooms_controller.dart';
 import 'package:iagree/app/settings_controller.dart';
 import 'package:iagree/core/data/mock/mock_auth_repository.dart';
@@ -16,6 +17,15 @@ import 'package:iagree/features/home/home_screen.dart';
 
 late MockRoomsRepository _repo;
 late SettingsController _settings;
+final List<Uri> _opened = [];
+
+class _Opener implements UrlOpener {
+  @override
+  Future<bool> open(Uri uri) async {
+    _opened.add(uri);
+    return true;
+  }
+}
 
 Future<void> _launch(
   WidgetTester tester, {
@@ -38,6 +48,7 @@ Future<void> _launch(
     latency: const Duration(milliseconds: 100),
   );
   _settings = SettingsController();
+  _opened.clear();
   await tester.pumpWidget(
     MediaQuery(
       data: MediaQueryData.fromView(tester.view)
@@ -46,6 +57,7 @@ Future<void> _launch(
         auth: MockAuthRepository(startSignedIn: true),
         rooms: RoomsController(repository: _repo),
         settings: _settings,
+        opener: _Opener(),
       ),
     ),
   );
@@ -212,6 +224,31 @@ void main() {
       }
     }
   }
+
+  group('Profil bağlantıları', () {
+    testWidgets('Gizlilik ve koşullar: sheet, seçilen adres açılır', (
+      tester,
+    ) async {
+      await _launch(tester);
+      await _openAccount(tester);
+      await tester.tap(find.text('Gizlilik ve koşullar'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
+      await tester.tap(find.text('Gizlilik politikası'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
+      expect(_opened.single.toString(), 'https://iagree.app/privacy');
+    });
+
+    testWidgets('Bize yaz: destek e-postası açılır', (tester) async {
+      await _launch(tester);
+      await _openAccount(tester);
+      await tester.tap(find.text('Bize yaz'));
+      await tester.pump();
+      expect(_opened.single.scheme, 'mailto');
+      expect(_opened.single.path, 'destek@iagree.app');
+    });
+  });
 
   group('Profil', () {
     testWidgets('avatar profile götürür; isim ve e-posta görünür', (

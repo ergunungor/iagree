@@ -48,11 +48,13 @@ class MockAuthRepository implements AuthRepository {
   Future<UserProfile> createProfile({
     required String email,
     required String name,
+    String? photoPath,
   }) async {
     final user = UserProfile(
       id: 'u-${email.hashCode.abs()}',
       name: name.trim(),
       email: email,
+      photoPath: photoPath,
     );
     _user = user;
     return user;

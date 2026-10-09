@@ -325,15 +325,6 @@ class AppLocalizationsTr extends AppLocalizations {
   String get authStart => 'Başla';
 
   @override
-  String get authPhotoSoon => 'Fotoğraf seçimi yakında';
-
-  @override
-  String get authMailSoon => 'Mail uygulaması yakında açılacak';
-
-  @override
-  String get welcomeLinkSoon => 'Bu sayfa yakında eklenecek';
-
-  @override
   String get welcomeTagline =>
       '“Nereye gidelim?” sorusunu birlikte, tartışmadan bitirin.';
 
@@ -367,9 +358,6 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get welcomeSceneThreeBody =>
       'Oda kur, arkadaşlarını çağır. Herkes seçsin, iAgree ortak noktayı bulsun.';
-
-  @override
-  String get homeSignOut => 'Çıkış yap';
 
   @override
   String get commonBack => 'Geri';
@@ -672,9 +660,6 @@ class AppLocalizationsTr extends AppLocalizations {
   String get roomDeleteConfirm => 'Odayı sil';
 
   @override
-  String get createUseMyLocation => 'Konumumu kullan';
-
-  @override
   String get createMyLocation => 'Konumum';
 
   @override
@@ -740,4 +725,13 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get waitingNotifyOn => 'Bildirimler açıldı';
+
+  @override
+  String get linkOpenFailed => 'Bağlantı açılamadı';
+
+  @override
+  String get accountTerms => 'Kullanım koşulları';
+
+  @override
+  String get accountPrivacyPolicy => 'Gizlilik politikası';
 }

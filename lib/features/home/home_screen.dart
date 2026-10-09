@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../app/app_router.dart';
+import '../../app/user_image.dart';
 import '../../app/app_scope.dart';
 import '../../app/rooms_controller.dart';
 import '../../core/design_system/components/buttons/app_button.dart';
@@ -123,6 +124,7 @@ class _Header extends StatelessWidget {
                     child: AppAvatar(
                       userId: user?.id ?? '',
                       name: user?.name ?? '',
+                      image: userImage(user),
                       size: AppAvatarSize.sm,
                     ),
                   ),

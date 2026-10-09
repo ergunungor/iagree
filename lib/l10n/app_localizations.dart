@@ -571,24 +571,6 @@ abstract class AppLocalizations {
   /// **'Başla'**
   String get authStart;
 
-  /// Fotoğraf seçici henüz yokken gösterilen bilgi.
-  ///
-  /// In tr, this message translates to:
-  /// **'Fotoğraf seçimi yakında'**
-  String get authPhotoSoon;
-
-  /// Mail açma henüz yokken gösterilen bilgi.
-  ///
-  /// In tr, this message translates to:
-  /// **'Mail uygulaması yakında açılacak'**
-  String get authMailSoon;
-
-  /// Koşullar/gizlilik bağlantıları hazır olana kadar gösterilen bilgi.
-  ///
-  /// In tr, this message translates to:
-  /// **'Bu sayfa yakında eklenecek'**
-  String get welcomeLinkSoon;
-
   /// Karşılama sahne 1 sloganı.
   ///
   /// In tr, this message translates to:
@@ -648,12 +630,6 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Oda kur, arkadaşlarını çağır. Herkes seçsin, iAgree ortak noktayı bulsun.'**
   String get welcomeSceneThreeBody;
-
-  /// Geçici ana ekranda çıkış.
-  ///
-  /// In tr, this message translates to:
-  /// **'Çıkış yap'**
-  String get homeSignOut;
 
   /// Navigasyon çubuğundaki geri chevron'unun VoiceOver etiketi.
   ///
@@ -1183,12 +1159,6 @@ abstract class AppLocalizations {
   /// **'Odayı sil'**
   String get roomDeleteConfirm;
 
-  /// Semt sheet'inde ilk seçenek.
-  ///
-  /// In tr, this message translates to:
-  /// **'Konumumu kullan'**
-  String get createUseMyLocation;
-
   /// Konum seçilince alanda görünen ad.
   ///
   /// In tr, this message translates to:
@@ -1308,6 +1278,24 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Bildirimler açıldı'**
   String get waitingNotifyOn;
+
+  /// Dış bağlantı açılamayınca toast.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bağlantı açılamadı'**
+  String get linkOpenFailed;
+
+  /// Gizlilik sheet satırı.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kullanım koşulları'**
+  String get accountTerms;
+
+  /// Gizlilik sheet satırı.
+  ///
+  /// In tr, this message translates to:
+  /// **'Gizlilik politikası'**
+  String get accountPrivacyPolicy;
 }
 
 class _AppLocalizationsDelegate

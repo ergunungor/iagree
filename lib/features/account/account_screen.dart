@@ -2,6 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../app/app_info.dart';
+import '../../app/user_image.dart';
+import '../../app/app_links.dart';
+import '../../app/link_actions.dart';
 import '../../app/app_scope.dart';
 import '../../core/data/mock/mock_rooms_repository.dart';
 import '../../core/design_system/components/content/app_list_group.dart';
@@ -21,12 +24,31 @@ import '../../l10n/app_localizations.dart';
 class AccountScreen extends StatelessWidget {
   const AccountScreen({super.key});
 
-  void _soon(BuildContext context, {bool link = false}) {
+  void _soon(BuildContext context) =>
+      AppToast.show(context, message: AppLocalizations.of(context).comingSoon);
+
+  /// "Gizlilik ve koşullar": iki bağlantı. Seçilen eylem sheet kapandıktan sonra çalışır.
+  Future<void> _legal(BuildContext context) async {
     final l10n = AppLocalizations.of(context);
-    AppToast.show(
+    final uri = await AppSheet.show<Uri>(
       context,
-      message: link ? l10n.welcomeLinkSoon : l10n.comingSoon,
+      title: l10n.accountPrivacy,
+      builder: (sheetContext) => AppListGroup(
+        children: [
+          AppListRow(
+            title: l10n.accountTerms,
+            showsChevron: true,
+            onPressed: () => Navigator.of(sheetContext).pop(AppLinks.terms),
+          ),
+          AppListRow(
+            title: l10n.accountPrivacyPolicy,
+            showsChevron: true,
+            onPressed: () => Navigator.of(sheetContext).pop(AppLinks.privacy),
+          ),
+        ],
+      ),
     );
+    if (uri != null && context.mounted) await openExternal(context, uri);
   }
 
   Future<void> _chooseTheme(BuildContext context) {
@@ -133,6 +155,7 @@ class AccountScreen extends StatelessWidget {
                       AppAvatar(
                         userId: user?.id ?? '',
                         name: user?.name ?? '',
+                        image: userImage(user),
                         size: AppAvatarSize.xl,
                       ),
                       const SizedBox(height: AppSpacing.sm),
@@ -182,12 +205,13 @@ class AccountScreen extends StatelessWidget {
                       AppListRow(
                         title: l10n.accountPrivacy,
                         showsChevron: true,
-                        onPressed: () => _soon(context, link: true),
+                        onPressed: () => _legal(context),
                       ),
                       AppListRow(
                         title: l10n.accountContact,
                         showsChevron: true,
-                        onPressed: () => _soon(context, link: true),
+                        onPressed: () =>
+                            openExternal(context, AppLinks.support),
                       ),
                     ],
                   ),

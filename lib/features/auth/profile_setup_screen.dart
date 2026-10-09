@@ -1,10 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import '../../app/app_router.dart';
 import '../../app/app_scope.dart';
 import '../../core/data/auth_repository.dart';
 import '../../core/design_system/components/buttons/app_button.dart';
-import '../../core/design_system/components/feedback/app_toast.dart';
 import '../../core/design_system/components/inputs/app_text_field.dart';
 import '../../core/design_system/components/people/app_avatar.dart';
 import '../../core/design_system/foundations/app_haptics.dart';
@@ -32,6 +33,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
     text: widget.pending.suggestedName,
   );
   bool _missing = false;
+  String? _photoPath;
 
   /// Rozet: 36'lık daire, avatarın sağ altında.
   static const double _badge = 36;
@@ -55,15 +57,16 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
     final user = await scope.auth.createProfile(
       email: widget.pending.email,
       name: name,
+      photoPath: _photoPath,
     );
     if (!mounted) return;
     AppRoutes.finishSignIn(context, user);
   }
 
-  void _pickPhoto() => AppToast.show(
-    context,
-    message: AppLocalizations.of(context).authPhotoSoon,
-  );
+  Future<void> _pickPhoto() async {
+    final path = await AppScope.of(context).photos.pick();
+    if (path != null && mounted) setState(() => _photoPath = path);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,6 +93,9 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                     userId: widget.pending.email,
                     name: _name.text,
                     size: AppAvatarSize.xl,
+                    image: _photoPath == null
+                        ? null
+                        : FileImage(File(_photoPath!)),
                   ),
                 ),
                 Positioned(

@@ -45,6 +45,7 @@ abstract interface class AuthRepository {
   Future<UserProfile> createProfile({
     required String email,
     required String name,
+    String? photoPath,
   });
 
   Future<void> signOut();

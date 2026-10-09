@@ -566,18 +566,6 @@
   "@authStart": {
     "description": "Profil kurulumu birincil butonu."
   },
-  "authPhotoSoon": "Fotoğraf seçimi yakında",
-  "@authPhotoSoon": {
-    "description": "Fotoğraf seçici henüz yokken gösterilen bilgi."
-  },
-  "authMailSoon": "Mail uygulaması yakında açılacak",
-  "@authMailSoon": {
-    "description": "Mail açma henüz yokken gösterilen bilgi."
-  },
-  "welcomeLinkSoon": "Bu sayfa yakında eklenecek",
-  "@welcomeLinkSoon": {
-    "description": "Koşullar/gizlilik bağlantıları hazır olana kadar gösterilen bilgi."
-  },
   "welcomeTagline": "“Nereye gidelim?” sorusunu birlikte, tartışmadan bitirin.",
   "@welcomeTagline": {
     "description": "Karşılama sahne 1 sloganı."
@@ -625,10 +613,6 @@
   "welcomeSceneThreeBody": "Oda kur, arkadaşlarını çağır. Herkes seçsin, iAgree ortak noktayı bulsun.",
   "@welcomeSceneThreeBody": {
     "description": "Karşılama sahne 3 açıklaması."
-  },
-  "homeSignOut": "Çıkış yap",
-  "@homeSignOut": {
-    "description": "Geçici ana ekranda çıkış."
   },
   "commonBack": "Geri",
   "@commonBack": {
@@ -1095,10 +1079,6 @@
   "@roomDeleteConfirm": {
     "description": "Oda silme alert onay butonu."
   },
-  "createUseMyLocation": "Konumumu kullan",
-  "@createUseMyLocation": {
-    "description": "Semt sheet'inde ilk seçenek."
-  },
   "createMyLocation": "Konumum",
   "@createMyLocation": {
     "description": "Konum seçilince alanda görünen ad."
@@ -1196,5 +1176,17 @@
   "waitingNotifyOn": "Bildirimler açıldı",
   "@waitingNotifyOn": {
     "description": "İzin verilince toast."
+  },
+  "linkOpenFailed": "Bağlantı açılamadı",
+  "@linkOpenFailed": {
+    "description": "Dış bağlantı açılamayınca toast."
+  },
+  "accountTerms": "Kullanım koşulları",
+  "@accountTerms": {
+    "description": "Gizlilik sheet satırı."
+  },
+  "accountPrivacyPolicy": "Gizlilik politikası",
+  "@accountPrivacyPolicy": {
+    "description": "Gizlilik sheet satırı."
   }
 }

@@ -2,11 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../../app/app_links.dart';
 import '../../app/app_router.dart';
+import '../../app/link_actions.dart';
 import '../../app/app_scope.dart';
 import '../../core/data/auth_repository.dart';
 import '../../core/design_system/components/buttons/app_button.dart';
-import '../../core/design_system/components/feedback/app_toast.dart';
 import '../../core/design_system/components/inputs/app_code_field.dart';
 import '../../core/design_system/foundations/app_haptics.dart';
 import '../../core/design_system/foundations/app_icons.dart';
@@ -127,7 +128,7 @@ class _CodeScreenState extends State<CodeScreen> {
       bottom: AppButton.secondary(
         label: l10n.authOpenMail,
         icon: AppIcons.mail,
-        onPressed: () => AppToast.show(context, message: l10n.authMailSoon),
+        onPressed: () => openExternal(context, AppLinks.mailApp),
       ),
       children: [
         Align(

@@ -4,7 +4,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
+import '../../app/app_links.dart';
 import '../../app/app_router.dart';
+import '../../app/link_actions.dart';
 import '../../app/app_scope.dart';
 import '../../core/data/auth_repository.dart';
 import '../../core/design_system/components/agreement/agreement_arc.dart';
@@ -13,7 +15,6 @@ import '../../core/design_system/components/buttons/app_button.dart';
 import '../../core/design_system/components/deck/deck_card.dart';
 import '../../core/design_system/components/deck/deck_decision_overlay.dart';
 import '../../core/design_system/components/deck/swipe_deck_physics.dart';
-import '../../core/design_system/components/feedback/app_toast.dart';
 import '../../core/design_system/components/people/app_avatar.dart';
 import '../../core/design_system/foundations/app_icons.dart';
 import '../../core/design_system/foundations/app_pressable.dart';
@@ -89,9 +90,9 @@ class _WelcomeScreenState extends State<WelcomeScreen>
 
   final ValueNotifier<SwipeFrame> _frame = ValueNotifier(SwipeFrame.rest);
   late final TapGestureRecognizer _terms = TapGestureRecognizer()
-    ..onTap = _linkSoon;
+    ..onTap = () => openExternal(context, AppLinks.terms);
   late final TapGestureRecognizer _privacy = TapGestureRecognizer()
-    ..onTap = _linkSoon;
+    ..onTap = () => openExternal(context, AppLinks.privacy);
 
   /// Ön kartın kayma mesafesi ve eşik hesabı için kart boyutu.
   static const double _slideDistance = 80;
@@ -149,11 +150,6 @@ class _WelcomeScreenState extends State<WelcomeScreen>
       const Size(_frontWidth, _frontWidth / DeckCard.aspectRatio),
     );
   }
-
-  void _linkSoon() => AppToast.show(
-    context,
-    message: AppLocalizations.of(context).welcomeLinkSoon,
-  );
 
   Future<void> _apple() async {
     final scope = AppScope.of(context);

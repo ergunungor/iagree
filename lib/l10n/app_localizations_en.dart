@@ -326,15 +326,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get authStart => 'Get started';
 
   @override
-  String get authPhotoSoon => 'Photo picking is coming soon';
-
-  @override
-  String get authMailSoon => 'Opening Mail is coming soon';
-
-  @override
-  String get welcomeLinkSoon => 'This page is coming soon';
-
-  @override
   String get welcomeTagline =>
       'Settle “where should we go?” together, without the argument.';
 
@@ -368,9 +359,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get welcomeSceneThreeBody =>
       'Start a room, invite your friends. Everyone picks, iAgree finds the common ground.';
-
-  @override
-  String get homeSignOut => 'Sign out';
 
   @override
   String get commonBack => 'Back';
@@ -673,9 +661,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get roomDeleteConfirm => 'Delete room';
 
   @override
-  String get createUseMyLocation => 'Use my location';
-
-  @override
   String get createMyLocation => 'My location';
 
   @override
@@ -742,4 +727,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get waitingNotifyOn => 'Notifications are on';
+
+  @override
+  String get linkOpenFailed => 'Couldn’t open the link';
+
+  @override
+  String get accountTerms => 'Terms of use';
+
+  @override
+  String get accountPrivacyPolicy => 'Privacy policy';
 }

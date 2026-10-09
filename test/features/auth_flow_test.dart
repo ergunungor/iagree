@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:iagree/app/app.dart';
+import 'package:iagree/app/app_scope.dart';
+import 'package:iagree/app/platform_services.dart';
 import 'package:iagree/core/data/mock/mock_auth_repository.dart';
 import 'package:iagree/core/design_system/components/buttons/app_icon_button.dart';
 import 'package:iagree/core/design_system/components/inputs/app_code_field.dart';
@@ -12,6 +14,23 @@ import 'package:iagree/features/auth/profile_setup_screen.dart';
 import 'package:iagree/features/auth/welcome_screen.dart';
 import 'package:iagree/features/home/home_screen.dart';
 
+final List<Uri> _opened = [];
+bool _openOk = true;
+String? _pickedPhoto;
+
+class _Opener implements UrlOpener {
+  @override
+  Future<bool> open(Uri uri) async {
+    _opened.add(uri);
+    return _openOk;
+  }
+}
+
+class _Photos implements PhotoPicker {
+  @override
+  Future<String?> pick() async => _pickedPhoto;
+}
+
 void _phone(WidgetTester tester) {
   tester.view.physicalSize = const Size(1170, 2532);
   tester.view.devicePixelRatio = 3;
@@ -20,6 +39,9 @@ void _phone(WidgetTester tester) {
 
 Future<void> _launch(WidgetTester tester, {bool reduce = false}) async {
   _phone(tester);
+  _opened.clear();
+  _openOk = true;
+  _pickedPhoto = null;
   tester.platformDispatcher.localeTestValue = const Locale('tr');
   tester.platformDispatcher.localesTestValue = const [Locale('tr')];
   addTearDown(tester.platformDispatcher.clearLocaleTestValue);
@@ -28,7 +50,11 @@ Future<void> _launch(WidgetTester tester, {bool reduce = false}) async {
     MediaQuery(
       data: MediaQueryData.fromView(tester.view)
           .copyWith(disableAnimations: reduce),
-      child: IAgreeApp(auth: MockAuthRepository()),
+      child: IAgreeApp(
+        auth: MockAuthRepository(),
+        opener: _Opener(),
+        photos: _Photos(),
+      ),
     ),
   );
   await tester.pump();
@@ -199,12 +225,21 @@ void main() {
       expect(find.byType(EmailScreen), findsOneWidget);
     });
 
-    testWidgets('Mail\'i aç: şimdilik bilgi toast\'ı', (tester) async {
+    testWidgets('Mail\'i aç: Mail uygulamasını açar', (tester) async {
       await toCode(tester, 'can@ornek.com');
       await tester.tap(find.text('Mail\'i aç'));
       await tester.pump();
+      expect(_opened.single.toString(), 'message://');
+    });
+
+    testWidgets('Mail açılamazsa bilgi toast\'ı', (tester) async {
+      _openOk = false;
+      await toCode(tester, 'can@ornek.com');
+      _openOk = false;
+      await tester.tap(find.text('Mail\'i aç'));
+      await tester.pump();
       await tester.pump(const Duration(milliseconds: 400));
-      expect(find.text('Mail uygulaması yakında açılacak'), findsOneWidget);
+      expect(find.text('Bağlantı açılamadı'), findsOneWidget);
       await tester.pump(const Duration(seconds: 4));
     });
   });
@@ -254,13 +289,30 @@ void main() {
       },
     );
 
-    testWidgets('fotoğraf ekle: şimdilik bilgi toast\'ı', (tester) async {
+    testWidgets('fotoğraf ekle: seçilen yol profile işlenir', (tester) async {
+      await toProfile(tester);
+      _pickedPhoto = '/tmp/ornek.png';
+      await tester.tap(find.text('Fotoğraf ekle'));
+      await tester.pump();
+      await tester.enterText(find.byType(TextField), 'Can Kaya');
+      await tester.tap(find.text('Başla'));
+      await _nav(tester);
+      final session = AppScope.of(tester.element(find.byType(HomeScreen)))
+          .session;
+      expect(session.user!.photoPath, '/tmp/ornek.png');
+    });
+
+    testWidgets('fotoğraf seçimi iptal: profil fotoğrafsız', (tester) async {
+      _pickedPhoto = null;
       await toProfile(tester);
       await tester.tap(find.text('Fotoğraf ekle'));
       await tester.pump();
-      await tester.pump(const Duration(milliseconds: 400));
-      expect(find.text('Fotoğraf seçimi yakında'), findsOneWidget);
-      await tester.pump(const Duration(seconds: 4));
+      await tester.enterText(find.byType(TextField), 'Can Kaya');
+      await tester.tap(find.text('Başla'));
+      await _nav(tester);
+      final session = AppScope.of(tester.element(find.byType(HomeScreen)))
+          .session;
+      expect(session.user!.photoPath, isNull);
     });
   });
 

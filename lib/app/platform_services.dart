@@ -1,4 +1,6 @@
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -67,17 +69,66 @@ class SystemUrlOpener implements UrlOpener {
 /// Bildirim izni sonucu.
 enum NotificationAccess { granted, denied }
 
-/// Bildirim izni (SCREENS D6). Gerçek uygulama bildirim paketi seçilince bağlanacak;
-/// şimdilik [PlaceholderNotificationService] kullanılır.
+/// Bildirim izni (SCREENS D6).
 abstract interface class NotificationService {
   Future<NotificationAccess> request();
 }
 
-/// Bildirim paketi henüz seçilmediği için sistem izin penceresi açmaz; her zaman "verildi"
-/// döner. Paket eklenince yerini gerçek servis alır.
-class PlaceholderNotificationService implements NotificationService {
-  const PlaceholderNotificationService();
+/// iOS bildirim iznini `flutter_local_notifications` ile ister. Sistem penceresi yalnızca
+/// ilk istekte çıkar; kullanıcı daha önce cevap verdiyse sonuç doğrudan döner.
+class SystemNotificationService implements NotificationService {
+  const SystemNotificationService();
 
   @override
-  Future<NotificationAccess> request() async => NotificationAccess.granted;
+  Future<NotificationAccess> request() async {
+    try {
+      final plugin = FlutterLocalNotificationsPlugin();
+      await plugin.initialize(
+        settings: const InitializationSettings(
+          iOS: DarwinInitializationSettings(
+            requestAlertPermission: false,
+            requestBadgePermission: false,
+            requestSoundPermission: false,
+          ),
+        ),
+      );
+      final ios = plugin
+          .resolvePlatformSpecificImplementation<
+            IOSFlutterLocalNotificationsPlugin
+          >();
+      final ok = await ios?.requestPermissions(
+        alert: true,
+        badge: true,
+        sound: true,
+      );
+      return ok == true
+          ? NotificationAccess.granted
+          : NotificationAccess.denied;
+    } on Object {
+      return NotificationAccess.denied;
+    }
+  }
+}
+
+/// Galeriden fotoğraf seçer; seçilen dosyanın yolunu verir, vazgeçilirse null.
+abstract interface class PhotoPicker {
+  Future<String?> pick();
+}
+
+class SystemPhotoPicker implements PhotoPicker {
+  const SystemPhotoPicker();
+
+  @override
+  Future<String?> pick() async {
+    try {
+      final file = await ImagePicker().pickImage(
+        source: ImageSource.gallery,
+        maxWidth: 1024,
+        imageQuality: 85,
+      );
+      return file?.path;
+    } on Object {
+      return null;
+    }
+  }
 }

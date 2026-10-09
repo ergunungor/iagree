@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../app/app_links.dart';
 import '../../app/app_router.dart';
 import '../../app/app_scope.dart';
 import '../../core/data/mock/mock_rooms_repository.dart';
@@ -93,9 +94,7 @@ class _RoomView extends StatelessWidget {
 
   final Room room;
 
-  static const String _linkHost = 'iagree.app/r/';
-
-  String get _link => '$_linkHost${room.inviteSlug}';
+  String get _link => AppLinks.invite(room.inviteSlug);
 
   Future<void> _share(BuildContext context) =>
       AppScope.of(context).sharer.share('https://$_link');

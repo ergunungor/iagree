@@ -2,10 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:iagree/app/app.dart';
+import 'package:iagree/app/platform_services.dart';
 import 'package:iagree/core/design_system/components/agreement/agreement_arc.dart';
 import 'package:iagree/core/design_system/components/people/app_avatar.dart';
 import 'package:iagree/core/design_system/foundations/app_icons.dart';
 import 'package:iagree/features/auth/welcome_screen.dart';
+
+final List<Uri> _opened = [];
+
+class _Opener implements UrlOpener {
+  @override
+  Future<bool> open(Uri uri) async {
+    _opened.add(uri);
+    return true;
+  }
+}
 
 void _phone(WidgetTester tester) {
   tester.view.physicalSize = const Size(1170, 2532);
@@ -25,6 +36,7 @@ Future<void> _pump(
   bool animate = true,
 }) async {
   _phone(tester);
+  _opened.clear();
   tester.platformDispatcher.platformBrightnessTestValue = brightness;
   addTearDown(tester.platformDispatcher.clearPlatformBrightnessTestValue);
   await tester.pumpWidget(
@@ -33,7 +45,10 @@ Future<void> _pump(
         disableAnimations: reduce,
         textScaler: TextScaler.linear(textScale),
       ),
-      child: IAgreeApp(home: WelcomeScreen(animate: animate)),
+      child: IAgreeApp(
+        home: WelcomeScreen(animate: animate),
+        opener: _Opener(),
+      ),
     ),
   );
   await tester.pump();
@@ -240,13 +255,18 @@ void main() {
     });
   });
 
-  testWidgets('koşullar bağlantısı bilgi toast\'ı gösterir', (tester) async {
+  testWidgets('koşullar ve gizlilik bağlantıları adresleri açar', (
+    tester,
+  ) async {
     await _pump(tester, animate: false);
     await tester.tapOnText(find.textRange.ofSubstring('Kullanım Koşulları'));
     await tester.pump();
-    await tester.pump(const Duration(milliseconds: 400));
-    expect(find.text('Bu sayfa yakında eklenecek'), findsOneWidget);
-    await tester.pump(const Duration(seconds: 4));
+    await tester.tapOnText(find.textRange.ofSubstring('Gizlilik Politikası'));
+    await tester.pump();
+    expect(_opened.map((u) => u.toString()), [
+      'https://iagree.app/terms',
+      'https://iagree.app/privacy',
+    ]);
   });
 
   for (final dark in [false, true]) {
