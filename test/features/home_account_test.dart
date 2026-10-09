@@ -254,6 +254,41 @@ void main() {
     }
   }
 
+  group('Dil', () {
+    testWidgets('English seçilince arayüz anında İngilizceye döner', (
+      tester,
+    ) async {
+      await _launch(tester);
+      await _openAccount(tester);
+      await tester.tap(find.text('Dil'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
+      expect(find.text('Sistem'), findsWidgets);
+      await tester.tap(find.text('English'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 700));
+      expect(_settings.locale, const Locale('en'));
+      expect(find.text('Language'), findsOneWidget);
+      expect(find.text('Sign out'), findsOneWidget);
+      expect(find.text('Çıkış yap'), findsNothing);
+    });
+
+    testWidgets('Sistem\'e dönünce cihaz dili geçerli olur', (tester) async {
+      await _launch(tester);
+      await _settings.setLocale(const Locale('en'));
+      await tester.pump();
+      await _openAccount(tester);
+      await tester.tap(find.text('Language'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
+      await tester.tap(find.text('System').first);
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 700));
+      expect(_settings.locale, isNull);
+      expect(find.text('Çıkış yap'), findsOneWidget);
+    });
+  });
+
   group('Bildirim ayarları', () {
     Future<void> openNotif(
       WidgetTester tester, {

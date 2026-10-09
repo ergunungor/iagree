@@ -853,4 +853,16 @@ class AppLocalizationsTr extends AppLocalizations {
   String detailRuntime(int minutes) {
     return '$minutes dk';
   }
+
+  @override
+  String get accountLanguage => 'Dil';
+
+  @override
+  String get languageSystem => 'Sistem';
+
+  @override
+  String get languageTurkish => 'Türkçe';
+
+  @override
+  String get languageEnglish => 'English';
 }

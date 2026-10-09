@@ -1351,5 +1351,21 @@
         "type": "int"
       }
     }
+  },
+  "accountLanguage": "Dil",
+  "@accountLanguage": {
+    "description": "Profil listesi satırı."
+  },
+  "languageSystem": "Sistem",
+  "@languageSystem": {
+    "description": "Dil seçeneği: cihaz dili."
+  },
+  "languageTurkish": "Türkçe",
+  "@languageTurkish": {
+    "description": "Dil seçeneği (kendi adıyla, çevrilmez)."
+  },
+  "languageEnglish": "English",
+  "@languageEnglish": {
+    "description": "Dil seçeneği (kendi adıyla, çevrilmez)."
   }
 }

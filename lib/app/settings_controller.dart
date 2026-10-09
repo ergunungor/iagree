@@ -10,16 +10,21 @@ class SettingsController extends ChangeNotifier {
   SettingsController();
 
   static const String _themeKey = 'themeMode';
+  static const String _localeKey = 'locale';
   static const String _deckHintKey = 'deckHintSeen';
   static const String _notifyKey = 'notificationPromptSeen';
 
   ThemeMode _themeMode = ThemeMode.system;
+  Locale? _locale;
 
   bool _deckHintSeen = false;
   bool _notificationPromptSeen = false;
   final Set<NotificationTopic> _topics = {...NotificationTopic.values};
 
   ThemeMode get themeMode => _themeMode;
+
+  /// Uygulama dili; null ise cihaz dili (desteklenmiyorsa Türkçe).
+  Locale? get locale => _locale;
 
   /// İlk kullanım ipucu (dört yön) bir kez gösterilir.
   bool get deckHintSeen => _deckHintSeen;
@@ -38,6 +43,8 @@ class SettingsController extends ChangeNotifier {
         final on = prefs.getBool('notif.${t.name}');
         if (on == false) _topics.remove(t);
       }
+      final lang = prefs.getString(_localeKey);
+      _locale = lang == null ? null : Locale(lang);
       final stored = prefs.getString(_themeKey);
       final mode = ThemeMode.values.where((m) => m.name == stored);
       if (mode.isNotEmpty && mode.first != _themeMode) {
@@ -91,6 +98,21 @@ class SettingsController extends ChangeNotifier {
     try {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setBool('notif.${topic.name}', enabled);
+    } on Object {
+      // Kaydedilemedi; bu oturumda geçerli kalır.
+    }
+  }
+
+  /// [locale] null: cihaz dili.
+  Future<void> setLocale(Locale? locale) async {
+    if (locale == _locale) return;
+    _locale = locale;
+    notifyListeners();
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      locale == null
+          ? await prefs.remove(_localeKey)
+          : await prefs.setString(_localeKey, locale.languageCode);
     } on Object {
       // Kaydedilemedi; bu oturumda geçerli kalır.
     }

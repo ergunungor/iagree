@@ -48,6 +48,36 @@ class AccountScreen extends StatelessWidget {
     if (uri != null && context.mounted) await openExternal(context, uri);
   }
 
+  Future<void> _chooseLanguage(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final settings = AppScope.of(context).settings;
+    final options = <(Locale?, String)>[
+      (null, l10n.languageSystem),
+      (const Locale('tr'), l10n.languageTurkish),
+      (const Locale('en'), l10n.languageEnglish),
+    ];
+    return AppSheet.show<void>(
+      context,
+      title: l10n.accountLanguage,
+      builder: (sheetContext) => ListenableBuilder(
+        listenable: settings,
+        builder: (context, _) => AppListGroup(
+          children: [
+            for (final (locale, label) in options)
+              AppListRow(
+                title: label,
+                selected: settings.locale == locale,
+                onPressed: () {
+                  settings.setLocale(locale);
+                  Navigator.of(sheetContext).pop();
+                },
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Future<void> _chooseTheme(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final settings = AppScope.of(context).settings;
@@ -206,6 +236,24 @@ class AccountScreen extends StatelessWidget {
                         ),
                         showsChevron: true,
                         onPressed: () => _chooseTheme(context),
+                      ),
+                      AppListRow(
+                        title: l10n.accountLanguage,
+                        trailing: ListenableBuilder(
+                          listenable: scope.settings,
+                          builder: (context, _) => ExcludeSemantics(
+                            child: Text(
+                              switch (scope.settings.locale?.languageCode) {
+                                'tr' => l10n.languageTurkish,
+                                'en' => l10n.languageEnglish,
+                                _ => l10n.languageSystem,
+                              },
+                              style: text.body.copyWith(color: c.textSecondary),
+                            ),
+                          ),
+                        ),
+                        showsChevron: true,
+                        onPressed: () => _chooseLanguage(context),
                       ),
                     ],
                   ),

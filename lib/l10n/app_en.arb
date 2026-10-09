@@ -235,5 +235,9 @@
   "detailSynopsis": "Synopsis",
   "detailCast": "Cast",
   "detailPlatform": "Where to watch",
-  "detailRuntime": "{minutes} min"
+  "detailRuntime": "{minutes} min",
+  "accountLanguage": "Language",
+  "languageSystem": "System",
+  "languageTurkish": "Türkçe",
+  "languageEnglish": "English"
 }

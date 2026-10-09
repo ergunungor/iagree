@@ -1518,6 +1518,30 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'{minutes} dk'**
   String detailRuntime(int minutes);
+
+  /// Profil listesi satırı.
+  ///
+  /// In tr, this message translates to:
+  /// **'Dil'**
+  String get accountLanguage;
+
+  /// Dil seçeneği: cihaz dili.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sistem'**
+  String get languageSystem;
+
+  /// Dil seçeneği (kendi adıyla, çevrilmez).
+  ///
+  /// In tr, this message translates to:
+  /// **'Türkçe'**
+  String get languageTurkish;
+
+  /// Dil seçeneği (kendi adıyla, çevrilmez).
+  ///
+  /// In tr, this message translates to:
+  /// **'English'**
+  String get languageEnglish;
 }
 
 class _AppLocalizationsDelegate

@@ -87,6 +87,7 @@ class _IAgreeAppState extends State<IAgreeApp> {
           theme: AppTheme.light,
           darkTheme: AppTheme.dark,
           themeMode: _settings.themeMode,
+          locale: _settings.locale,
           onGenerateRoute: AppRoutes.onGenerateRoute,
           home:
               widget.home ??

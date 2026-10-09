@@ -856,4 +856,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String detailRuntime(int minutes) {
     return '$minutes min';
   }
+
+  @override
+  String get accountLanguage => 'Language';
+
+  @override
+  String get languageSystem => 'System';
+
+  @override
+  String get languageTurkish => 'Türkçe';
+
+  @override
+  String get languageEnglish => 'English';
 }
