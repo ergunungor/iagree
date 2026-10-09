@@ -7,6 +7,7 @@ import '../features/auth/code_screen.dart';
 import '../features/auth/email_screen.dart';
 import '../features/account/account_screen.dart';
 import '../features/account/edit_profile_screen.dart';
+import '../features/account/notification_settings_screen.dart';
 import '../features/auth/profile_setup_screen.dart';
 import '../features/decision/decision_screen.dart';
 import '../features/decision/deck_screen.dart';
@@ -29,6 +30,7 @@ abstract final class AppRoutes {
   static const String profile = '/auth/profile';
   static const String account = '/account';
   static const String editProfile = '/account/edit';
+  static const String notificationSettings = '/account/notifications';
   static const String createWhat = '/create/what';
   static const String createDetails = '/create/details';
   static const String room = '/room';
@@ -49,6 +51,8 @@ abstract final class AppRoutes {
         return _push(settings, (_) => ProfileSetupScreen(pending: pending));
       case account:
         return _push(settings, (_) => const AccountScreen());
+      case notificationSettings:
+        return _push(settings, (_) => const NotificationSettingsScreen());
       case editProfile:
         return CupertinoPageRoute<void>(
           settings: settings,
@@ -104,6 +108,9 @@ abstract final class AppRoutes {
 
   static void pushAccount(BuildContext context) =>
       Navigator.of(context).pushNamed(account);
+
+  static void pushNotificationSettings(BuildContext context) =>
+      Navigator.of(context).pushNamed(notificationSettings);
 
   static void pushEditProfile(BuildContext context) =>
       Navigator.of(context).pushNamed(editProfile);

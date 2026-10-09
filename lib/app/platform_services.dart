@@ -71,13 +71,33 @@ enum NotificationAccess { granted, denied }
 
 /// Bildirim izni (SCREENS D6).
 abstract interface class NotificationService {
+  /// Sistem iznini ister (pencere yalnızca ilk seferde çıkar).
   Future<NotificationAccess> request();
+
+  /// Pencere göstermeden mevcut izin durumu.
+  Future<NotificationAccess> status();
 }
 
 /// iOS bildirim iznini `flutter_local_notifications` ile ister. Sistem penceresi yalnızca
 /// ilk istekte çıkar; kullanıcı daha önce cevap verdiyse sonuç doğrudan döner.
 class SystemNotificationService implements NotificationService {
   const SystemNotificationService();
+
+  @override
+  Future<NotificationAccess> status() async {
+    try {
+      final ios = FlutterLocalNotificationsPlugin()
+          .resolvePlatformSpecificImplementation<
+            IOSFlutterLocalNotificationsPlugin
+          >();
+      final options = await ios?.checkPermissions();
+      return options?.isEnabled == true
+          ? NotificationAccess.granted
+          : NotificationAccess.denied;
+    } on Object {
+      return NotificationAccess.denied;
+    }
+  }
 
   @override
   Future<NotificationAccess> request() async {

@@ -77,6 +77,9 @@ int _notifyRequests = 0;
 
 class _Notify implements NotificationService {
   @override
+  Future<NotificationAccess> status() async => NotificationAccess.granted;
+
+  @override
   Future<NotificationAccess> request() async {
     _notifyRequests++;
     return NotificationAccess.granted;

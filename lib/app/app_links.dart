@@ -15,6 +15,9 @@ abstract final class AppLinks {
   /// iOS Mail uygulamasını açar (kod ekranındaki "Mail'i aç").
   static final Uri mailApp = Uri.parse('message://');
 
+  /// iOS Ayarları'nda uygulamanın sayfası.
+  static final Uri appSettings = Uri.parse('app-settings:');
+
   /// Oda davet linki, şemasız (`iagree.app/r/<kod>`).
   static String invite(String slug) => '$host/r/$slug';
 }

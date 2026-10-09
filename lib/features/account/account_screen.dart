@@ -11,7 +11,6 @@ import '../../core/data/mock/mock_rooms_repository.dart';
 import '../../core/design_system/components/content/app_list_group.dart';
 import '../../core/design_system/components/feedback/app_alert.dart';
 import '../../core/design_system/components/feedback/app_sheet.dart';
-import '../../core/design_system/components/feedback/app_toast.dart';
 import '../../core/design_system/components/buttons/app_button.dart';
 import '../../core/design_system/components/buttons/app_icon_button.dart';
 import '../../core/design_system/components/people/app_avatar.dart';
@@ -24,9 +23,6 @@ import '../../l10n/app_localizations.dart';
 /// C2 · Profil (SCREENS C2): avatar, isim, e-posta; ayar grupları; çıkış ve hesap silme.
 class AccountScreen extends StatelessWidget {
   const AccountScreen({super.key});
-
-  void _soon(BuildContext context) =>
-      AppToast.show(context, message: AppLocalizations.of(context).comingSoon);
 
   /// "Gizlilik ve koşullar": iki bağlantı. Seçilen eylem sheet kapandıktan sonra çalışır.
   Future<void> _legal(BuildContext context) async {
@@ -194,7 +190,8 @@ class AccountScreen extends StatelessWidget {
                       AppListRow(
                         title: l10n.accountNotifications,
                         showsChevron: true,
-                        onPressed: () => _soon(context),
+                        onPressed: () =>
+                            AppRoutes.pushNotificationSettings(context),
                       ),
                       AppListRow(
                         title: l10n.accountAppearance,

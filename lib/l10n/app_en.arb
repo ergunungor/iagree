@@ -208,5 +208,18 @@
   "editDiscardTitle": "Discard changes?",
   "editDiscardMessage": "Changes you haven’t saved will be lost.",
   "editDiscardConfirm": "Discard changes",
-  "editKeepEditing": "Keep editing"
+  "editKeepEditing": "Keep editing",
+  "notifTitle": "Notifications",
+  "notifOffTitle": "Notifications are off",
+  "notifOffBody": "To get notifications, allow them in iOS Settings.",
+  "notifOpenSettings": "Open Settings",
+  "notifTurn": "Your turn",
+  "notifTurnHint": "Tell me when a room is waiting on my picks.",
+  "notifResults": "Results are ready",
+  "notifResultsHint": "Tell me when everyone has finished picking.",
+  "notifDecision": "Decision made",
+  "notifDecisionHint": "Tell me when the group settles on a place.",
+  "notifNudge": "Reminders",
+  "notifNudgeHint": "Tell me when a friend nudges me.",
+  "notifFooter": "You can also turn these off any time in iOS Settings."
 }

@@ -1356,6 +1356,84 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Düzenlemeye devam'**
   String get editKeepEditing;
+
+  /// Bildirim ayarları ekran başlığı.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bildirimler'**
+  String get notifTitle;
+
+  /// Sistem izni yokken uyarı başlığı.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bildirimler kapalı'**
+  String get notifOffTitle;
+
+  /// Sistem izni yokken açıklama.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bildirim almak için iOS Ayarları\'ndan izin ver.'**
+  String get notifOffBody;
+
+  /// iOS Ayarları'nı açma butonu.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ayarları aç'**
+  String get notifOpenSettings;
+
+  /// Bildirim konusu.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sıra sende'**
+  String get notifTurn;
+
+  /// Bildirim konusu açıklaması.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bir oda seçimini bekliyorsa haber ver.'**
+  String get notifTurnHint;
+
+  /// Bildirim konusu.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sonuçlar hazır'**
+  String get notifResults;
+
+  /// Bildirim konusu açıklaması.
+  ///
+  /// In tr, this message translates to:
+  /// **'Herkes seçimini bitirince haber ver.'**
+  String get notifResultsHint;
+
+  /// Bildirim konusu.
+  ///
+  /// In tr, this message translates to:
+  /// **'Karar verildi'**
+  String get notifDecision;
+
+  /// Bildirim konusu açıklaması.
+  ///
+  /// In tr, this message translates to:
+  /// **'Grup bir yerde anlaşınca haber ver.'**
+  String get notifDecisionHint;
+
+  /// Bildirim konusu (dürtme).
+  ///
+  /// In tr, this message translates to:
+  /// **'Hatırlatmalar'**
+  String get notifNudge;
+
+  /// Bildirim konusu açıklaması.
+  ///
+  /// In tr, this message translates to:
+  /// **'Arkadaşların seni dürtünce haber ver.'**
+  String get notifNudgeHint;
+
+  /// Ekran altı notu.
+  ///
+  /// In tr, this message translates to:
+  /// **'İstediğin zaman iOS Ayarları\'ndan da kapatabilirsin.'**
+  String get notifFooter;
 }
 
 class _AppLocalizationsDelegate

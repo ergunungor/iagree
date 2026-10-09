@@ -1228,5 +1228,57 @@
   "editKeepEditing": "Düzenlemeye devam",
   "@editKeepEditing": {
     "description": "Alert iptal butonu."
+  },
+  "notifTitle": "Bildirimler",
+  "@notifTitle": {
+    "description": "Bildirim ayarları ekran başlığı."
+  },
+  "notifOffTitle": "Bildirimler kapalı",
+  "@notifOffTitle": {
+    "description": "Sistem izni yokken uyarı başlığı."
+  },
+  "notifOffBody": "Bildirim almak için iOS Ayarları'ndan izin ver.",
+  "@notifOffBody": {
+    "description": "Sistem izni yokken açıklama."
+  },
+  "notifOpenSettings": "Ayarları aç",
+  "@notifOpenSettings": {
+    "description": "iOS Ayarları'nı açma butonu."
+  },
+  "notifTurn": "Sıra sende",
+  "@notifTurn": {
+    "description": "Bildirim konusu."
+  },
+  "notifTurnHint": "Bir oda seçimini bekliyorsa haber ver.",
+  "@notifTurnHint": {
+    "description": "Bildirim konusu açıklaması."
+  },
+  "notifResults": "Sonuçlar hazır",
+  "@notifResults": {
+    "description": "Bildirim konusu."
+  },
+  "notifResultsHint": "Herkes seçimini bitirince haber ver.",
+  "@notifResultsHint": {
+    "description": "Bildirim konusu açıklaması."
+  },
+  "notifDecision": "Karar verildi",
+  "@notifDecision": {
+    "description": "Bildirim konusu."
+  },
+  "notifDecisionHint": "Grup bir yerde anlaşınca haber ver.",
+  "@notifDecisionHint": {
+    "description": "Bildirim konusu açıklaması."
+  },
+  "notifNudge": "Hatırlatmalar",
+  "@notifNudge": {
+    "description": "Bildirim konusu (dürtme)."
+  },
+  "notifNudgeHint": "Arkadaşların seni dürtünce haber ver.",
+  "@notifNudgeHint": {
+    "description": "Bildirim konusu açıklaması."
+  },
+  "notifFooter": "İstediğin zaman iOS Ayarları'ndan da kapatabilirsin.",
+  "@notifFooter": {
+    "description": "Ekran altı notu."
   }
 }

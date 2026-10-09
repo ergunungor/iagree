@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+/// Bildirim konuları (Profil → Bildirimler). Hepsi varsayılan olarak açık.
+enum NotificationTopic { turn, results, decision, nudge }
+
 /// Cihaza özel ayarlar. Şimdilik yalnızca görünüm (Sistem/Açık/Koyu); `shared_preferences`
 /// ile saklanır. Depolama erişilemezse (test, bozuk disk) varsayılana düşer ve çökmez.
 class SettingsController extends ChangeNotifier {
@@ -14,11 +17,14 @@ class SettingsController extends ChangeNotifier {
 
   bool _deckHintSeen = false;
   bool _notificationPromptSeen = false;
+  final Set<NotificationTopic> _topics = {...NotificationTopic.values};
 
   ThemeMode get themeMode => _themeMode;
 
   /// İlk kullanım ipucu (dört yön) bir kez gösterilir.
   bool get deckHintSeen => _deckHintSeen;
+
+  bool topicEnabled(NotificationTopic topic) => _topics.contains(topic);
 
   /// Bildirim kartı bir kez gösterilir (cevap ne olursa olsun, bir daha çıkmaz).
   bool get notificationPromptSeen => _notificationPromptSeen;
@@ -28,6 +34,10 @@ class SettingsController extends ChangeNotifier {
       final prefs = await SharedPreferences.getInstance();
       _deckHintSeen = prefs.getBool(_deckHintKey) ?? false;
       _notificationPromptSeen = prefs.getBool(_notifyKey) ?? false;
+      for (final t in NotificationTopic.values) {
+        final on = prefs.getBool('notif.${t.name}');
+        if (on == false) _topics.remove(t);
+      }
       final stored = prefs.getString(_themeKey);
       final mode = ThemeMode.values.where((m) => m.name == stored);
       if (mode.isNotEmpty && mode.first != _themeMode) {
@@ -71,6 +81,18 @@ class SettingsController extends ChangeNotifier {
       await prefs.setBool(_notifyKey, true);
     } on Object {
       // Kaydedilemedi; bu oturumda tekrar gösterilmez.
+    }
+  }
+
+  Future<void> setTopic(NotificationTopic topic, bool enabled) async {
+    if (enabled == topicEnabled(topic)) return;
+    enabled ? _topics.add(topic) : _topics.remove(topic);
+    notifyListeners();
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('notif.${topic.name}', enabled);
+    } on Object {
+      // Kaydedilemedi; bu oturumda geçerli kalır.
     }
   }
 }

@@ -764,4 +764,44 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get editKeepEditing => 'Düzenlemeye devam';
+
+  @override
+  String get notifTitle => 'Bildirimler';
+
+  @override
+  String get notifOffTitle => 'Bildirimler kapalı';
+
+  @override
+  String get notifOffBody => 'Bildirim almak için iOS Ayarları\'ndan izin ver.';
+
+  @override
+  String get notifOpenSettings => 'Ayarları aç';
+
+  @override
+  String get notifTurn => 'Sıra sende';
+
+  @override
+  String get notifTurnHint => 'Bir oda seçimini bekliyorsa haber ver.';
+
+  @override
+  String get notifResults => 'Sonuçlar hazır';
+
+  @override
+  String get notifResultsHint => 'Herkes seçimini bitirince haber ver.';
+
+  @override
+  String get notifDecision => 'Karar verildi';
+
+  @override
+  String get notifDecisionHint => 'Grup bir yerde anlaşınca haber ver.';
+
+  @override
+  String get notifNudge => 'Hatırlatmalar';
+
+  @override
+  String get notifNudgeHint => 'Arkadaşların seni dürtünce haber ver.';
+
+  @override
+  String get notifFooter =>
+      'İstediğin zaman iOS Ayarları\'ndan da kapatabilirsin.';
 }

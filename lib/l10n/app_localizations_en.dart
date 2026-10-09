@@ -766,4 +766,45 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get editKeepEditing => 'Keep editing';
+
+  @override
+  String get notifTitle => 'Notifications';
+
+  @override
+  String get notifOffTitle => 'Notifications are off';
+
+  @override
+  String get notifOffBody =>
+      'To get notifications, allow them in iOS Settings.';
+
+  @override
+  String get notifOpenSettings => 'Open Settings';
+
+  @override
+  String get notifTurn => 'Your turn';
+
+  @override
+  String get notifTurnHint => 'Tell me when a room is waiting on my picks.';
+
+  @override
+  String get notifResults => 'Results are ready';
+
+  @override
+  String get notifResultsHint => 'Tell me when everyone has finished picking.';
+
+  @override
+  String get notifDecision => 'Decision made';
+
+  @override
+  String get notifDecisionHint => 'Tell me when the group settles on a place.';
+
+  @override
+  String get notifNudge => 'Reminders';
+
+  @override
+  String get notifNudgeHint => 'Tell me when a friend nudges me.';
+
+  @override
+  String get notifFooter =>
+      'You can also turn these off any time in iOS Settings.';
 }

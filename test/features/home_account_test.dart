@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:iagree/app/app.dart';
 import 'package:iagree/app/platform_services.dart';
-import 'package:iagree/app/rooms_controller.dart';
 import 'package:iagree/app/settings_controller.dart';
+import 'package:iagree/core/design_system/components/selection/app_toggle.dart';
+import 'package:iagree/features/account/notification_settings_screen.dart';
+import 'package:iagree/app/rooms_controller.dart';
 import 'package:iagree/core/data/mock/mock_auth_repository.dart';
 import 'package:iagree/core/data/mock/mock_rooms_repository.dart';
 import 'package:iagree/core/design_system/components/buttons/app_button.dart';
@@ -22,6 +24,19 @@ late MockRoomsRepository _repo;
 late SettingsController _settings;
 final List<Uri> _opened = [];
 String? _picked;
+NotificationAccess _notifAccess = NotificationAccess.granted;
+int _notifRequests = 0;
+
+class _Notify implements NotificationService {
+  @override
+  Future<NotificationAccess> status() async => _notifAccess;
+
+  @override
+  Future<NotificationAccess> request() async {
+    _notifRequests++;
+    return _notifAccess;
+  }
+}
 
 class _Photos implements PhotoPicker {
   @override
@@ -59,6 +74,8 @@ Future<void> _launch(
   _settings = SettingsController();
   _opened.clear();
   _picked = null;
+  _notifAccess = NotificationAccess.granted;
+  _notifRequests = 0;
   await tester.pumpWidget(
     MediaQuery(
       data: MediaQueryData.fromView(tester.view)
@@ -69,6 +86,7 @@ Future<void> _launch(
         settings: _settings,
         opener: _Opener(),
         photos: _Photos(),
+        notifications: _Notify(),
       ),
     ),
   );
@@ -235,6 +253,63 @@ void main() {
       }
     }
   }
+
+  group('Bildirim ayarları', () {
+    Future<void> openNotif(
+      WidgetTester tester, {
+      NotificationAccess access = NotificationAccess.granted,
+    }) async {
+      await _launch(tester);
+      await _openAccount(tester);
+      _notifAccess = access;
+      await tester.tap(find.text('Bildirimler'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 700));
+    }
+
+    testWidgets('dört konu, hepsi açık; izin varsa uyarı yok', (tester) async {
+      await openNotif(tester);
+      for (final t in [
+        'Sıra sende',
+        'Sonuçlar hazır',
+        'Karar verildi',
+        'Hatırlatmalar',
+      ]) {
+        expect(find.text(t), findsOneWidget, reason: t);
+      }
+      expect(find.byType(AppToggle), findsNWidgets(4));
+      for (final t in tester.widgetList<AppToggle>(find.byType(AppToggle))) {
+        expect(t.value, isTrue);
+      }
+      expect(find.text('Bildirimler kapalı'), findsNothing);
+    });
+
+    testWidgets('konuyu kapatmak ayara yazılır', (tester) async {
+      await openNotif(tester);
+      await tester.tap(find.byType(AppToggle).at(1));
+      await tester.pump();
+      expect(_settings.topicEnabled(NotificationTopic.results), isFalse);
+      expect(_settings.topicEnabled(NotificationTopic.turn), isTrue);
+    });
+
+    testWidgets('sistem izni kapalıysa uyarı + Ayarları aç', (tester) async {
+      await openNotif(tester, access: NotificationAccess.denied);
+      expect(find.text('Bildirimler kapalı'), findsOneWidget);
+      await tester.tap(find.text('Ayarları aç'));
+      await tester.pump();
+      expect(_opened.single.toString(), 'app-settings:');
+    });
+
+    testWidgets('izin yokken konu açmak izni ister', (tester) async {
+      await openNotif(tester, access: NotificationAccess.denied);
+      await tester.tap(find.byType(AppToggle).first); // kapat
+      await tester.pump();
+      expect(_notifRequests, 0);
+      await tester.tap(find.byType(AppToggle).first); // aç
+      await tester.pump();
+      expect(_notifRequests, 1);
+    });
+  });
 
   group('Profili düzenle', () {
     Future<void> openEdit(WidgetTester tester) async {
@@ -443,14 +518,13 @@ void main() {
       expect(find.byType(WelcomeScreen), findsOneWidget);
     });
 
-    testWidgets('Bildirimler: şimdilik bilgi toast\'ı', (tester) async {
+    testWidgets('Bildirimler: ayar ekranını açar', (tester) async {
       await _launch(tester);
       await _openAccount(tester);
       await tester.tap(find.text('Bildirimler'));
       await tester.pump();
-      await tester.pump(const Duration(milliseconds: 400));
-      expect(find.text('Bu ekran yakında eklenecek'), findsOneWidget);
-      await tester.pump(const Duration(seconds: 4));
+      await tester.pump(const Duration(milliseconds: 700));
+      expect(find.byType(NotificationSettingsScreen), findsOneWidget);
     });
   });
 }
