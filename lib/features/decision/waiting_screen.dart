@@ -3,10 +3,14 @@ import 'package:flutter/material.dart';
 
 import '../../app/app_router.dart';
 import '../../app/app_scope.dart';
+import '../../app/platform_services.dart';
 import '../../app/rooms_controller.dart';
 import '../../core/data/mock/mock_rooms_repository.dart';
 import '../../core/design_system/components/buttons/app_button.dart';
+import '../../core/design_system/components/content/app_card.dart';
+import '../../core/design_system/components/feedback/app_toast.dart';
 import '../../core/design_system/components/people/app_avatar.dart';
+import '../../core/design_system/foundations/app_icons.dart';
 import '../../core/design_system/components/people/participant_ring.dart';
 import '../../core/design_system/foundations/context_extensions.dart';
 import '../../core/design_system/tokens/app_spacing.dart';
@@ -126,6 +130,8 @@ class _WaitingScreenState extends State<WaitingScreen> {
                                 color: c.textSecondary,
                               ),
                             ),
+                            const SizedBox(height: AppSpacing.xl),
+                            const _NotificationCard(),
                           ],
                         ),
                       ),
@@ -143,6 +149,95 @@ class _WaitingScreenState extends State<WaitingScreen> {
           },
         ),
       ),
+    );
+  }
+}
+
+/// Bildirim izni kartı (SCREENS D6): bir kez gösterilir. "Evet" sistem iznini ister; hangi
+/// cevap verilirse verilsin kart bir daha çıkmaz.
+class _NotificationCard extends StatelessWidget {
+  const _NotificationCard();
+
+  @override
+  Widget build(BuildContext context) {
+    final scope = AppScope.of(context);
+    final settings = scope.settings;
+    return ListenableBuilder(
+      listenable: settings,
+      builder: (context, _) {
+        if (settings.notificationPromptSeen) return const SizedBox.shrink();
+        final l10n = AppLocalizations.of(context);
+        final c = context.colors;
+        return Padding(
+          padding: const EdgeInsets.only(bottom: AppSpacing.md),
+          child: AppCard(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ExcludeSemantics(
+                      child: Icon(AppIcons.bell, color: c.brand),
+                    ),
+                    const SizedBox(width: AppSpacing.sm),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Semantics(
+                            header: true,
+                            child: Text(
+                              l10n.waitingNotifyTitle,
+                              style: context.text.title,
+                            ),
+                          ),
+                          const SizedBox(height: AppSpacing.xxs),
+                          Text(
+                            l10n.waitingNotifyBody,
+                            style: context.text.bodySmall.copyWith(
+                              color: c.textSecondary,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: AppSpacing.md),
+                Row(
+                  children: [
+                    Expanded(
+                      child: AppButton.tertiary(
+                        label: l10n.waitingNotifyNo,
+                        onPressed: settings.markNotificationPromptSeen,
+                      ),
+                    ),
+                    const SizedBox(width: AppSpacing.xs),
+                    Expanded(
+                      // Ekranda Primary yok (SCREENS D6): kart eylemi Secondary.
+                      child: AppButton.secondary(
+                        label: l10n.waitingNotifyYes,
+                        onPressed: () async {
+                          final access = await scope.notifications.request();
+                          await settings.markNotificationPromptSeen();
+                          if (access == NotificationAccess.granted &&
+                              context.mounted) {
+                            AppToast.show(
+                              context,
+                              message: l10n.waitingNotifyOn,
+                            );
+                          }
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

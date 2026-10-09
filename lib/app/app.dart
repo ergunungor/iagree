@@ -31,6 +31,7 @@ class IAgreeApp extends StatefulWidget {
     this.sharer,
     this.location,
     this.opener,
+    this.notifications,
   });
 
   final Widget? home;
@@ -41,6 +42,7 @@ class IAgreeApp extends StatefulWidget {
   final LinkSharer? sharer;
   final LocationService? location;
   final UrlOpener? opener;
+  final NotificationService? notifications;
 
   /// Geliştirme kısayolu: `--dart-define=DEMO=home` oturum açık başlar; başka bir değer
   /// verilirse tasarım galerisi (ve demo sayfaları) açılır.
@@ -71,6 +73,8 @@ class _IAgreeAppState extends State<IAgreeApp> {
       sharer: widget.sharer ?? const SystemLinkSharer(),
       location: widget.location ?? const SystemLocationService(),
       opener: widget.opener ?? const SystemUrlOpener(),
+      notifications:
+          widget.notifications ?? const PlaceholderNotificationService(),
       child: ListenableBuilder(
         listenable: _settings,
         builder: (context, _) => MaterialApp(

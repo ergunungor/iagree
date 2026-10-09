@@ -1176,5 +1176,25 @@
         "type": "String"
       }
     }
+  },
+  "waitingNotifyTitle": "Sonuçlar hazır olunca haber verelim mi?",
+  "@waitingNotifyTitle": {
+    "description": "Bekleme ekranı bildirim kartı başlığı."
+  },
+  "waitingNotifyBody": "Herkes seçimini bitirdiğinde sana bildirim göndeririz.",
+  "@waitingNotifyBody": {
+    "description": "Bildirim kartı açıklaması."
+  },
+  "waitingNotifyYes": "Evet",
+  "@waitingNotifyYes": {
+    "description": "Bildirim kartı onay butonu."
+  },
+  "waitingNotifyNo": "Şimdi değil",
+  "@waitingNotifyNo": {
+    "description": "Bildirim kartı erteleme butonu."
+  },
+  "waitingNotifyOn": "Bildirimler açıldı",
+  "@waitingNotifyOn": {
+    "description": "İzin verilince toast."
   }
 }

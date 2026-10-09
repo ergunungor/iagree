@@ -304,4 +304,11 @@ abstract final class AppIcons {
     fontFamily: _regular,
     fontPackage: _package,
   );
+
+  /// Phosphor `bell` (regular).
+  static const IconData bell = IconData(
+    0xe0ce,
+    fontFamily: _regular,
+    fontPackage: _package,
+  );
 }

@@ -33,6 +33,7 @@ Future<void> _launch(
   WidgetTester tester, {
   double textScale = 1,
   Brightness brightness = Brightness.light,
+  bool notifyPromptSeen = false,
 }) async {
   tester.view.physicalSize = const Size(1170, 2532);
   tester.view.devicePixelRatio = 3;
@@ -44,9 +45,13 @@ Future<void> _launch(
   addTearDown(tester.platformDispatcher.clearLocalesTestValue);
   addTearDown(tester.platformDispatcher.clearPlatformBrightnessTestValue);
   _opened.clear();
+  _notifyRequests = 0;
   _shared.clear();
   _repo = MockRoomsRepository(latency: const Duration(milliseconds: 50));
-  SharedPreferences.setMockInitialValues({'deckHintSeen': true});
+  SharedPreferences.setMockInitialValues({
+    'deckHintSeen': true,
+    'notificationPromptSeen': notifyPromptSeen,
+  });
   final settings = SettingsController();
   await settings.load();
   await tester.pumpWidget(
@@ -59,12 +64,23 @@ Future<void> _launch(
         settings: settings,
         opener: _Opener(),
         sharer: _Sharer(),
+        notifications: _Notify(),
       ),
     ),
   );
   await tester.pump();
   await tester.pump();
   await tester.pump(const Duration(milliseconds: 200));
+}
+
+int _notifyRequests = 0;
+
+class _Notify implements NotificationService {
+  @override
+  Future<NotificationAccess> request() async {
+    _notifyRequests++;
+    return NotificationAccess.granted;
+  }
 }
 
 class _Sharer implements LinkSharer {
@@ -140,6 +156,50 @@ void main() {
       await _settle(tester);
       expect(find.byType(WaitingScreen), findsOneWidget);
       expect(find.text('2 kişi daha seçiyor'), findsOneWidget);
+    });
+  });
+
+  group('bildirim izni kartı', () {
+    testWidgets('Bekleme\'de bir kez çıkar; Evet izni ister, kart kalkar', (
+      tester,
+    ) async {
+      await _launch(tester);
+      await _openYourTurnRoom(tester);
+      await _finishDeck(tester);
+      expect(find.text('Sonuçlar hazır olunca haber verelim mi?'), findsOne);
+      await tester.tap(find.text('Evet'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 400));
+      expect(_notifyRequests, 1);
+      expect(find.text('Bildirimler açıldı'), findsOneWidget);
+      expect(
+        find.text('Sonuçlar hazır olunca haber verelim mi?'),
+        findsNothing,
+      );
+      await tester.pump(const Duration(seconds: 4));
+    });
+
+    testWidgets('Şimdi değil: izin istenmez, kart kalkar', (tester) async {
+      await _launch(tester);
+      await _openYourTurnRoom(tester);
+      await _finishDeck(tester);
+      await tester.tap(find.text('Şimdi değil'));
+      await tester.pump();
+      expect(_notifyRequests, 0);
+      expect(
+        find.text('Sonuçlar hazır olunca haber verelim mi?'),
+        findsNothing,
+      );
+    });
+
+    testWidgets('daha önce gösterildiyse çıkmaz', (tester) async {
+      await _launch(tester, notifyPromptSeen: true);
+      await _openYourTurnRoom(tester);
+      await _finishDeck(tester);
+      expect(
+        find.text('Sonuçlar hazır olunca haber verelim mi?'),
+        findsNothing,
+      );
     });
   });
 

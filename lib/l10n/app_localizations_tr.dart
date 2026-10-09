@@ -724,4 +724,20 @@ class AppLocalizationsTr extends AppLocalizations {
   String decisionShareText(String place, String when) {
     return '$place · $when. iAgree ile karar verdik.';
   }
+
+  @override
+  String get waitingNotifyTitle => 'Sonuçlar hazır olunca haber verelim mi?';
+
+  @override
+  String get waitingNotifyBody =>
+      'Herkes seçimini bitirdiğinde sana bildirim göndeririz.';
+
+  @override
+  String get waitingNotifyYes => 'Evet';
+
+  @override
+  String get waitingNotifyNo => 'Şimdi değil';
+
+  @override
+  String get waitingNotifyOn => 'Bildirimler açıldı';
 }

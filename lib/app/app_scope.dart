@@ -19,6 +19,7 @@ class AppScope extends InheritedWidget {
     required this.sharer,
     required this.location,
     required this.opener,
+    required this.notifications,
     required super.child,
   });
 
@@ -29,6 +30,7 @@ class AppScope extends InheritedWidget {
   final LinkSharer sharer;
   final LocationService location;
   final UrlOpener opener;
+  final NotificationService notifications;
 
   static AppScope of(BuildContext context) {
     final scope = context.getInheritedWidgetOfExactType<AppScope>();

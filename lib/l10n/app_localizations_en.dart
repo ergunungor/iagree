@@ -726,4 +726,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String decisionShareText(String place, String when) {
     return '$place · $when. We decided with iAgree.';
   }
+
+  @override
+  String get waitingNotifyTitle => 'Want a heads-up when results are ready?';
+
+  @override
+  String get waitingNotifyBody =>
+      'We’ll notify you when everyone has finished picking.';
+
+  @override
+  String get waitingNotifyYes => 'Yes';
+
+  @override
+  String get waitingNotifyNo => 'Not now';
+
+  @override
+  String get waitingNotifyOn => 'Notifications are on';
 }

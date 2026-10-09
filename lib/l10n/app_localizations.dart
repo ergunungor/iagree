@@ -1278,6 +1278,36 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'{place} · {when}. iAgree ile karar verdik.'**
   String decisionShareText(String place, String when);
+
+  /// Bekleme ekranı bildirim kartı başlığı.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sonuçlar hazır olunca haber verelim mi?'**
+  String get waitingNotifyTitle;
+
+  /// Bildirim kartı açıklaması.
+  ///
+  /// In tr, this message translates to:
+  /// **'Herkes seçimini bitirdiğinde sana bildirim göndeririz.'**
+  String get waitingNotifyBody;
+
+  /// Bildirim kartı onay butonu.
+  ///
+  /// In tr, this message translates to:
+  /// **'Evet'**
+  String get waitingNotifyYes;
+
+  /// Bildirim kartı erteleme butonu.
+  ///
+  /// In tr, this message translates to:
+  /// **'Şimdi değil'**
+  String get waitingNotifyNo;
+
+  /// İzin verilince toast.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bildirimler açıldı'**
+  String get waitingNotifyOn;
 }
 
 class _AppLocalizationsDelegate

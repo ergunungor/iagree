@@ -63,3 +63,21 @@ class SystemUrlOpener implements UrlOpener {
     }
   }
 }
+
+/// Bildirim izni sonucu.
+enum NotificationAccess { granted, denied }
+
+/// Bildirim izni (SCREENS D6). Gerçek uygulama bildirim paketi seçilince bağlanacak;
+/// şimdilik [PlaceholderNotificationService] kullanılır.
+abstract interface class NotificationService {
+  Future<NotificationAccess> request();
+}
+
+/// Bildirim paketi henüz seçilmediği için sistem izin penceresi açmaz; her zaman "verildi"
+/// döner. Paket eklenince yerini gerçek servis alır.
+class PlaceholderNotificationService implements NotificationService {
+  const PlaceholderNotificationService();
+
+  @override
+  Future<NotificationAccess> request() async => NotificationAccess.granted;
+}
