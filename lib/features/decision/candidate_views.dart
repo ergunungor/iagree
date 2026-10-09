@@ -22,7 +22,11 @@ abstract final class CandidateViews {
     distanceKm: c.distanceKm,
   );
 
-  static Widget deckCard(BuildContext context, Candidate c) {
+  static Widget deckCard(
+    BuildContext context,
+    Candidate c, {
+    VoidCallback? onDetails,
+  }) {
     if (c.kind == RoomKind.film) {
       return DeckCard.film(
         name: c.name,
@@ -32,6 +36,7 @@ abstract final class CandidateViews {
         durationMinutes: c.durationMinutes,
         platform: c.platform,
         closingInMinutes: c.closingInMinutes,
+        onDetailsTap: onDetails,
       );
     }
     return DeckCard.place(
@@ -44,6 +49,7 @@ abstract final class CandidateViews {
       priceLevel: c.priceLevel,
       distanceKm: c.distanceKm,
       closingInMinutes: c.closingInMinutes,
+      onDetailsTap: onDetails,
     );
   }
 }

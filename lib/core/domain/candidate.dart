@@ -24,6 +24,11 @@ class Candidate {
     this.durationMinutes,
     this.platform,
     this.closingInMinutes,
+    this.address,
+    this.hoursLabel,
+    this.websiteUrl,
+    this.synopsis,
+    this.cast = const [],
   });
 
   final String id;
@@ -44,6 +49,15 @@ class Candidate {
 
   /// "Kapanıyor · 45 dk" istisnası.
   final int? closingInMinutes;
+
+  /// Detay sayfası (D5). Mekan: adres, saat metni (veriden biçimli), menü/web adresi.
+  final String? address;
+  final String? hoursLabel;
+  final String? websiteUrl;
+
+  /// Film: özet ve oyuncular.
+  final String? synopsis;
+  final List<String> cast;
 }
 
 /// Sonuç listesindeki bir seçenek (SCREENS D7). Pas ve veto için alan yoktur: yanlışlıkla

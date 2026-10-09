@@ -827,4 +827,30 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get tieFailed => 'Karar kaydedilemedi. Tekrar dene.';
+
+  @override
+  String get detailAddress => 'Adres';
+
+  @override
+  String get detailOpenMap => 'Haritada aç';
+
+  @override
+  String get detailHours => 'Saatler';
+
+  @override
+  String get detailWebsite => 'Menü ve web sitesi';
+
+  @override
+  String get detailSynopsis => 'Özet';
+
+  @override
+  String get detailCast => 'Oyuncular';
+
+  @override
+  String get detailPlatform => 'Nereden izlenir';
+
+  @override
+  String detailRuntime(int minutes) {
+    return '$minutes dk';
+  }
 }

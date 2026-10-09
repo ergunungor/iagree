@@ -1314,5 +1314,42 @@
   "tieFailed": "Karar kaydedilemedi. Tekrar dene.",
   "@tieFailed": {
     "description": "Son söz hatası."
+  },
+  "detailAddress": "Adres",
+  "@detailAddress": {
+    "description": "Detay sheet satırı."
+  },
+  "detailOpenMap": "Haritada aç",
+  "@detailOpenMap": {
+    "description": "Adres satırı VoiceOver ipucu."
+  },
+  "detailHours": "Saatler",
+  "@detailHours": {
+    "description": "Detay sheet satırı."
+  },
+  "detailWebsite": "Menü ve web sitesi",
+  "@detailWebsite": {
+    "description": "Detay sheet satırı."
+  },
+  "detailSynopsis": "Özet",
+  "@detailSynopsis": {
+    "description": "Film özeti başlığı."
+  },
+  "detailCast": "Oyuncular",
+  "@detailCast": {
+    "description": "Film oyuncular başlığı."
+  },
+  "detailPlatform": "Nereden izlenir",
+  "@detailPlatform": {
+    "description": "Platform satırı."
+  },
+  "detailRuntime": "{minutes} dk",
+  "@detailRuntime": {
+    "description": "Film süresi.",
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
   }
 }

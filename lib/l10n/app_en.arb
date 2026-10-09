@@ -227,5 +227,13 @@
   "tieOthersBody": "The room owner, {name}, will make the final call.",
   "tieConfirm": "Choose this one",
   "tieVoteCount": "{count} votes",
-  "tieFailed": "Couldn’t save the decision. Try again."
+  "tieFailed": "Couldn’t save the decision. Try again.",
+  "detailAddress": "Address",
+  "detailOpenMap": "Open in Maps",
+  "detailHours": "Hours",
+  "detailWebsite": "Menu and website",
+  "detailSynopsis": "Synopsis",
+  "detailCast": "Cast",
+  "detailPlatform": "Where to watch",
+  "detailRuntime": "{minutes} min"
 }

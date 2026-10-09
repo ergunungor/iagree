@@ -360,6 +360,9 @@ class MockRoomsRepository implements RoomsRepository {
       categoryLabel: 'İtalyan',
       priceLevel: 2,
       distanceKm: 1.2,
+      address: 'Moda Cd. 112, Kadıköy',
+      hoursLabel: 'Her gün 12:00–23:00',
+      websiteUrl: 'https://iagree.app/mekan/trattoria-lume',
     ),
     Candidate(
       id: 'p2',
@@ -369,6 +372,9 @@ class MockRoomsRepository implements RoomsRepository {
       categoryLabel: 'Kahve',
       priceLevel: 1,
       distanceKm: 0.65,
+      address: 'Bahariye Cd. 45, Kadıköy',
+      hoursLabel: 'Hafta içi 08:00–20:00 · Hafta sonu 09:00–22:00',
+      websiteUrl: 'https://iagree.app/mekan/mavi-kapi',
     ),
     Candidate(
       id: 'p3',
@@ -379,6 +385,9 @@ class MockRoomsRepository implements RoomsRepository {
       priceLevel: 3,
       distanceKm: 2.4,
       closingInMinutes: 45,
+      address: 'Kadife Sk. 8, Kadıköy',
+      hoursLabel: 'Her gün 18:00–01:00',
+      websiteUrl: 'https://iagree.app/mekan/cinar-meyhane',
     ),
     Candidate(
       id: 'p4',
@@ -388,6 +397,9 @@ class MockRoomsRepository implements RoomsRepository {
       categoryLabel: 'Fırın',
       priceLevel: 1,
       distanceKm: 1.9,
+      address: 'Caferağa Mah. 3, Kadıköy',
+      hoursLabel: 'Her gün 07:00–19:00',
+      websiteUrl: 'https://iagree.app/mekan/sahil-borekcisi',
     ),
     Candidate(
       id: 'p5',
@@ -397,6 +409,9 @@ class MockRoomsRepository implements RoomsRepository {
       categoryLabel: 'Ev yemeği',
       priceLevel: 2,
       distanceKm: 3.1,
+      address: 'Fenerbahçe Cd. 21, Kadıköy',
+      hoursLabel: 'Salı–Pazar 11:00–22:00',
+      websiteUrl: 'https://iagree.app/mekan/lale-sofrasi',
     ),
     Candidate(
       id: 'p6',
@@ -406,6 +421,9 @@ class MockRoomsRepository implements RoomsRepository {
       categoryLabel: 'Bistro',
       priceLevel: 2,
       distanceKm: 0.9,
+      address: 'Moda Cd. 76, Kadıköy',
+      hoursLabel: 'Her gün 10:00–00:00',
+      websiteUrl: 'https://iagree.app/mekan/nar-bistro',
     ),
   ];
 
@@ -419,6 +437,8 @@ class MockRoomsRepository implements RoomsRepository {
       genre: 'Gerilim',
       durationMinutes: 112,
       platform: 'Netflix',
+      synopsis: 'Bir tren yolculuğunda tanık olunan olay, yolcuları sabaha kadar süren bir gerilime sürükler.',
+      cast: ['Elif Aras', 'Kerem Ulus', 'Naz Demir'],
     ),
     Candidate(
       id: 'f2',
@@ -429,6 +449,8 @@ class MockRoomsRepository implements RoomsRepository {
       genre: 'Dram',
       durationMinutes: 98,
       platform: 'MUBI',
+      synopsis: 'Sınır kasabasında bir limon bahçesi, iki komşunun yıllardır süren küslüğünü sınar.',
+      cast: ['Zeynep Aktaş', 'Orhan Tan'],
     ),
     Candidate(
       id: 'f3',
@@ -439,6 +461,8 @@ class MockRoomsRepository implements RoomsRepository {
       genre: 'Macera',
       durationMinutes: 125,
       platform: 'Prime Video',
+      synopsis: 'Beş arkadaş, tatil için çıktıkları yolda beklenmedik bir maceraya karışır.',
+      cast: ['Can Yıldız', 'Selin Kaya', 'Mert Ay'],
     ),
     Candidate(
       id: 'f4',
@@ -449,6 +473,8 @@ class MockRoomsRepository implements RoomsRepository {
       genre: 'Komedi',
       durationMinutes: 104,
       platform: 'Disney+',
+      synopsis: 'Yaşlı bir dans öğretmeni, bir yarışma için eski öğrencilerini yeniden bir araya getirir.',
+      cast: ['Ayla Şen', 'Tuncay Er'],
     ),
   ];
 

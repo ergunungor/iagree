@@ -830,4 +830,30 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tieFailed => 'Couldn’t save the decision. Try again.';
+
+  @override
+  String get detailAddress => 'Address';
+
+  @override
+  String get detailOpenMap => 'Open in Maps';
+
+  @override
+  String get detailHours => 'Hours';
+
+  @override
+  String get detailWebsite => 'Menu and website';
+
+  @override
+  String get detailSynopsis => 'Synopsis';
+
+  @override
+  String get detailCast => 'Cast';
+
+  @override
+  String get detailPlatform => 'Where to watch';
+
+  @override
+  String detailRuntime(int minutes) {
+    return '$minutes min';
+  }
 }

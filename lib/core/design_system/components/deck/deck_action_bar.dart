@@ -16,9 +16,12 @@ import 'swipe_deck_physics.dart';
 /// Sürükleme geri bildirimi butonlarda değil, ekran zemininde ve kartta verilir
 /// (`SwipeDeckScaffold`); butonlar sürükleme boyunca sabit kalır.
 class DeckActionBar extends StatelessWidget {
-  const DeckActionBar({super.key, required this.controller});
+  const DeckActionBar({super.key, required this.controller, this.onAction});
 
   final SwipeDeckController controller;
+
+  /// Karar verilmeden hemen önce çağrılır (örn. detay sheet'i kapatmak için).
+  final VoidCallback? onAction;
 
   static const double _doneOpacity = 0.35;
 
@@ -34,7 +37,10 @@ class DeckActionBar extends StatelessWidget {
             size: size,
             iconSize: iconSize,
             enabled: !done,
-            onPressed: () => controller.swipe(d),
+            onPressed: () {
+              onAction?.call();
+              controller.swipe(d);
+            },
           );
         }
 

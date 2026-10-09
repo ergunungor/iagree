@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../app/app_router.dart';
 import '../../app/app_scope.dart';
+import '../../core/design_system/components/deck/swipe_deck.dart';
 import '../../core/design_system/components/deck/swipe_deck_physics.dart';
 import '../../core/design_system/components/deck/swipe_deck_scaffold.dart';
 import '../../core/design_system/components/feedback/app_empty_state.dart';
@@ -15,6 +16,7 @@ import '../../core/design_system/tokens/app_radius.dart';
 import '../../core/design_system/tokens/app_spacing.dart';
 import '../../core/domain/candidate.dart';
 import '../../l10n/app_localizations.dart';
+import 'candidate_detail_sheet.dart';
 import 'candidate_views.dart';
 
 /// D4 · Deste (SCREENS D4): tam ekran kart destesi. Kararlar bellekte toplanır (geri alma
@@ -30,6 +32,7 @@ class DeckScreen extends StatefulWidget {
 
 class _DeckScreenState extends State<DeckScreen> {
   final Map<String, Pick> _picks = {};
+  final SwipeDeckController _controller = SwipeDeckController();
   List<Candidate>? _deck;
   bool _failed = false;
   bool _started = false;
@@ -79,6 +82,12 @@ class _DeckScreenState extends State<DeckScreen> {
   }
 
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final settings = AppScope.of(context).settings;
     final deck = _deck;
@@ -90,13 +99,22 @@ class _DeckScreenState extends State<DeckScreen> {
           ? const _Loading()
           : SwipeDeckScaffold<Candidate>(
               items: deck,
+              controller: _controller,
               showHint: !settings.deckHintSeen,
               onHintShown: settings.markDeckHintSeen,
               onBack: () => Navigator.of(context).maybePop(),
               onSwiped: (c, d) => _picks[c.id] = _pickOf(d),
               onUndo: (c, _) => _picks.remove(c.id),
               onCompleted: _submit,
-              itemBuilder: CandidateViews.deckCard,
+              itemBuilder: (context, c) => CandidateViews.deckCard(
+                context,
+                c,
+                onDetails: () => showCandidateDetails(
+                  context,
+                  candidate: c,
+                  controller: _controller,
+                ),
+              ),
             ),
     );
   }

@@ -299,6 +299,48 @@ void main() {
     });
   });
 
+  group('detay sheet\'i (D5)', () {
+    testWidgets(
+      'karta dokununca açılır: adres, saatler, web; adres haritayı açar',
+      (tester) async {
+        await _launch(tester);
+        await _openYourTurnRoom(tester);
+        await _settle(tester, 300);
+        await tester.tap(find.text('Trattoria Lume'));
+        await _settle(tester);
+        expect(find.text('Adres'), findsOneWidget);
+        expect(find.text('Moda Cd. 112, Kadıköy'), findsOneWidget);
+        expect(find.text('Saatler'), findsOneWidget);
+        expect(find.text('Menü ve web sitesi'), findsOneWidget);
+        await tester.tap(find.text('Adres'));
+        await tester.pump();
+        expect(_opened.single, startsWith('https://maps.apple.com/'));
+        expect(_opened.single, contains('Trattoria'));
+      },
+    );
+
+    testWidgets('sheet içinden karar: sheet kapanır, deste ilerler', (
+      tester,
+    ) async {
+      await _launch(tester);
+      await _openYourTurnRoom(tester);
+      await _settle(tester, 300);
+      expect(find.text('1/6'), findsOneWidget);
+      await tester.tap(find.text('Trattoria Lume'));
+      await _settle(tester);
+      // Sheet içindeki aksiyon çubuğu: Olur (son buton).
+      final sheetButtons = find.descendant(
+        of: find.byType(DeckActionBar).last,
+        matching: find.byType(AppPressable),
+      );
+      await tester.tap(sheetButtons.last);
+      await _settle(tester, 600);
+      await _settle(tester, 600);
+      expect(find.text('Adres'), findsNothing);
+      expect(find.text('2/6'), findsOneWidget);
+    });
+  });
+
   group('eşitlik: son söz', () {
     Future<void> toVoted(WidgetTester tester) async {
       await _launch(tester);

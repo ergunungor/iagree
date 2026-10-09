@@ -1470,6 +1470,54 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Karar kaydedilemedi. Tekrar dene.'**
   String get tieFailed;
+
+  /// Detay sheet satırı.
+  ///
+  /// In tr, this message translates to:
+  /// **'Adres'**
+  String get detailAddress;
+
+  /// Adres satırı VoiceOver ipucu.
+  ///
+  /// In tr, this message translates to:
+  /// **'Haritada aç'**
+  String get detailOpenMap;
+
+  /// Detay sheet satırı.
+  ///
+  /// In tr, this message translates to:
+  /// **'Saatler'**
+  String get detailHours;
+
+  /// Detay sheet satırı.
+  ///
+  /// In tr, this message translates to:
+  /// **'Menü ve web sitesi'**
+  String get detailWebsite;
+
+  /// Film özeti başlığı.
+  ///
+  /// In tr, this message translates to:
+  /// **'Özet'**
+  String get detailSynopsis;
+
+  /// Film oyuncular başlığı.
+  ///
+  /// In tr, this message translates to:
+  /// **'Oyuncular'**
+  String get detailCast;
+
+  /// Platform satırı.
+  ///
+  /// In tr, this message translates to:
+  /// **'Nereden izlenir'**
+  String get detailPlatform;
+
+  /// Film süresi.
+  ///
+  /// In tr, this message translates to:
+  /// **'{minutes} dk'**
+  String detailRuntime(int minutes);
 }
 
 class _AppLocalizationsDelegate
