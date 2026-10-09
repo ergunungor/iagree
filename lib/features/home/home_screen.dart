@@ -20,6 +20,7 @@ import '../../core/design_system/tokens/app_radius.dart';
 import '../../core/design_system/tokens/app_spacing.dart';
 import '../../core/design_system/tokens/app_typography.dart';
 import '../../core/domain/room.dart';
+import '../../core/domain/user_profile.dart';
 import '../../l10n/app_localizations.dart';
 
 /// C1 · Odalarım (SCREENS C1): hero kart (en acil oda) → diğer odalar → geçmiş kararlar.
@@ -99,7 +100,18 @@ class _Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final user = AppScope.of(context).session.user;
+    final session = AppScope.of(context).session;
+    return ListenableBuilder(
+      listenable: session,
+      builder: (context, _) => _content(context, l10n, session.user),
+    );
+  }
+
+  Widget _content(
+    BuildContext context,
+    AppLocalizations l10n,
+    UserProfile? user,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

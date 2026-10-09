@@ -736,4 +736,34 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get accountPrivacyPolicy => 'Privacy policy';
+
+  @override
+  String get editTitle => 'Edit profile';
+
+  @override
+  String get editSave => 'Save';
+
+  @override
+  String get editEmailHelper => 'Your email address can’t be changed.';
+
+  @override
+  String get editChangePhoto => 'Change photo';
+
+  @override
+  String get editRemovePhoto => 'Remove photo';
+
+  @override
+  String get editSaveFailed => 'Couldn’t save. Try again.';
+
+  @override
+  String get editDiscardTitle => 'Discard changes?';
+
+  @override
+  String get editDiscardMessage => 'Changes you haven’t saved will be lost.';
+
+  @override
+  String get editDiscardConfirm => 'Discard changes';
+
+  @override
+  String get editKeepEditing => 'Keep editing';
 }

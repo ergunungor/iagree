@@ -22,7 +22,7 @@ class MockAuthRepository implements AuthRepository {
 
   @override
   Future<UserProfile?> restore() async =>
-      _user ?? (startSignedIn ? known : null);
+      _user ??= startSignedIn ? known : null;
 
   @override
   Future<void> sendCode(String email) async {}
@@ -58,6 +58,23 @@ class MockAuthRepository implements AuthRepository {
     );
     _user = user;
     return user;
+  }
+
+  @override
+  Future<UserProfile> updateProfile({
+    required String name,
+    String? photoPath,
+    bool removePhoto = false,
+  }) async {
+    final current = _user!;
+    final updated = UserProfile(
+      id: current.id,
+      name: name.trim(),
+      email: current.email,
+      photoPath: removePhoto ? null : (photoPath ?? current.photoPath),
+    );
+    _user = updated;
+    return updated;
   }
 
   @override

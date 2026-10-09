@@ -48,6 +48,13 @@ abstract interface class AuthRepository {
     String? photoPath,
   });
 
+  /// Adı ve fotoğrafı günceller; [photoPath] null ve [removePhoto] true ise fotoğraf kalkar.
+  Future<UserProfile> updateProfile({
+    required String name,
+    String? photoPath,
+    bool removePhoto = false,
+  });
+
   Future<void> signOut();
 
   /// Hesabı ve ona bağlı tüm veriyi siler (App Store zorunluluğu). Oturum kapanır.

@@ -198,5 +198,15 @@
   "waitingNotifyOn": "Notifications are on",
   "linkOpenFailed": "Couldn’t open the link",
   "accountTerms": "Terms of use",
-  "accountPrivacyPolicy": "Privacy policy"
+  "accountPrivacyPolicy": "Privacy policy",
+  "editTitle": "Edit profile",
+  "editSave": "Save",
+  "editEmailHelper": "Your email address can’t be changed.",
+  "editChangePhoto": "Change photo",
+  "editRemovePhoto": "Remove photo",
+  "editSaveFailed": "Couldn’t save. Try again.",
+  "editDiscardTitle": "Discard changes?",
+  "editDiscardMessage": "Changes you haven’t saved will be lost.",
+  "editDiscardConfirm": "Discard changes",
+  "editKeepEditing": "Keep editing"
 }

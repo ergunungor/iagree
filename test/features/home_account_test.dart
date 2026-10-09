@@ -7,10 +7,13 @@ import 'package:iagree/app/settings_controller.dart';
 import 'package:iagree/core/data/mock/mock_auth_repository.dart';
 import 'package:iagree/core/data/mock/mock_rooms_repository.dart';
 import 'package:iagree/core/design_system/components/buttons/app_button.dart';
+import 'package:iagree/core/design_system/components/buttons/app_icon_button.dart';
 import 'package:iagree/core/design_system/components/feedback/app_empty_state.dart';
 import 'package:iagree/core/design_system/components/feedback/app_skeleton.dart';
 import 'package:iagree/core/design_system/components/people/app_avatar.dart';
 import 'package:iagree/features/account/account_screen.dart';
+import 'package:iagree/features/account/edit_profile_screen.dart';
+import 'package:iagree/core/design_system/foundations/app_icons.dart';
 import 'package:iagree/features/auth/welcome_screen.dart';
 import 'package:iagree/features/decision/deck_screen.dart';
 import 'package:iagree/features/home/home_screen.dart';
@@ -18,6 +21,12 @@ import 'package:iagree/features/home/home_screen.dart';
 late MockRoomsRepository _repo;
 late SettingsController _settings;
 final List<Uri> _opened = [];
+String? _picked;
+
+class _Photos implements PhotoPicker {
+  @override
+  Future<String?> pick() async => _picked;
+}
 
 class _Opener implements UrlOpener {
   @override
@@ -49,6 +58,7 @@ Future<void> _launch(
   );
   _settings = SettingsController();
   _opened.clear();
+  _picked = null;
   await tester.pumpWidget(
     MediaQuery(
       data: MediaQueryData.fromView(tester.view)
@@ -58,6 +68,7 @@ Future<void> _launch(
         rooms: RoomsController(repository: _repo),
         settings: _settings,
         opener: _Opener(),
+        photos: _Photos(),
       ),
     ),
   );
@@ -224,6 +235,114 @@ void main() {
       }
     }
   }
+
+  group('Profili düzenle', () {
+    Future<void> openEdit(WidgetTester tester) async {
+      await _launch(tester);
+      await _openAccount(tester);
+      await tester.tap(find.text('Düzenle'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 700));
+    }
+
+    Finder save() => find.widgetWithText(AppButton, 'Kaydet');
+
+    testWidgets('açılır: isim dolu, e-posta salt okunur, Kaydet pasif', (
+      tester,
+    ) async {
+      await openEdit(tester);
+      expect(find.byType(EditProfileScreen), findsOneWidget);
+      expect(find.text('Profili düzenle'), findsOneWidget);
+      expect(find.text('E-posta adresi değiştirilemez.'), findsOneWidget);
+      expect(tester.widget<AppButton>(save()).onPressed, isNull);
+      expect(
+        tester.widget<TextField>(find.byType(TextField).first).controller!.text,
+        'Ayşe Yılmaz',
+      );
+      expect(
+        tester.widgetList<TextField>(find.byType(TextField)).last.enabled,
+        isFalse,
+      );
+    });
+
+    testWidgets('isim değişince Kaydet etkin; kaydedince Profil güncellenir', (
+      tester,
+    ) async {
+      await openEdit(tester);
+      await tester.enterText(find.byType(TextField).first, 'Ayşe Demir');
+      await tester.pump();
+      expect(tester.widget<AppButton>(save()).onPressed, isNotNull);
+      await tester.tap(save());
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 700));
+      await tester.pump(const Duration(milliseconds: 700));
+      expect(find.byType(EditProfileScreen), findsNothing);
+      expect(find.text('Ayşe Demir'), findsOneWidget);
+    });
+
+    testWidgets('boş isim: hata, kaydedilmez', (tester) async {
+      await openEdit(tester);
+      await tester.enterText(find.byType(TextField).first, '  ');
+      await tester.pump();
+      await tester.tap(save());
+      await tester.pump();
+      expect(find.text('Adını yaz.'), findsOneWidget);
+      expect(find.byType(EditProfileScreen), findsOneWidget);
+    });
+
+    testWidgets('fotoğraf seç, sonra kaldır', (tester) async {
+      await openEdit(tester);
+      _picked = '/tmp/ornek.png';
+      await tester.tap(find.text('Fotoğraf ekle'));
+      await tester.pump();
+      expect(find.text('Fotoğrafı değiştir'), findsOneWidget);
+      expect(find.text('Fotoğrafı kaldır'), findsOneWidget);
+      expect(tester.widget<AppButton>(save()).onPressed, isNotNull);
+      await tester.tap(find.text('Fotoğrafı kaldır'));
+      await tester.pump();
+      expect(find.text('Fotoğraf ekle'), findsOneWidget);
+      expect(tester.widget<AppButton>(save()).onPressed, isNull);
+    });
+
+    testWidgets('değişiklik yokken ✕ doğrudan kapatır', (tester) async {
+      await openEdit(tester);
+      await tester.tap(find.widgetWithIcon(AppIconButton, AppIcons.close));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 700));
+      expect(find.byType(EditProfileScreen), findsNothing);
+    });
+
+    testWidgets('değişiklik varken ✕ alert sorar; Düzenlemeye devam', (
+      tester,
+    ) async {
+      await openEdit(tester);
+      await tester.enterText(find.byType(TextField).first, 'Başka');
+      await tester.pump();
+      await tester.tap(find.widgetWithIcon(AppIconButton, AppIcons.close));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
+      expect(find.text('Değişiklikler silinsin mi?'), findsOneWidget);
+      await tester.tap(find.text('Düzenlemeye devam'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
+      expect(find.byType(EditProfileScreen), findsOneWidget);
+    });
+
+    testWidgets('değişiklikleri sil: kapanır, isim değişmez', (tester) async {
+      await openEdit(tester);
+      await tester.enterText(find.byType(TextField).first, 'Başka');
+      await tester.pump();
+      await tester.tap(find.widgetWithIcon(AppIconButton, AppIcons.close));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
+      await tester.tap(find.text('Değişiklikleri sil'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 700));
+      await tester.pump(const Duration(milliseconds: 700));
+      expect(find.byType(EditProfileScreen), findsNothing);
+      expect(find.text('Ayşe Yılmaz'), findsOneWidget);
+    });
+  });
 
   group('Profil bağlantıları', () {
     testWidgets('Gizlilik ve koşullar: sheet, seçilen adres açılır', (

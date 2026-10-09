@@ -1188,5 +1188,45 @@
   "accountPrivacyPolicy": "Gizlilik politikası",
   "@accountPrivacyPolicy": {
     "description": "Gizlilik sheet satırı."
+  },
+  "editTitle": "Profili düzenle",
+  "@editTitle": {
+    "description": "Profil düzenleme başlığı."
+  },
+  "editSave": "Kaydet",
+  "@editSave": {
+    "description": "Profil düzenleme Primary butonu."
+  },
+  "editEmailHelper": "E-posta adresi değiştirilemez.",
+  "@editEmailHelper": {
+    "description": "Salt okunur e-posta alanı açıklaması."
+  },
+  "editChangePhoto": "Fotoğrafı değiştir",
+  "@editChangePhoto": {
+    "description": "Fotoğraf varken avatar altı etiketi."
+  },
+  "editRemovePhoto": "Fotoğrafı kaldır",
+  "@editRemovePhoto": {
+    "description": "Fotoğrafı kaldırma butonu."
+  },
+  "editSaveFailed": "Kaydedilemedi. Tekrar dene.",
+  "@editSaveFailed": {
+    "description": "Profil kaydetme hatası."
+  },
+  "editDiscardTitle": "Değişiklikler silinsin mi?",
+  "@editDiscardTitle": {
+    "description": "Kaydedilmemiş değişiklik alert başlığı."
+  },
+  "editDiscardMessage": "Kaydetmediğin değişiklikler kaybolacak.",
+  "@editDiscardMessage": {
+    "description": "Alert açıklaması."
+  },
+  "editDiscardConfirm": "Değişiklikleri sil",
+  "@editDiscardConfirm": {
+    "description": "Alert onay butonu."
+  },
+  "editKeepEditing": "Düzenlemeye devam",
+  "@editKeepEditing": {
+    "description": "Alert iptal butonu."
   }
 }

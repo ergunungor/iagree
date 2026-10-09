@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../app/app_info.dart';
+import '../../app/app_router.dart';
 import '../../app/user_image.dart';
 import '../../app/app_links.dart';
 import '../../app/link_actions.dart';
@@ -106,10 +107,7 @@ class AccountScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final c = context.colors;
-    final text = context.text;
     final scope = AppScope.of(context);
-    final user = scope.session.user;
 
     final themeLabels = {
       ThemeMode.system: l10n.accountThemeSystem,
@@ -117,6 +115,21 @@ class AccountScreen extends StatelessWidget {
       ThemeMode.dark: l10n.accountThemeDark,
     };
 
+    return ListenableBuilder(
+      listenable: scope.session,
+      builder: (context, _) => _body(context, scope, themeLabels),
+    );
+  }
+
+  Widget _body(
+    BuildContext context,
+    AppScope scope,
+    Map<ThemeMode, String> themeLabels,
+  ) {
+    final l10n = AppLocalizations.of(context);
+    final c = context.colors;
+    final text = context.text;
+    final user = scope.session.user;
     return Scaffold(
       backgroundColor: c.canvas,
       body: SafeArea(
@@ -136,7 +149,7 @@ class AccountScreen extends StatelessWidget {
                     label: l10n.accountEdit,
                     size: AppButtonSize.small,
                     fullWidth: false,
-                    onPressed: () => _soon(context),
+                    onPressed: () => AppRoutes.pushEditProfile(context),
                   ),
                 ],
               ),

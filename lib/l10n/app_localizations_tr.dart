@@ -734,4 +734,34 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get accountPrivacyPolicy => 'Gizlilik politikası';
+
+  @override
+  String get editTitle => 'Profili düzenle';
+
+  @override
+  String get editSave => 'Kaydet';
+
+  @override
+  String get editEmailHelper => 'E-posta adresi değiştirilemez.';
+
+  @override
+  String get editChangePhoto => 'Fotoğrafı değiştir';
+
+  @override
+  String get editRemovePhoto => 'Fotoğrafı kaldır';
+
+  @override
+  String get editSaveFailed => 'Kaydedilemedi. Tekrar dene.';
+
+  @override
+  String get editDiscardTitle => 'Değişiklikler silinsin mi?';
+
+  @override
+  String get editDiscardMessage => 'Kaydetmediğin değişiklikler kaybolacak.';
+
+  @override
+  String get editDiscardConfirm => 'Değişiklikleri sil';
+
+  @override
+  String get editKeepEditing => 'Düzenlemeye devam';
 }

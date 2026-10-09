@@ -1296,6 +1296,66 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Gizlilik politikası'**
   String get accountPrivacyPolicy;
+
+  /// Profil düzenleme başlığı.
+  ///
+  /// In tr, this message translates to:
+  /// **'Profili düzenle'**
+  String get editTitle;
+
+  /// Profil düzenleme Primary butonu.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kaydet'**
+  String get editSave;
+
+  /// Salt okunur e-posta alanı açıklaması.
+  ///
+  /// In tr, this message translates to:
+  /// **'E-posta adresi değiştirilemez.'**
+  String get editEmailHelper;
+
+  /// Fotoğraf varken avatar altı etiketi.
+  ///
+  /// In tr, this message translates to:
+  /// **'Fotoğrafı değiştir'**
+  String get editChangePhoto;
+
+  /// Fotoğrafı kaldırma butonu.
+  ///
+  /// In tr, this message translates to:
+  /// **'Fotoğrafı kaldır'**
+  String get editRemovePhoto;
+
+  /// Profil kaydetme hatası.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kaydedilemedi. Tekrar dene.'**
+  String get editSaveFailed;
+
+  /// Kaydedilmemiş değişiklik alert başlığı.
+  ///
+  /// In tr, this message translates to:
+  /// **'Değişiklikler silinsin mi?'**
+  String get editDiscardTitle;
+
+  /// Alert açıklaması.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kaydetmediğin değişiklikler kaybolacak.'**
+  String get editDiscardMessage;
+
+  /// Alert onay butonu.
+  ///
+  /// In tr, this message translates to:
+  /// **'Değişiklikleri sil'**
+  String get editDiscardConfirm;
+
+  /// Alert iptal butonu.
+  ///
+  /// In tr, this message translates to:
+  /// **'Düzenlemeye devam'**
+  String get editKeepEditing;
 }
 
 class _AppLocalizationsDelegate

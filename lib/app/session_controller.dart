@@ -36,6 +36,20 @@ class SessionController extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Profili günceller; ekranlar (avatar, isim) kendiliğinden tazelenir.
+  Future<void> updateProfile({
+    required String name,
+    String? photoPath,
+    bool removePhoto = false,
+  }) async {
+    _user = await auth.updateProfile(
+      name: name,
+      photoPath: photoPath,
+      removePhoto: removePhoto,
+    );
+    notifyListeners();
+  }
+
   /// Hesabı siler; sonuç çıkış yapmakla aynıdır (karşılamaya döner).
   Future<void> deleteAccount() async {
     await auth.deleteAccount();

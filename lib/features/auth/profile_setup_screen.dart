@@ -7,15 +7,11 @@ import '../../app/app_scope.dart';
 import '../../core/data/auth_repository.dart';
 import '../../core/design_system/components/buttons/app_button.dart';
 import '../../core/design_system/components/inputs/app_text_field.dart';
-import '../../core/design_system/components/people/app_avatar.dart';
 import '../../core/design_system/foundations/app_haptics.dart';
-import '../../core/design_system/foundations/app_icons.dart';
-import '../../core/design_system/foundations/app_pressable.dart';
-import '../../core/design_system/foundations/context_extensions.dart';
-import '../../core/design_system/tokens/app_radius.dart';
 import '../../core/design_system/tokens/app_spacing.dart';
 import '../../l10n/app_localizations.dart';
 import 'widgets/auth_page.dart';
+import 'widgets/profile_photo_field.dart';
 
 /// A5 · Profil kurulumu (SCREENS A5): yalnızca yeni kullanıcı. İsim Apple'dan geldiyse dolu
 /// ve altında not; fotoğraf isteğe bağlı.
@@ -34,11 +30,6 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
   );
   bool _missing = false;
   String? _photoPath;
-
-  /// Rozet: 36'lık daire, avatarın sağ altında.
-  static const double _badge = 36;
-  static const double _badgeOffset = AppSpacing.xxs;
-  static const double _badgeRing = 3;
 
   @override
   void dispose() {
@@ -71,65 +62,12 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final c = context.colors;
-    final text = context.text;
-
-    // Avatar, "Fotoğraf ekle" ve "İsteğe bağlı" tek dokunma hedefidir.
-    final photo = Center(
-      child: AppPressable(
-        onPressed: _pickPhoto,
-        semanticLabel: l10n.authAddPhoto,
-        focusShape: AppRadius.border(AppRadius.lg),
-        scaleOnPress: false,
-        builder: (context, pressed) => Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Stack(
-              clipBehavior: Clip.none,
-              children: [
-                ListenableBuilder(
-                  listenable: _name,
-                  builder: (context, _) => AppAvatar(
-                    userId: widget.pending.email,
-                    name: _name.text,
-                    size: AppAvatarSize.xl,
-                    image: _photoPath == null
-                        ? null
-                        : FileImage(File(_photoPath!)),
-                  ),
-                ),
-                Positioned(
-                  right: -_badgeOffset,
-                  bottom: -_badgeOffset,
-                  child: DecoratedBox(
-                    decoration: AppRadius.circle(
-                      color: c.surfaceMuted,
-                      side: BorderSide(color: c.canvas, width: _badgeRing),
-                    ),
-                    child: SizedBox.square(
-                      dimension: _badge,
-                      child: Icon(
-                        AppIcons.camera,
-                        size: AppIconSize.s20,
-                        color: c.textPrimary,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: AppSpacing.xs),
-            Text(
-              l10n.authAddPhoto,
-              style: text.buttonSmall.copyWith(color: c.brand),
-            ),
-            Text(
-              l10n.authOptional,
-              style: text.caption.copyWith(color: c.textTertiary),
-            ),
-          ],
-        ),
-      ),
+    final photo = ProfilePhotoField(
+      userId: widget.pending.email,
+      nameController: _name,
+      image: _photoPath == null ? null : FileImage(File(_photoPath!)),
+      hint: l10n.authOptional,
+      onPressed: _pickPhoto,
     );
 
     final field = AppTextField(
