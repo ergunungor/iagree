@@ -179,5 +179,21 @@
   "roomDelete": "Delete room",
   "roomDeleteTitle": "Delete this room?",
   "roomDeleteMessage": "The room and everyone’s picks in it will be deleted. This can’t be undone.",
-  "roomDeleteConfirm": "Delete room"
+  "roomDeleteConfirm": "Delete room",
+  "createUseMyLocation": "Use my location",
+  "createMyLocation": "My location",
+  "createLocationDenied": "Location access was denied. You can pick a district.",
+  "deckSubmitFailed": "Couldn’t send your picks. Try again.",
+  "waitingReady": "You’re all set",
+  "waitingOthers": "{count} more picking",
+  "waitingBack": "Back to room",
+  "resultsTitle": "Results",
+  "resultsHeading": "Which one?",
+  "resultsVote": "Cast my vote",
+  "resultsVoteFailed": "Couldn’t send your vote. Try again.",
+  "resultsWaiting": "{count} more to vote",
+  "resultsNudge": "Nudge",
+  "resultsNudged": "Reminder sent",
+  "resultsYou": "You",
+  "decisionShareText": "{place} · {when}. We decided with iAgree."
 }

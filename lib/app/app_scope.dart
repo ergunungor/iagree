@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 import '../core/data/auth_repository.dart';
+import 'platform_services.dart';
 import 'rooms_controller.dart';
 import 'session_controller.dart';
 import 'settings_controller.dart';
@@ -15,6 +16,9 @@ class AppScope extends InheritedWidget {
     required this.auth,
     required this.rooms,
     required this.settings,
+    required this.sharer,
+    required this.location,
+    required this.opener,
     required super.child,
   });
 
@@ -22,6 +26,9 @@ class AppScope extends InheritedWidget {
   final AuthRepository auth;
   final RoomsController rooms;
   final SettingsController settings;
+  final LinkSharer sharer;
+  final LocationService location;
+  final UrlOpener opener;
 
   static AppScope of(BuildContext context) {
     final scope = context.getInheritedWidgetOfExactType<AppScope>();

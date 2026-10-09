@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../app/app_router.dart';
 import '../../app/app_scope.dart';
 import '../../core/data/mock/mock_rooms_repository.dart';
 import '../../core/design_system/components/buttons/app_button.dart';
@@ -96,11 +97,9 @@ class _RoomView extends StatelessWidget {
 
   String get _link => '$_linkHost${room.inviteSlug}';
 
-  void _soon(BuildContext context) =>
-      AppToast.show(context, message: AppLocalizations.of(context).comingSoon);
+  Future<void> _share(BuildContext context) =>
+      AppScope.of(context).sharer.share('https://$_link');
 
-  /// Gerçek paylaşım sayfası (`share_plus`) paket onayı bekliyor; o zamana kadar link panoya
-  /// kopyalanır.
   Future<void> _copy(BuildContext context) async {
     final l10n = AppLocalizations.of(context);
     await Clipboard.setData(ClipboardData(text: _link));
@@ -283,25 +282,25 @@ class _RoomView extends StatelessWidget {
                     ? [
                         AppButton.primary(
                           label: l10n.roomStartPicking,
-                          onPressed: () => _soon(context),
+                          onPressed: () => AppRoutes.pushDeck(context, room.id),
                         ),
                         const SizedBox(height: AppSpacing.xxs),
                         AppButton.tertiary(
                           label: l10n.roomShare,
                           icon: AppIcons.share,
-                          onPressed: () => _copy(context),
+                          onPressed: () => _share(context),
                         ),
                       ]
                     : [
                         AppButton.primary(
                           label: l10n.roomShare,
                           icon: AppIcons.share,
-                          onPressed: () => _copy(context),
+                          onPressed: () => _share(context),
                         ),
                         const SizedBox(height: AppSpacing.xxs),
                         AppButton.tertiary(
                           label: l10n.roomPickFirst,
-                          onPressed: () => _soon(context),
+                          onPressed: () => AppRoutes.pushDeck(context, room.id),
                         ),
                       ],
               ),

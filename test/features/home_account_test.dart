@@ -11,6 +11,7 @@ import 'package:iagree/core/design_system/components/feedback/app_skeleton.dart'
 import 'package:iagree/core/design_system/components/people/app_avatar.dart';
 import 'package:iagree/features/account/account_screen.dart';
 import 'package:iagree/features/auth/welcome_screen.dart';
+import 'package:iagree/features/decision/deck_screen.dart';
 import 'package:iagree/features/home/home_screen.dart';
 
 late MockRoomsRepository _repo;
@@ -139,15 +140,12 @@ void main() {
       handle.dispose();
     });
 
-    testWidgets('satıra dokunmak (oda ekranı yok) bilgi toast\'ı gösterir', (
-      tester,
-    ) async {
+    testWidgets('sıra sende odasına dokunmak desteyi açar', (tester) async {
       await _launch(tester);
       await tester.tap(find.text('Doğum günü planı'));
       await tester.pump();
-      await tester.pump(const Duration(milliseconds: 400));
-      expect(find.text('Bu ekran yakında eklenecek'), findsOneWidget);
-      await tester.pump(const Duration(seconds: 4));
+      await tester.pump(const Duration(milliseconds: 700));
+      expect(find.byType(DeckScreen), findsOneWidget);
     });
   });
 

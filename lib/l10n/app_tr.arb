@@ -1094,5 +1094,87 @@
   "roomDeleteConfirm": "Odayı sil",
   "@roomDeleteConfirm": {
     "description": "Oda silme alert onay butonu."
+  },
+  "createUseMyLocation": "Konumumu kullan",
+  "@createUseMyLocation": {
+    "description": "Semt sheet'inde ilk seçenek."
+  },
+  "createMyLocation": "Konumum",
+  "@createMyLocation": {
+    "description": "Konum seçilince alanda görünen ad."
+  },
+  "createLocationDenied": "Konum izni verilmedi. Semt seçebilirsin.",
+  "@createLocationDenied": {
+    "description": "İzin reddedilince toast."
+  },
+  "deckSubmitFailed": "Seçimlerin gönderilemedi. Tekrar dene.",
+  "@deckSubmitFailed": {
+    "description": "Deste bitince gönderme hatası."
+  },
+  "waitingReady": "Sen hazırsın",
+  "@waitingReady": {
+    "description": "Bekleme başlığı."
+  },
+  "waitingOthers": "{count} kişi daha seçiyor",
+  "@waitingOthers": {
+    "description": "Bekleme açıklaması.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "waitingBack": "Odaya dön",
+  "@waitingBack": {
+    "description": "Bekleme ekranı Tertiary butonu."
+  },
+  "resultsTitle": "Sonuçlar",
+  "@resultsTitle": {
+    "description": "Sonuçlar nav başlığı."
+  },
+  "resultsHeading": "Hangisi olsun?",
+  "@resultsHeading": {
+    "description": "Sonuçlar ekran başlığı."
+  },
+  "resultsVote": "Oyumu ver",
+  "@resultsVote": {
+    "description": "Sonuçlar Primary butonu."
+  },
+  "resultsVoteFailed": "Oyun gönderilemedi. Tekrar dene.",
+  "@resultsVoteFailed": {
+    "description": "Oy gönderme hatası."
+  },
+  "resultsWaiting": "{count} kişi daha oy verecek",
+  "@resultsWaiting": {
+    "description": "Oy sonrası bekleyen sayısı.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "resultsNudge": "Dürt",
+  "@resultsNudge": {
+    "description": "Bekleyenleri dürtme butonu."
+  },
+  "resultsNudged": "Hatırlatma gönderildi",
+  "@resultsNudged": {
+    "description": "Dürtme toast."
+  },
+  "resultsYou": "Sen",
+  "@resultsYou": {
+    "description": "Oy verenler arasında kullanıcı."
+  },
+  "decisionShareText": "{place} · {when}. iAgree ile karar verdik.",
+  "@decisionShareText": {
+    "description": "Karar paylaşım metni.",
+    "placeholders": {
+      "place": {
+        "type": "String"
+      },
+      "when": {
+        "type": "String"
+      }
+    }
   }
 }

@@ -671,4 +671,59 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get roomDeleteConfirm => 'Delete room';
+
+  @override
+  String get createUseMyLocation => 'Use my location';
+
+  @override
+  String get createMyLocation => 'My location';
+
+  @override
+  String get createLocationDenied =>
+      'Location access was denied. You can pick a district.';
+
+  @override
+  String get deckSubmitFailed => 'Couldn’t send your picks. Try again.';
+
+  @override
+  String get waitingReady => 'You’re all set';
+
+  @override
+  String waitingOthers(int count) {
+    return '$count more picking';
+  }
+
+  @override
+  String get waitingBack => 'Back to room';
+
+  @override
+  String get resultsTitle => 'Results';
+
+  @override
+  String get resultsHeading => 'Which one?';
+
+  @override
+  String get resultsVote => 'Cast my vote';
+
+  @override
+  String get resultsVoteFailed => 'Couldn’t send your vote. Try again.';
+
+  @override
+  String resultsWaiting(int count) {
+    return '$count more to vote';
+  }
+
+  @override
+  String get resultsNudge => 'Nudge';
+
+  @override
+  String get resultsNudged => 'Reminder sent';
+
+  @override
+  String get resultsYou => 'You';
+
+  @override
+  String decisionShareText(String place, String when) {
+    return '$place · $when. We decided with iAgree.';
+  }
 }

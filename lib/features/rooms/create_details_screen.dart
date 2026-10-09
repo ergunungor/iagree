@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 
 import '../../app/app_router.dart';
 import '../../app/app_scope.dart';
+import '../../app/platform_services.dart';
 import '../../core/design_system/components/buttons/app_button.dart';
 import '../../core/design_system/components/feedback/app_sheet.dart';
 import '../../core/design_system/components/feedback/app_toast.dart';
@@ -38,6 +39,9 @@ class _CreateDetailsScreenState extends State<CreateDetailsScreen> {
   static const int _budgetLevels = 3;
   static const String _lira = '₺';
 
+  /// "Konumum" seçeneğinin değeri; gerçek bir semt adıyla çakışmaz.
+  static const String _myLocation = '\u0000my-location';
+
   final TextEditingController _name = TextEditingController();
   late RoomWhen _when = widget.args.when;
   DateTime? _date;
@@ -66,6 +70,27 @@ class _CreateDetailsScreenState extends State<CreateDetailsScreen> {
     _name.dispose();
     super.dispose();
   }
+
+  /// "Konumum": izin yalnızca burada istenir; reddedilirse semt elle seçilir.
+  Future<void> _onDistrict(String value) async {
+    if (value != _myLocation) {
+      setState(() => _district = value);
+      return;
+    }
+    final l10n = AppLocalizations.of(context);
+    final scope = AppScope.of(context);
+    final access = await scope.location.request();
+    if (!mounted) return;
+    if (access == LocationAccess.granted) {
+      setState(() => _district = _myLocation);
+    } else {
+      AppToast.show(context, message: l10n.createLocationDenied);
+    }
+  }
+
+  String _placeName() => _district == _myLocation
+      ? AppLocalizations.of(context).createMyLocation
+      : _district!;
 
   String _whenLabel() {
     final l10n = AppLocalizations.of(context);
@@ -143,7 +168,7 @@ class _CreateDetailsScreenState extends State<CreateDetailsScreen> {
         _category.label,
         whenLabel,
         if (!_isFilm && _budgets.isNotEmpty) _budgetText(),
-        if (!_isFilm) l10n.createPlaceTag(_district!, _km.round()),
+        if (!_isFilm) l10n.createPlaceTag(_placeName(), _km.round()),
         if (_isFilm)
           for (final p in widget.args.catalog.platforms)
             if (_platforms.contains(p)) p,
@@ -215,10 +240,14 @@ class _CreateDetailsScreenState extends State<CreateDetailsScreen> {
               hintText: l10n.createWherePlaceholder,
               value: _district,
               options: [
+                AppSelectionOption(
+                  value: _myLocation,
+                  label: l10n.createMyLocation,
+                ),
                 for (final d in catalog.districts)
                   AppSelectionOption(value: d, label: d),
               ],
-              onChanged: (d) => setState(() => _district = d),
+              onChanged: _onDistrict,
             ),
             if (_submitted && _district == null)
               _FieldError(l10n.createLocationRequired),

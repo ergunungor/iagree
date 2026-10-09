@@ -1,8 +1,11 @@
 import 'package:flutter/foundation.dart';
 
+import 'candidate.dart';
+import 'room_catalog.dart';
+
 /// Bir odanın kullanıcı açısından durumu. Sıra, Odalarım'daki öncelik sırasıdır (SCREENS C1):
 /// sonuçlar hazır (oy ver) → sıra sende (seç) → başkaları bekleniyor.
-enum RoomStage { resultsReady, yourTurn, waiting }
+enum RoomStage { resultsReady, yourTurn, waiting, decided }
 
 /// Sonuç listesinde öne çıkan mekan (hero kartın önizlemesi).
 @immutable
@@ -40,6 +43,8 @@ class Room {
     this.frameTags = const [],
     this.members = const [],
     this.inviteSlug = '',
+    this.decision,
+    this.kind = RoomKind.place,
   });
 
   final String id;
@@ -65,6 +70,12 @@ class Room {
   /// Davet linkinin son parçası (`iagree.app/r/<slug>`).
   final String inviteSlug;
 
+  /// Mekan ya da film/dizi odası (deste kartları buna göre).
+  final RoomKind kind;
+
+  /// Karar verildiyse sonuç ([RoomStage.decided]).
+  final Decision? decision;
+
   /// Henüz kimse katılmadı: oda ekranı davet durumunda açılır.
   bool get isInviting => participantCount <= 1;
 
@@ -72,18 +83,23 @@ class Room {
     String? name,
     int? participantCount,
     List<RoomMember>? members,
+    RoomStage? stage,
+    int? readyCount,
+    Decision? decision,
   }) => Room(
     id: id,
     name: name ?? this.name,
     categoryLabel: categoryLabel,
     whenLabel: whenLabel,
-    stage: stage,
+    stage: stage ?? this.stage,
     participantCount: participantCount ?? this.participantCount,
-    readyCount: readyCount,
+    readyCount: readyCount ?? this.readyCount,
     previews: previews,
     frameTags: frameTags,
     members: members ?? this.members,
     inviteSlug: inviteSlug,
+    decision: decision ?? this.decision,
+    kind: kind,
   );
 }
 
@@ -104,7 +120,11 @@ class PastDecision {
     required this.title,
     required this.dateLabel,
     this.tintIndex = 0,
+    this.roomId,
   });
+
+  /// Bu karar bir odaya aitse odanın kimliği (dokununca karar anı açılır).
+  final String? roomId;
 
   final String id;
   final String title;

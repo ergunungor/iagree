@@ -1182,6 +1182,102 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Odayı sil'**
   String get roomDeleteConfirm;
+
+  /// Semt sheet'inde ilk seçenek.
+  ///
+  /// In tr, this message translates to:
+  /// **'Konumumu kullan'**
+  String get createUseMyLocation;
+
+  /// Konum seçilince alanda görünen ad.
+  ///
+  /// In tr, this message translates to:
+  /// **'Konumum'**
+  String get createMyLocation;
+
+  /// İzin reddedilince toast.
+  ///
+  /// In tr, this message translates to:
+  /// **'Konum izni verilmedi. Semt seçebilirsin.'**
+  String get createLocationDenied;
+
+  /// Deste bitince gönderme hatası.
+  ///
+  /// In tr, this message translates to:
+  /// **'Seçimlerin gönderilemedi. Tekrar dene.'**
+  String get deckSubmitFailed;
+
+  /// Bekleme başlığı.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sen hazırsın'**
+  String get waitingReady;
+
+  /// Bekleme açıklaması.
+  ///
+  /// In tr, this message translates to:
+  /// **'{count} kişi daha seçiyor'**
+  String waitingOthers(int count);
+
+  /// Bekleme ekranı Tertiary butonu.
+  ///
+  /// In tr, this message translates to:
+  /// **'Odaya dön'**
+  String get waitingBack;
+
+  /// Sonuçlar nav başlığı.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sonuçlar'**
+  String get resultsTitle;
+
+  /// Sonuçlar ekran başlığı.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hangisi olsun?'**
+  String get resultsHeading;
+
+  /// Sonuçlar Primary butonu.
+  ///
+  /// In tr, this message translates to:
+  /// **'Oyumu ver'**
+  String get resultsVote;
+
+  /// Oy gönderme hatası.
+  ///
+  /// In tr, this message translates to:
+  /// **'Oyun gönderilemedi. Tekrar dene.'**
+  String get resultsVoteFailed;
+
+  /// Oy sonrası bekleyen sayısı.
+  ///
+  /// In tr, this message translates to:
+  /// **'{count} kişi daha oy verecek'**
+  String resultsWaiting(int count);
+
+  /// Bekleyenleri dürtme butonu.
+  ///
+  /// In tr, this message translates to:
+  /// **'Dürt'**
+  String get resultsNudge;
+
+  /// Dürtme toast.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hatırlatma gönderildi'**
+  String get resultsNudged;
+
+  /// Oy verenler arasında kullanıcı.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sen'**
+  String get resultsYou;
+
+  /// Karar paylaşım metni.
+  ///
+  /// In tr, this message translates to:
+  /// **'{place} · {when}. iAgree ile karar verdik.'**
+  String decisionShareText(String place, String when);
 }
 
 class _AppLocalizationsDelegate

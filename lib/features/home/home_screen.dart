@@ -45,13 +45,14 @@ class _HomeScreenState extends State<HomeScreen> {
   void _soon() =>
       AppToast.show(context, message: AppLocalizations.of(context).comingSoon);
 
-  /// Davet aşamasındaki oda (D2) açılır; diğer aşamalar (deste, bekleme, sonuçlar) sonraki
-  /// ekranlarla bağlanacak.
-  void _openRoom(Room room) {
-    if (room.isInviting && room.members.isNotEmpty) {
-      AppRoutes.pushRoom(context, room);
-    } else {
+  void _openRoom(Room room) => AppRoutes.openRoom(context, room);
+
+  void _openDecision(PastDecision decision) {
+    final id = decision.roomId;
+    if (id == null) {
       _soon();
+    } else {
+      AppRoutes.pushDecision(context, id, animate: false);
     }
   }
 
@@ -75,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 rooms: rooms,
                 onCreate: () => AppRoutes.pushCreateWhat(context),
                 onOpenRoom: _openRoom,
-                onOpenDecision: (_) => _soon(),
+                onOpenDecision: _openDecision,
               ),
             };
           },
@@ -156,7 +157,7 @@ class _Loaded extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final hero = rooms.hero!;
+    final hero = rooms.hero;
     final others = rooms.others;
     final history = rooms.history;
     return ListView(
@@ -167,8 +168,10 @@ class _Loaded extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               _Header(onCreate: onCreate),
-              const SizedBox(height: AppSpacing.lg),
-              _HeroCard(room: hero, onPressed: () => onOpenRoom(hero)),
+              if (hero != null) ...[
+                const SizedBox(height: AppSpacing.lg),
+                _HeroCard(room: hero, onPressed: () => onOpenRoom(hero)),
+              ],
               if (others.isNotEmpty) ...[
                 _SectionTitle(l10n.homeOtherRooms),
                 AppListGroup(
@@ -248,7 +251,7 @@ class _HeroCard extends StatelessWidget {
         l10n.homeHeroTurnBody(room.readyCount, room.participantCount),
         l10n.homeHeroPick,
       ),
-      RoomStage.waiting => (
+      RoomStage.waiting || RoomStage.decided => (
         l10n.homeHeroWaitLabel,
         l10n.homeHeroWaitBody(room.readyCount, room.participantCount),
         l10n.homeHeroOpen,
@@ -383,7 +386,7 @@ AppListRow _roomRow(BuildContext context, Room room, VoidCallback onPressed) {
       l10n.homeTagYourTurn,
       AppStatusTag(label: l10n.homeTagYourTurn),
     ),
-    RoomStage.waiting => (
+    RoomStage.waiting || RoomStage.decided => (
       l10n.homeReadyCount(room.readyCount, room.participantCount),
       ExcludeSemantics(
         child: Text(

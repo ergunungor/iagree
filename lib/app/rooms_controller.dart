@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 import '../core/data/rooms_repository.dart';
+import '../core/domain/candidate.dart';
 import '../core/domain/room.dart';
 import '../core/domain/room_catalog.dart';
 
@@ -20,7 +21,20 @@ class RoomsController extends ChangeNotifier {
 
   RoomsStatus get status => _status;
   List<Room> get rooms => _rooms;
-  List<PastDecision> get history => _history;
+
+  /// Geçmiş kararlar: karara bağlanan odalar (yeniden eskiye) + eski kararlar.
+  List<PastDecision> get history => [
+    for (final r in _rooms.reversed)
+      if (r.stage == RoomStage.decided && r.decision != null)
+        PastDecision(
+          id: 'room-${r.id}',
+          title: r.decision!.candidate.name,
+          dateLabel: r.decision!.whenLabel,
+          tintIndex: r.decision!.candidate.tintIndexes.first,
+          roomId: r.id,
+        ),
+    ..._history,
+  ];
 
   /// Aksiyon bekleyen en acil oda (öncelik: sonuçlar hazır → sıra sende → bekleniyor).
   /// Hiç oda yoksa null.
@@ -31,9 +45,12 @@ class RoomsController extends ChangeNotifier {
 
   /// Öncelik sırasıyla odalar; aynı durumdakilerin sırası korunur.
   List<Room> get ordered {
-    final sorted = [..._rooms];
+    final sorted = [
+      for (final r in _rooms)
+        if (r.stage != RoomStage.decided) r,
+    ];
     // List.sort kararlı değildir; indeksle eşitlik bozulur.
-    final index = {for (var i = 0; i < _rooms.length; i++) _rooms[i].id: i};
+    final index = {for (var i = 0; i < sorted.length; i++) sorted[i].id: i};
     sorted.sort((a, b) {
       final byStage = a.stage.index.compareTo(b.stage.index);
       return byStage != 0 ? byStage : index[a.id]!.compareTo(index[b.id]!);
@@ -94,6 +111,28 @@ class RoomsController extends ChangeNotifier {
       for (final r in _rooms)
         if (r.id != id) r,
     ];
+    notifyListeners();
+  }
+
+  Future<List<Candidate>> deck(String roomId) => repository.deck(roomId);
+
+  Future<RoomResults> results(String roomId) => repository.results(roomId);
+
+  Future<void> submitPicks(String roomId, Map<String, Pick> picks) async {
+    final updated = await repository.submitPicks(roomId, picks);
+    _replace(updated);
+  }
+
+  Future<void> vote(String roomId, String candidateId) async {
+    final updated = await repository.vote(roomId, candidateId);
+    _replace(updated);
+  }
+
+  /// Sunucu/arka plan değişikliğinden sonra listeyi sessizce tazeler.
+  Future<void> refresh() => load(silent: true);
+
+  void _replace(Room updated) {
+    _rooms = [for (final r in _rooms) r.id == updated.id ? updated : r];
     notifyListeners();
   }
 }

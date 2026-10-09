@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:iagree/app/app.dart';
+import 'package:iagree/app/platform_services.dart';
 import 'package:iagree/app/rooms_controller.dart';
 import 'package:iagree/app/settings_controller.dart';
 import 'package:iagree/core/data/mock/mock_auth_repository.dart';
@@ -17,6 +18,18 @@ import 'package:iagree/features/rooms/room_screen.dart';
 late MockRoomsRepository _repo;
 final List<String> _haptics = [];
 final List<String> _clipboard = [];
+final List<String> _shared = [];
+LocationAccess _access = LocationAccess.granted;
+
+class _Sharer implements LinkSharer {
+  @override
+  Future<void> share(String link) async => _shared.add(link);
+}
+
+class _Location implements LocationService {
+  @override
+  Future<LocationAccess> request() async => _access;
+}
 
 Future<void> _launch(
   WidgetTester tester, {
@@ -35,6 +48,7 @@ Future<void> _launch(
   addTearDown(tester.platformDispatcher.clearPlatformBrightnessTestValue);
   _haptics.clear();
   _clipboard.clear();
+  _shared.clear();
   TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
       .setMockMethodCallHandler(SystemChannels.platform, (call) async {
         if (call.method == 'HapticFeedback.vibrate') _haptics.add('x');
@@ -59,6 +73,8 @@ Future<void> _launch(
         auth: MockAuthRepository(startSignedIn: true),
         rooms: RoomsController(repository: _repo),
         settings: SettingsController(),
+        sharer: _Sharer(),
+        location: _Location(),
       ),
     ),
   );
@@ -368,6 +384,51 @@ void main() {
       await tester.tap(find.text('Vazgeç'));
       await _settle(tester);
       expect(find.byType(RoomScreen), findsOneWidget);
+    });
+  });
+
+  group('paylaşım ve konum', () {
+    testWidgets('Linki paylaş: paylaşım servisine davet linki gider', (
+      tester,
+    ) async {
+      await _launch(tester);
+      await _toRoom(tester);
+      await tester.tap(find.text('Linki paylaş'));
+      await tester.pump();
+      expect(_shared, ['https://iagree.app/r/oda-1']);
+    });
+
+    testWidgets('Konumum: izin verilirse seçilir, etikette "Konumum"', (
+      tester,
+    ) async {
+      _access = LocationAccess.granted;
+      await _launch(tester);
+      await _openCreate(tester);
+      await _tapCategory(tester, 'Yemek');
+      await _pickDistrict(tester, 'Konumum');
+      expect(find.text('Bir konum seç.'), findsNothing);
+      await _submit(tester);
+      expect(find.text('Konumum · 3 km'), findsOneWidget);
+    });
+
+    testWidgets('Konumum: izin reddedilirse toast, semt seçilmiş sayılmaz', (
+      tester,
+    ) async {
+      _access = LocationAccess.denied;
+      await _launch(tester);
+      await _openCreate(tester);
+      await _tapCategory(tester, 'Yemek');
+      await _pickDistrict(tester, 'Konumum');
+      await tester.pump(const Duration(milliseconds: 400));
+      expect(
+        find.text('Konum izni verilmedi. Semt seçebilirsin.'),
+        findsOneWidget,
+      );
+      await tester.pump(const Duration(seconds: 4));
+      await _submit(tester);
+      expect(find.byType(CreateDetailsScreen), findsOneWidget);
+      expect(find.text('Bir konum seç.'), findsOneWidget);
+      _access = LocationAccess.granted;
     });
   });
 

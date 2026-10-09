@@ -71,5 +71,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Yakınındaki mekanları önerebilmemiz için konumuna ihtiyacımız var.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Profil fotoğrafı seçebilmen için fotoğraflarına erişmemiz gerekiyor.</string>
 </dict>
 </plist>

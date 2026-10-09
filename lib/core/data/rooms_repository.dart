@@ -1,3 +1,4 @@
+import '../domain/candidate.dart';
 import '../domain/room.dart';
 import '../domain/room_catalog.dart';
 
@@ -19,4 +20,16 @@ abstract interface class RoomsRepository {
   Future<Room> renameRoom(String id, String name);
 
   Future<void> deleteRoom(String id);
+
+  /// Odanın destesi (kartlar).
+  Future<List<Candidate>> deck(String roomId);
+
+  /// Kullanıcının deste kararlarını gönderir; oda "başkaları bekleniyor"a geçer.
+  Future<Room> submitPicks(String roomId, Map<String, Pick> picks);
+
+  /// Oy aşaması: en uyumlu seçenekler ve (oy verildiyse) oylar.
+  Future<RoomResults> results(String roomId);
+
+  /// Kullanıcının oyunu verir.
+  Future<Room> vote(String roomId, String candidateId);
 }

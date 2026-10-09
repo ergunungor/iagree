@@ -7,6 +7,10 @@ import '../features/auth/code_screen.dart';
 import '../features/auth/email_screen.dart';
 import '../features/account/account_screen.dart';
 import '../features/auth/profile_setup_screen.dart';
+import '../features/decision/decision_screen.dart';
+import '../features/decision/deck_screen.dart';
+import '../features/decision/results_screen.dart';
+import '../features/decision/waiting_screen.dart';
 import '../features/rooms/create_details_screen.dart';
 import '../features/rooms/create_what_screen.dart';
 import '../features/rooms/room_screen.dart';
@@ -26,6 +30,10 @@ abstract final class AppRoutes {
   static const String createWhat = '/create/what';
   static const String createDetails = '/create/details';
   static const String room = '/room';
+  static const String deck = '/room/deck';
+  static const String waiting = '/room/waiting';
+  static const String results = '/room/results';
+  static const String decision = '/room/decision';
 
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -52,6 +60,24 @@ abstract final class AppRoutes {
       case room:
         final id = settings.arguments! as String;
         return _push(settings, (_) => RoomScreen(roomId: id));
+      case deck:
+        final id = settings.arguments! as String;
+        return _push(settings, (_) => DeckScreen(roomId: id));
+      case waiting:
+        final id = settings.arguments! as String;
+        return _push(settings, (_) => WaitingScreen(roomId: id));
+      case results:
+        final id = settings.arguments! as String;
+        return _push(settings, (_) => ResultsScreen(roomId: id));
+      case decision:
+        // Karar anı kendi içinde bir an: tam ekran modal.
+        final args = settings.arguments! as ({String roomId, bool animate});
+        return CupertinoPageRoute<void>(
+          settings: settings,
+          fullscreenDialog: true,
+          builder: (_) =>
+              DecisionScreen(roomId: args.roomId, animate: args.animate),
+        );
     }
     return null;
   }
@@ -79,6 +105,50 @@ abstract final class AppRoutes {
 
   static void pushRoom(BuildContext context, Room target) =>
       Navigator.of(context).pushNamed(room, arguments: target.id);
+
+  /// Odayı durumuna uygun ekranda açar: karar verildiyse karar anı, sonuçlar hazırsa oylama,
+  /// beklemedeyse bekleme, sıra kullanıcıdaysa deste (kimse katılmadıysa önce davet ekranı).
+  static void openRoom(BuildContext context, Room target) {
+    switch (target.stage) {
+      case RoomStage.decided:
+        pushDecision(context, target.id, animate: false);
+      case RoomStage.resultsReady:
+        Navigator.of(context).pushNamed(results, arguments: target.id);
+      case RoomStage.waiting:
+        Navigator.of(context).pushNamed(waiting, arguments: target.id);
+      case RoomStage.yourTurn:
+        target.participantCount <= 1
+            ? pushRoom(context, target)
+            : pushDeck(context, target.id);
+    }
+  }
+
+  static void pushDeck(BuildContext context, String roomId) =>
+      Navigator.of(context).pushNamed(deck, arguments: roomId);
+
+  static void pushDecision(
+    BuildContext context,
+    String roomId, {
+    required bool animate,
+  }) =>
+      Navigator.of(context)
+          .pushNamed(decision, arguments: (roomId: roomId, animate: animate));
+
+  /// Deste bitti: deste yığından kalkar, bekleme açılır (geri Odalarım ya da odaya döner).
+  static void replaceWithWaiting(BuildContext context, String roomId) =>
+      Navigator.of(context).pushReplacementNamed(waiting, arguments: roomId);
+
+  static void replaceWithResults(BuildContext context, String roomId) =>
+      Navigator.of(context).pushReplacementNamed(results, arguments: roomId);
+
+  static void replaceWithDecision(
+    BuildContext context,
+    String roomId, {
+    required bool animate,
+  }) => Navigator.of(context).pushReplacementNamed(
+    decision,
+    arguments: (roomId: roomId, animate: animate),
+  );
 
   /// Oda kuruldu: oda kurma adımları yığından kalkar, oda ekranı Odalarım'ın üstüne açılır
   /// (tek geçişle; geri Odalarım'a döner).

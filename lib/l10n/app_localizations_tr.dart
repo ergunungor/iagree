@@ -670,4 +670,58 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get roomDeleteConfirm => 'Odayı sil';
+
+  @override
+  String get createUseMyLocation => 'Konumumu kullan';
+
+  @override
+  String get createMyLocation => 'Konumum';
+
+  @override
+  String get createLocationDenied => 'Konum izni verilmedi. Semt seçebilirsin.';
+
+  @override
+  String get deckSubmitFailed => 'Seçimlerin gönderilemedi. Tekrar dene.';
+
+  @override
+  String get waitingReady => 'Sen hazırsın';
+
+  @override
+  String waitingOthers(int count) {
+    return '$count kişi daha seçiyor';
+  }
+
+  @override
+  String get waitingBack => 'Odaya dön';
+
+  @override
+  String get resultsTitle => 'Sonuçlar';
+
+  @override
+  String get resultsHeading => 'Hangisi olsun?';
+
+  @override
+  String get resultsVote => 'Oyumu ver';
+
+  @override
+  String get resultsVoteFailed => 'Oyun gönderilemedi. Tekrar dene.';
+
+  @override
+  String resultsWaiting(int count) {
+    return '$count kişi daha oy verecek';
+  }
+
+  @override
+  String get resultsNudge => 'Dürt';
+
+  @override
+  String get resultsNudged => 'Hatırlatma gönderildi';
+
+  @override
+  String get resultsYou => 'Sen';
+
+  @override
+  String decisionShareText(String place, String when) {
+    return '$place · $when. iAgree ile karar verdik.';
+  }
 }

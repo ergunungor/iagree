@@ -11,6 +11,7 @@ import '../features/home/home_screen.dart';
 import '../l10n/app_localizations.dart';
 import 'app_router.dart';
 import 'app_scope.dart';
+import 'platform_services.dart';
 import 'rooms_controller.dart';
 import 'session_controller.dart';
 import 'settings_controller.dart';
@@ -27,6 +28,9 @@ class IAgreeApp extends StatefulWidget {
     this.session,
     this.rooms,
     this.settings,
+    this.sharer,
+    this.location,
+    this.opener,
   });
 
   final Widget? home;
@@ -34,9 +38,12 @@ class IAgreeApp extends StatefulWidget {
   final SessionController? session;
   final RoomsController? rooms;
   final SettingsController? settings;
+  final LinkSharer? sharer;
+  final LocationService? location;
+  final UrlOpener? opener;
 
-  /// Geliştirme kısayolu: `--dart-define=DEMO=...` verilirse tasarım galerisi (ve demo
-  /// sayfaları) açılır.
+  /// Geliştirme kısayolu: `--dart-define=DEMO=home` oturum açık başlar; başka bir değer
+  /// verilirse tasarım galerisi (ve demo sayfaları) açılır.
   static const String demo = String.fromEnvironment('DEMO');
 
   @override
@@ -44,7 +51,9 @@ class IAgreeApp extends StatefulWidget {
 }
 
 class _IAgreeAppState extends State<IAgreeApp> {
-  late final AuthRepository _auth = widget.auth ?? MockAuthRepository();
+  late final AuthRepository _auth =
+      widget.auth ??
+      MockAuthRepository(startSignedIn: IAgreeApp.demo == 'home');
   late final SessionController _session =
       widget.session ?? (SessionController(auth: _auth)..restore());
   late final SettingsController _settings =
@@ -59,6 +68,9 @@ class _IAgreeAppState extends State<IAgreeApp> {
       auth: _auth,
       rooms: _rooms,
       settings: _settings,
+      sharer: widget.sharer ?? const SystemLinkSharer(),
+      location: widget.location ?? const SystemLocationService(),
+      opener: widget.opener ?? const SystemUrlOpener(),
       child: ListenableBuilder(
         listenable: _settings,
         builder: (context, _) => MaterialApp(
@@ -72,7 +84,7 @@ class _IAgreeAppState extends State<IAgreeApp> {
           onGenerateRoute: AppRoutes.onGenerateRoute,
           home:
               widget.home ??
-              (IAgreeApp.demo.isNotEmpty
+              (IAgreeApp.demo.isNotEmpty && IAgreeApp.demo != 'home'
                   ? const DesignSystemGallery()
                   : const RootGate()),
         ),
